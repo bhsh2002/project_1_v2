@@ -1,8 +1,8 @@
 import pytest
 from io import BytesIO
-import pandas as pd
-from dev_kit.database.extensions import db
-from sqlalchemy.sql import select
+# import pandas as pd
+# from dev_kit.database.extensions import db
+# from sqlalchemy.sql import select
 
 
 @pytest.fixture
