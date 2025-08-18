@@ -1,92 +1,20 @@
-alembic==1.16.4 ; python_version >= "3.11" and python_version < "3.14"
-amqp==5.3.1 ; python_version >= "3.11" and python_version < "3.14"
-apiflask==2.4.0 ; python_version >= "3.11" and python_version < "3.14"
-apispec==6.8.2 ; python_version >= "3.11" and python_version < "3.14"
-async-timeout==5.0.1 ; python_version == "3.11" and python_full_version < "3.11.3"
-attrs==25.3.0 ; python_version >= "3.11" and python_version < "3.14"
-billiard==4.2.1 ; python_version >= "3.11" and python_version < "3.14"
-blinker==1.9.0 ; python_version >= "3.11" and python_version < "3.14"
-celery==5.5.3 ; python_version >= "3.11" and python_version < "3.14"
-certifi==2025.8.3 ; python_version >= "3.11" and python_version < "3.14"
-charset-normalizer==3.4.3 ; python_version >= "3.11" and python_version < "3.14"
-click-didyoumean==0.3.1 ; python_version >= "3.11" and python_version < "3.14"
-click-plugins==1.1.1.2 ; python_version >= "3.11" and python_version < "3.14"
-click-repl==0.3.0 ; python_version >= "3.11" and python_version < "3.14"
-click==8.2.1 ; python_version >= "3.11" and python_version < "3.14"
-colorama==0.4.6 ; python_version >= "3.11" and python_version < "3.14" and platform_system == "Windows"
-coloredlogs==15.0.1 ; python_version >= "3.11" and python_version < "3.14"
-deprecated==1.2.18 ; python_version >= "3.11" and python_version < "3.14"
-dev-kit @ git+https://github.com/bhsh2002/dev-kit.git@653bca509b4303d566e5c8b7b27a9ed4c82b370b ; python_version >= "3.11" and python_version < "3.14"
-et-xmlfile==2.0.0 ; python_version >= "3.11" and python_version < "3.14"
-flask-cors==6.0.1 ; python_version >= "3.11" and python_version < "3.14"
-flask-httpauth==4.8.0 ; python_version >= "3.11" and python_version < "3.14"
-flask-jwt-extended==4.7.1 ; python_version >= "3.11" and python_version < "3.14"
-flask-limiter==3.12 ; python_version >= "3.11" and python_version < "3.14"
-flask-marshmallow==1.3.0 ; python_version >= "3.11" and python_version < "3.14"
-flask-migrate==4.1.0 ; python_version >= "3.11" and python_version < "3.14"
-flask-sqlalchemy==3.1.1 ; python_version >= "3.11" and python_version < "3.14"
-flask==3.1.1 ; python_version >= "3.11" and python_version < "3.14"
-flatbuffers==25.2.10 ; python_version >= "3.11" and python_version < "3.14"
-greenlet==3.2.4 ; python_version >= "3.11" and python_version < "3.14" and (platform_machine == "aarch64" or platform_machine == "ppc64le" or platform_machine == "x86_64" or platform_machine == "amd64" or platform_machine == "AMD64" or platform_machine == "win32" or platform_machine == "WIN32")
-gunicorn==23.0.0 ; python_version >= "3.11" and python_version < "3.14"
-humanfriendly==10.0 ; python_version >= "3.11" and python_version < "3.14"
-idna==3.10 ; python_version >= "3.11" and python_version < "3.14"
-imageio==2.37.0 ; python_version >= "3.11" and python_version < "3.14"
-itsdangerous==2.2.0 ; python_version >= "3.11" and python_version < "3.14"
-jinja2==3.1.6 ; python_version >= "3.11" and python_version < "3.14"
-jsonschema-specifications==2025.4.1 ; python_version >= "3.11" and python_version < "3.14"
-jsonschema==4.25.0 ; python_version >= "3.11" and python_version < "3.14"
-kombu==5.5.4 ; python_version >= "3.11" and python_version < "3.14"
-lazy-loader==0.4 ; python_version >= "3.11" and python_version < "3.14"
-limits==5.5.0 ; python_version >= "3.11" and python_version < "3.14"
-llvmlite==0.44.0 ; python_version >= "3.11" and python_version < "3.14"
-mako==1.3.10 ; python_version >= "3.11" and python_version < "3.14"
-markdown-it-py==4.0.0 ; python_version >= "3.11" and python_version < "3.14"
-markupsafe==3.0.2 ; python_version >= "3.11" and python_version < "3.14"
-marshmallow-sqlalchemy==1.4.2 ; python_version >= "3.11" and python_version < "3.14"
-marshmallow==4.0.0 ; python_version >= "3.11" and python_version < "3.14"
-mdurl==0.1.2 ; python_version >= "3.11" and python_version < "3.14"
-mpmath==1.3.0 ; python_version >= "3.11" and python_version < "3.14"
-mysql-connector-python==9.4.0 ; python_version >= "3.11" and python_version < "3.14"
-networkx==3.5 ; python_version >= "3.11" and python_version < "3.14"
-numba==0.61.2 ; python_version >= "3.11" and python_version < "3.14"
-numpy==2.2.6 ; python_version >= "3.11" and python_version < "3.14"
-onnxruntime==1.22.1 ; python_version >= "3.11" and python_version < "3.14"
-opencv-python-headless==4.12.0.88 ; python_version >= "3.11" and python_version < "3.14"
-openpyxl==3.1.5 ; python_version >= "3.11" and python_version < "3.14"
-ordered-set==4.1.0 ; python_version >= "3.11" and python_version < "3.14"
-packaging==25.0 ; python_version >= "3.11" and python_version < "3.14"
-pandas==2.3.1 ; python_version >= "3.11" and python_version < "3.14"
-pillow==11.3.0 ; python_version >= "3.11" and python_version < "3.14"
-platformdirs==4.3.8 ; python_version >= "3.11" and python_version < "3.14"
-pooch==1.8.2 ; python_version >= "3.11" and python_version < "3.14"
-prompt-toolkit==3.0.51 ; python_version >= "3.11" and python_version < "3.14"
-protobuf==6.32.0 ; python_version >= "3.11" and python_version < "3.14"
-pygments==2.19.2 ; python_version >= "3.11" and python_version < "3.14"
-pyjwt==2.10.1 ; python_version >= "3.11" and python_version < "3.14"
-pymatting==1.1.14 ; python_version >= "3.11" and python_version < "3.14"
-pyreadline3==3.5.4 ; python_version >= "3.11" and python_version < "3.14" and sys_platform == "win32"
-python-dateutil==2.9.0.post0 ; python_version >= "3.11" and python_version < "3.14"
-python-dotenv==1.1.1 ; python_version >= "3.11" and python_version < "3.14"
-pytz==2025.2 ; python_version >= "3.11" and python_version < "3.14"
-redis==6.4.0 ; python_version >= "3.11" and python_version < "3.14"
-referencing==0.36.2 ; python_version >= "3.11" and python_version < "3.14"
-rembg==2.0.67 ; python_version >= "3.11" and python_version < "3.14"
-requests==2.32.4 ; python_version >= "3.11" and python_version < "3.14"
-rich==13.9.4 ; python_version >= "3.11" and python_version < "3.14"
-rpds-py==0.27.0 ; python_version >= "3.11" and python_version < "3.14"
-scikit-image==0.25.2 ; python_version >= "3.11" and python_version < "3.14"
-scipy==1.16.1 ; python_version >= "3.11" and python_version < "3.14"
-six==1.17.0 ; python_version >= "3.11" and python_version < "3.14"
-sqlalchemy==2.0.43 ; python_version >= "3.11" and python_version < "3.14"
-sympy==1.14.0 ; python_version >= "3.11" and python_version < "3.14"
-tifffile==2025.6.11 ; python_version >= "3.11" and python_version < "3.14"
-tqdm==4.67.1 ; python_version >= "3.11" and python_version < "3.14"
-typing-extensions==4.14.1 ; python_version >= "3.11" and python_version < "3.14"
-tzdata==2025.2 ; python_version >= "3.11" and python_version < "3.14"
-urllib3==2.5.0 ; python_version >= "3.11" and python_version < "3.14"
-vine==5.1.0 ; python_version >= "3.11" and python_version < "3.14"
-wcwidth==0.2.13 ; python_version >= "3.11" and python_version < "3.14"
-webargs==8.7.0 ; python_version >= "3.11" and python_version < "3.14"
-werkzeug==3.1.3 ; python_version >= "3.11" and python_version < "3.14"
-wrapt==1.17.3 ; python_version >= "3.11" and python_version < "3.14"
+Flask>=3.1.1,<4.0.0
+Flask-SQLAlchemy>=3.1.1,<4.0.0
+Flask-Migrate>=4.0.7,<5.0.0
+flask-jwt-extended>=4.7.1,<5.0.0
+Flask-Limiter>=3.8.0,<4.0.0
+limits>=3.7.0,<4.0.0
+APIFlask>=2.4.0,<3.0.0
+marshmallow-sqlalchemy>=1.4.2,<2.0.0
+python-dotenv>=1.0.1,<2.0.0
+pandas>=2.2.2,<3.0.0
+openpyxl>=3.1.5,<4.0.0
+pillow>=10.4.0,<11.0.0
+rembg>=2.0.57,<3.0.0
+onnxruntime>=1.18.0,<2.0.0
+celery>=5.4.0,<6.0.0
+redis>=5.0.0,<6.0.0
+mysql-connector-python>=9.4.0,<10.0.0
+Flask-Cors>=5.0.0,<6.0.0
+gunicorn>=22.0.0,<23.0.0
+# pytest>=8.2.0,<9.0.0

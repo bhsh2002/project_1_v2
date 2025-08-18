@@ -37,5 +37,5 @@ with app.app_context():
 PY
 
 # Start gunicorn
-# exec gunicorn wsgi:app -b 0.0.0.0:5000 --chdir /app/src
-exec flask run --host=0.0.0.0 --port=5000 --debug --reload
+exec gunicorn wsgi:app -b 0.0.0.0:5000 --chdir /app/src
+# exec flask run --host=0.0.0.0 --port=5000 --debug --reload
