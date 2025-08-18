@@ -9,6 +9,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     gcc \
+    git \
     libjpeg62-turbo-dev \
     zlib1g-dev \
     libgomp1 \
