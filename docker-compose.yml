@@ -1,0 +1,80 @@
+services:
+  api:
+    build:
+      context: ./
+      dockerfile: flask-backend/Dockerfile
+    image: project1v2-api:latest
+    environment:
+      PYTHONPATH: /app/src:/app/dev-kit/src
+      FLASK_ENV: development
+      FLASK_DEBUG: "True"
+      SECRET_KEY: ${SECRET_KEY:-dev-secret}
+      MYSQL_USER: ${MYSQL_USER:-app}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-app_pw}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-app_db}
+      DB_HOST: db
+      DB_PORT: "3306"
+      SQLALCHEMY_DATABASE_URI: mysql+mysqlconnector://${MYSQL_USER:-app}:${MYSQL_PASSWORD:-app_pw}@db:${DB_PORT:-3306}/${MYSQL_DATABASE:-app_db}
+      CORS_ORIGINS: "*"
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:5000}
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      DEVKIT_ADMIN_USERNAME: ${DEVKIT_ADMIN_USERNAME:-admin}
+      DEVKIT_ADMIN_PASSWORD: ${DEVKIT_ADMIN_PASSWORD:-change-me}
+    volumes:
+      - ./flask-backend/src:/app/src
+      - ./flask-backend/.env.dev:/app/src/.env.dev:ro
+      - ../../../dev-kit/src:/app/dev-kit/src:ro
+      - uploads_v2:/app/src/static/uploads
+      - temp_v2:/app/instance/temp
+      - ./tests:/app/tests:ro
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+      - redis
+    command: "/app/src/entrypoint.sh"
+
+  worker:
+    image: project1v2-api:latest
+    depends_on:
+      - api
+      - redis
+    environment:
+      PYTHONPATH: /app/src:/app/dev-kit/src
+      MYSQL_USER: ${MYSQL_USER:-app}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-app_pw}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-app_db}
+      DB_HOST: db
+      DB_PORT: "3306"
+      SQLALCHEMY_DATABASE_URI: mysql+mysqlconnector://${MYSQL_USER:-app}:${MYSQL_PASSWORD:-app_pw}@db:${DB_PORT:-3306}/${MYSQL_DATABASE:-app_db}
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      - ./flask-backend/src:/app/src
+      - ../../../dev-kit/src:/app/dev-kit/src:ro
+      - uploads_v2:/app/src/static/uploads
+      - temp_v2:/app/instance/temp
+    command: bash -lc "cd /app/src && CELERY_BROKER_URL=redis://redis:6379/0 celery -A app.products.tasks.celery worker -l info"
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_pw}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-app_db}
+      MYSQL_USER: ${MYSQL_USER:-app}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-app_pw}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data_v2:/var/lib/mysql
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+volumes:
+  db_data_v2:
+  uploads_v2:
+  temp_v2:
