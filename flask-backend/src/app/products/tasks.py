@@ -24,7 +24,7 @@ logger = get_task_logger(__name__)
 @celery.task(bind=True, name="products.process_image")
 def process_product_image(self, product_id, temp_image_path):
     from app import create_app
-    from app.extensions import db
+    from dev_kit.database.extensions import db
     from app.products.models import Product
 
     app = create_app()
