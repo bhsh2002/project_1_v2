@@ -82,6 +82,18 @@ services:
     networks:
       - proxy
 
+  frontend:
+    build:
+      context: ./react-frontend
+      dockerfile: Dockerfile
+    image: project1v2-frontend:latest
+    ports:
+      - "3000:80"
+    networks:
+      - proxy
+    depends_on:
+      - api
+
 volumes:
   db_data_v2:
   uploads_v2:
