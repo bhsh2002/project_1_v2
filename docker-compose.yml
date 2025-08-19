@@ -30,6 +30,8 @@ services:
       - ./tests:/app/tests:ro
     ports:
       - "5000:5000"
+    networks:
+      - proxy
     depends_on:
       - db
       - redis
@@ -78,3 +80,8 @@ volumes:
   db_data_v2:
   uploads_v2:
   temp_v2:
+
+
+networks:
+  proxy:
+    external: true
