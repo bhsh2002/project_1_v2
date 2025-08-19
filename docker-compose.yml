@@ -57,6 +57,8 @@ services:
       - ../../../dev-kit/src:/app/dev-kit/src:ro
       - uploads_v2:/app/src/static/uploads
       - temp_v2:/app/instance/temp
+    networks:
+      - proxy
     command: bash -lc "cd /app/src && CELERY_BROKER_URL=redis://redis:6379/0 celery -A app.products.tasks.celery worker -l info"
 
   db:
@@ -70,11 +72,15 @@ services:
       - "3307:3306"
     volumes:
       - db_data_v2:/var/lib/mysql
+    networks:
+      - proxy
 
   redis:
     image: redis:7
     ports:
       - "6379:6379"
+    networks:
+      - proxy
 
 volumes:
   db_data_v2:
