@@ -1,56 +1,64 @@
-import { Box, Typography, IconButton, Grid, Divider } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
-const formatPrice = (price, currency) => {
-    // إن كانت لديك عملة من الـ API مرّرها هنا، وإلا نعرض الرقم كما هو بتنسيق محلي
-    if (price == null) return '';
-    try {
-        return currency
-            ? new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(price)
-            : Number(price).toLocaleString();
-    } catch {
-        return String(price);
-    }
-};
+import Divider from '@mui/material/Divider';
 
 const ProductDisplay = ({ product, onClose }) => {
-    const { imageUrl, name, price, currency } = product || {};
+    if (!product) {
+        return null;
+    }
 
     return (
-        <Box sx={{ p: { xs: 2, sm: 3 }, color: 'white' }}>
-            {/* المقبض وزر الإغلاق */}
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', mb: 2 }}>
-                <Box sx={{ width: 40, height: 5, bgcolor: 'rgba(255,255,255,0.5)', borderRadius: '2.5px' }} />
-                <IconButton onClick={onClose} sx={{ position: 'absolute', top: -8, right: 0, color: 'white' }} aria-label="إغلاق اللوح">
+        <Box sx={{ p: 3, textAlign: 'center' }}>
+            {/* زر الإغلاق */}
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', position: 'absolute', top: 8, right: 8 }}>
+                <IconButton onClick={onClose}>
                     <CloseIcon />
                 </IconButton>
             </Box>
 
-            <Grid container spacing={3} alignItems="center">
-                {/* الصورة (إذا وجدت) */}
-                {!!imageUrl && (
-                    <Grid item xs={12} sm={4}>
-                        <Box
-                            component="img"
-                            src={imageUrl}
-                            alt={name || 'صورة المنتج'}
-                            sx={{ width: '100%', height: 'auto', maxHeight: 150, objectFit: 'contain', borderRadius: 2 }}
-                            loading="lazy"
-                        />
-                    </Grid>
-                )}
+            {/* اسم المنتج */}
+            <Typography variant="h4" component="h2" sx={{ mb: 2, fontWeight: 'medium' }}>
+                {product.name}
+            </Typography>
 
-                {/* التفاصيل */}
-                <Grid item xs={12} sm={imageUrl ? 8 : 12}>
-                    <Typography variant="h5" component="h2" sx={{ fontWeight: 'bold' }}>
-                        {name || 'منتج بدون اسم'}
-                    </Typography>
-                    <Divider sx={{ my: 2, borderColor: 'rgba(255,255,255,0.2)' }} />
-                    <Typography variant="h4" component="p" sx={{ fontWeight: 'bold', color: '#66bb6a' }}>
-                        {formatPrice(price, currency)}
-                    </Typography>
-                </Grid>
-            </Grid>
+            {/* الصورة (إذا كانت موجودة) */}
+            {product.imageUrl && (
+                <Box
+                    component="img"
+                    src={product.imageUrl}
+                    alt={product.name}
+                    sx={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: '200px',
+                        objectFit: 'contain', // contain أفضل من cover هنا
+                        borderRadius: 2,
+                        mb: 3,
+                    }}
+                />
+            )}
+
+            <Divider sx={{ my: 2 }} />
+
+            {/* السعر (بحجم كبير ولون مميز) */}
+            <Box sx={{ mt: 2 }}>
+                <Typography variant="subtitle1" color="text.secondary">
+                    السعر
+                </Typography>
+                <Typography
+                    variant="h3"
+                    component="p"
+                    sx={{
+                        fontWeight: 'bold',
+                        color: 'primary.main', // استخدام اللون الرئيسي للثيم
+                        lineHeight: 1.2
+                    }}
+                >
+                    {product.price}
+                </Typography>
+            </Box>
         </Box>
     );
 };
