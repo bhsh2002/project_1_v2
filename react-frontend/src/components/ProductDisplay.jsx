@@ -1,56 +1,65 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Divider from '@mui/material/Divider';
 
-// لإضافة تأثير ظهور بسيط
-import { keyframes } from '@emotion/react';
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-`;
-
-const ProductDisplay = ({ product }) => {
+const ProductDisplay = ({ product, onClose }) => {
     if (!product) {
         return null;
     }
 
     return (
-        <Card
-            sx={{
-                width: '100%',
-                maxWidth: 345,
-                textAlign: 'center',
-                animation: `${fadeIn} 0.5s ease-out`
-            }}
-        >
-            {/* عرض الصورة فقط إذا كانت موجودة */}
+        <Box sx={{ p: 3, textAlign: 'center' }}>
+            {/* زر الإغلاق */}
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', position: 'absolute', top: 8, right: 8 }}>
+                <IconButton onClick={onClose}>
+                    <CloseIcon />
+                </IconButton>
+            </Box>
+
+            {/* اسم المنتج */}
+            <Typography variant="h4" component="h2" sx={{ mb: 2, fontWeight: 'medium' }}>
+                {product.name}
+            </Typography>
+
+            {/* الصورة (إذا كانت موجودة) */}
             {product.imageUrl && (
-                <CardMedia
+                <Box
                     component="img"
-                    height="194"
-                    image={product.imageUrl}
+                    src={product.imageUrl}
                     alt={product.name}
-                    sx={{ objectFit: 'cover' }}
+                    sx={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: '200px',
+                        objectFit: 'contain', // contain أفضل من cover هنا
+                        borderRadius: 2,
+                        mb: 3,
+                    }}
                 />
             )}
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    {product.name}
+
+            <Divider sx={{ my: 2 }} />
+
+            {/* السعر (بحجم كبير ولون مميز) */}
+            <Box sx={{ mt: 2 }}>
+                <Typography variant="subtitle1" color="text.secondary">
+                    السعر
                 </Typography>
-                <Typography variant="h6" color="text.secondary">
-                    السعر: {product.price}
+                <Typography
+                    variant="h3"
+                    component="p"
+                    sx={{
+                        fontWeight: 'bold',
+                        color: 'primary.main', // استخدام اللون الرئيسي للثيم
+                        lineHeight: 1.2
+                    }}
+                >
+                    {product.price}
                 </Typography>
-            </CardContent>
-        </Card>
+            </Box>
+        </Box>
     );
 };
 
