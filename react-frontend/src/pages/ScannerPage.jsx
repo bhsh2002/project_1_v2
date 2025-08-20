@@ -1,75 +1,101 @@
-import { useState, useMemo } from 'react';
+// src/pages/ScannerPage.jsx
+
+import { useState, useMemo, useRef, useEffect } from 'react'; // <-- استيراد useRef و useEffect
 import BarcodeScanner from '../components/BarcodeScanner';
 import ProductDisplay from '../components/ProductDisplay';
 import { fetchProductByBarcode } from '../api/productService';
 
-// MUI Components for the new design
+// MUI Components
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import Drawer from '@mui/material/Drawer';
 import Backdrop from '@mui/material/Backdrop';
 import Typography from '@mui/material/Typography';
+import Dialog from '@mui/material/Dialog'; // <-- استبدال Drawer بـ Dialog
+import Fade from '@mui/material/Fade'; // <-- لإضافة تأثير دخول ناعم
 
 const ScannerPage = () => {
     const [productData, setProductData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [scannerKey, setScannerKey] = useState(1); // <-- state جديد لإعادة تشغيل الماسح
 
-    // --- إعداد مشغل الصوت ---
-    // نستخدم useMemo لضمان إنشاء كائن الصوت مرة واحدة فقط
+    // useRef لتخزين هوية المؤقت للتحكم فيه
+    const timerRef = useRef(null);
+
     const successAudio = useMemo(() => new Audio('/audio/scan-success.mp3'), []);
 
-    // --- معالجة نجاح المسح ---
-    const handleScanSuccess = async (decodedText) => {
-        // لا تفعل شيئاً إذا كان هناك طلب قيد التنفيذ بالفعل
-        if (isLoading) return;
+    // دالة إغلاق النافذة وإعادة تشغيل الماسح
+    const handleCloseDialog = () => {
+        setProductData(null);
+        // مسح أي مؤقت موجود لمنع تشغيله بعد الإغلاق اليدوي
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+            timerRef.current = null;
+        }
+        // تغيير الـ key لإجبار BarcodeScanner على إعادة التحميل
+        setScannerKey(prevKey => prevKey + 1);
+    };
 
+    const handleScanSuccess = async (decodedText) => {
+        if (isLoading) return;
         setIsLoading(true);
         setError(null);
 
         try {
             const product = await fetchProductByBarcode(decodedText);
             setProductData(product);
-            successAudio.play(); // تشغيل الصوت عند النجاح
+            successAudio.play();
+
+            // ضبط المؤقت ليقوم بإغلاق النافذة بعد 3 ثوانٍ
+            timerRef.current = setTimeout(() => {
+                handleCloseDialog();
+            }, 3000);
+
         } catch (err) {
             setError(err.message);
+            // في حالة الخطأ، أعد تشغيل الماسح فورًا
+            setScannerKey(prevKey => prevKey + 1);
         } finally {
             setIsLoading(false);
         }
     };
 
-    // --- دوال التحكم في إغلاق العناصر ---
-    const handleCloseDrawer = () => {
-        setProductData(null);
-    };
-
     const handleCloseSnackbar = () => {
         setError(null);
+        // أعد تشغيل الماسح أيضًا بعد إغلاق رسالة الخطأ
+        setScannerKey(prevKey => prevKey + 1);
     };
 
-    // -- `productData` يحدد ما إذا كان اللوح السفلي مفتوحًا أم لا
-    const isDrawerOpen = Boolean(productData);
-    // -- `error` يحدد ما إذا كان الإشعار مفتوحًا أم لا
+    const isDialogOpen = Boolean(productData);
     const isSnackbarOpen = Boolean(error);
+
+    // التأكد من مسح المؤقت عند تفكيك المكون
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+        };
+    }, []);
+
 
     return (
         <Box sx={{ position: 'relative', width: '100%', height: '100%', flexGrow: 1 }}>
 
-            {/* الماسح دائمًا في الخلفية */}
-            <Box sx={{
-                width: '100%',
-                maxWidth: '640px', // تحديد عرض أقصى على الشاشات الكبيرة
-                mx: 'auto', // توسيط أفقي
-            }}>
+            <Box sx={{ width: '100%', maxWidth: '640px', mx: 'auto' }}>
                 <Typography variant="h6" align="center" sx={{ mb: 2, color: 'text.secondary' }}>
                     وجه الكاميرا نحو الباركود
                 </Typography>
-                <BarcodeScanner onScanSuccess={handleScanSuccess} />
+
+                {/* استخدام key لإعادة التشغيل */}
+                <BarcodeScanner
+                    key={scannerKey}
+                    onScanSuccess={handleScanSuccess}
+                />
             </Box>
 
-            {/* طبقة التحميل فوق الماسح */}
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1, position: 'absolute' }}
                 open={isLoading}
@@ -77,28 +103,24 @@ const ScannerPage = () => {
                 <CircularProgress color="inherit" />
             </Backdrop>
 
-            {/* اللوح السفلي لعرض المنتج */}
-            <Drawer
-                anchor="bottom"
-                open={isDrawerOpen}
-                onClose={handleCloseDrawer}
-                sx={{
-                    '& .MuiDrawer-paper': {
-                        borderTopLeftRadius: 16,
-                        borderTopRightRadius: 16,
-                        height: 'auto',
-                        maxHeight: '70%', // لا تجعله يغطي الشاشة كلها
+            {/* استخدام Dialog لعرض المنتج */}
+            <Dialog
+                open={isDialogOpen}
+                onClose={handleCloseDialog}
+                TransitionComponent={Fade} // تأثير دخول ناعم
+                PaperProps={{
+                    style: {
+                        borderRadius: 16, // استخدام الحواف الدائرية من الثيم
                     },
                 }}
             >
-                {/* نمرر دالة الإغلاق للمكون الداخلي */}
-                {productData && <ProductDisplay product={productData} onClose={handleCloseDrawer} />}
-            </Drawer>
+                {/* لا نحتاج لعنوان منفصل، فالتصميم داخل ProductDisplay */}
+                {productData && <ProductDisplay product={productData} onClose={handleCloseDialog} />}
+            </Dialog>
 
-            {/* إشعار الخطأ */}
             <Snackbar
                 open={isSnackbarOpen}
-                autoHideDuration={4000} // يختفي بعد 4 ثوانٍ
+                autoHideDuration={4000}
                 onClose={handleCloseSnackbar}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             >
