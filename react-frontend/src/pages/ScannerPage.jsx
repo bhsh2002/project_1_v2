@@ -106,7 +106,7 @@ const ScannerPage = () => {
                 return;
             }
 
-            const videoConstraints = { facingMode: { ideal: 'environment' } };
+            const videoConstraints = { facingMode: 'environment' };
             const config = { fps: 10, qrbox: { width: SCAN_BOX_SIZE, height: SCAN_BOX_SIZE } };
 
             await html5QrCodeRef.current.start(
