@@ -1,8 +1,11 @@
+// src/components/ProductDisplay.jsx
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Divider from '@mui/material/Divider';
+import Stack from '@mui/material/Stack'; // استخدام Stack لتسهيل التنسيق
 
 const ProductDisplay = ({ product, onClose }) => {
     if (!product) {
@@ -10,55 +13,63 @@ const ProductDisplay = ({ product, onClose }) => {
     }
 
     return (
-        <Box sx={{ p: 3, textAlign: 'center' }}>
+        <Box sx={{ p: 2 }}>
+            {/* مقبض مرئي للإشارة إلى أن اللوح قابل للسحب */}
+            <Box
+                sx={{
+                    width: 40,
+                    height: 5,
+                    backgroundColor: 'grey.300',
+                    borderRadius: 3,
+                    mx: 'auto',
+                    mb: 2,
+                }}
+            />
+
             {/* زر الإغلاق */}
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', position: 'absolute', top: 8, right: 8 }}>
-                <IconButton onClick={onClose}>
-                    <CloseIcon />
-                </IconButton>
-            </Box>
+            <IconButton onClick={onClose} sx={{ position: 'absolute', top: 12, right: 12 }}>
+                <CloseIcon />
+            </IconButton>
 
-            {/* اسم المنتج */}
-            <Typography variant="h4" component="h2" sx={{ mb: 2, fontWeight: 'medium' }}>
-                {product.name}
-            </Typography>
-
-            {/* الصورة (إذا كانت موجودة) */}
-            {product.imageUrl && (
-                <Box
-                    component="img"
-                    src={product.imageUrl}
-                    alt={product.name}
-                    sx={{
-                        width: '100%',
-                        height: 'auto',
-                        maxHeight: '200px',
-                        objectFit: 'contain', // contain أفضل من cover هنا
-                        borderRadius: 2,
-                        mb: 3,
-                    }}
-                />
-            )}
-
-            <Divider sx={{ my: 2 }} />
-
-            {/* السعر (بحجم كبير ولون مميز) */}
-            <Box sx={{ mt: 2 }}>
-                <Typography variant="subtitle1" color="text.secondary">
-                    السعر
+            {/* استخدام Stack لتنظيم المحتوى */}
+            <Stack spacing={2} sx={{ textAlign: 'center' }}>
+                {/* اسم المنتج */}
+                <Typography variant="h4" component="h2">
+                    {product.name}
                 </Typography>
-                <Typography
-                    variant="h3"
-                    component="p"
-                    sx={{
-                        fontWeight: 'bold',
-                        color: 'primary.main', // استخدام اللون الرئيسي للثيم
-                        lineHeight: 1.2
-                    }}
-                >
-                    {product.price}
-                </Typography>
-            </Box>
+
+                {/* الصورة (إذا كانت موجودة) */}
+                {product.imageUrl && (
+                    <Box
+                        component="img"
+                        src={product.imageUrl}
+                        alt={product.name}
+                        sx={{
+                            width: '100%',
+                            height: 200, // ارتفاع ثابت
+                            objectFit: 'contain',
+                            borderRadius: 1.5,
+                            my: 2,
+                        }}
+                    />
+                )}
+
+                <Divider />
+
+                {/* السعر */}
+                <Box>
+                    <Typography variant="body1" color="text.secondary">
+                        السعر
+                    </Typography>
+                    <Typography
+                        variant="h3"
+                        component="p"
+                        sx={{ fontWeight: 'bold', color: 'primary.main' }}
+                    >
+                        {product.price}
+                    </Typography>
+                </Box>
+            </Stack>
         </Box>
     );
 };
