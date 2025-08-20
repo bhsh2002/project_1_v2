@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ScannerPage from './pages/ScannerPage';
 import CssBaseline from '@mui/material/CssBaseline';
+import ScannerPage from './pages/ScannerPage';
 
 function App() {
   return (
