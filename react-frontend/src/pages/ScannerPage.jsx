@@ -160,7 +160,7 @@ const ScannerPage = () => {
             <Box
                 id="reader"
                 aria-label="كاميرا المسح"
-                sx={{ width: '100%', height: '100%', '& video': { objectFit: 'cover', width: '100%', height: '100%' } }}
+                sx={{ position: 'absolute', inset: 0, '& video': { objectFit: 'cover', width: '100%', height: '100%' } }}
             />
 
             {/* 2. طبقة مؤشر المسح (فوق الكاميرا) */}
@@ -211,13 +211,15 @@ const ScannerPage = () => {
                         bottom: 0,
                         left: 0,
                         width: '100%',
+                        maxHeight: '70vh',   // 👈 أقصى ارتفاع اللوحة (70% من الشاشة)
+                        overflowY: 'auto',   // 👈 تمكين التمرير إذا زاد المحتوى
                         zIndex: (theme) => theme.zIndex.drawer + 1,
-                        borderTopLeftRadius: 2,
-                        borderTopRightRadius: 2,
+                        borderTopLeftRadius: 20,
+                        borderTopRightRadius: 20,
                         background: 'rgba(28, 28, 30, 0.85)',
                         backdropFilter: 'blur(20px) saturate(180%)',
                         WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                        boxShadow: '0 -5px 20px rgba(0,0,0,0.2)'
+                        boxShadow: '0 -5px 20px rgba(0,0,0,0.2)',
                     }}
                 >
                     {productData && <ProductDisplay product={productData} onClose={handleClosePanel} />}
