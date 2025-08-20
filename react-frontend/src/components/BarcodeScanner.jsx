@@ -56,14 +56,6 @@ const BarcodeScanner = ({ onScanSuccess, onScanFailure }) => {
     return (
         <Box
             id={qrcodeRegionId}
-            sx={{
-                width: '100%',
-                maxWidth: '600px',
-                border: '2px solid #eee',
-                borderRadius: 2,
-                overflow: 'hidden',
-                margin: 'auto',
-            }}
         />
     );
 };
