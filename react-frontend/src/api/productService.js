@@ -10,7 +10,7 @@ export const fetchProductByBarcode = async (barcode) => {
 
     try {
         // استبدل الرابط بالرابط الحقيقي للـ API الخاص بك
-        const response = await axios.get(`http://102.213.180.249:5000/api/v1/products/barcode/${barcode}`);
+        const response = await axios.get(`https://102.213.180.249/back/api/v1/products/barcode/${barcode}`);
 
         if (response.data) {
             console.log('Product found:', response.data);
