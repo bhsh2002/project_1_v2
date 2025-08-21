@@ -1,38 +1,26 @@
-// قاعدة بيانات وهمية للمنتجات
-const mockDatabase = {
-    '1234567890123': {
-        id: 1,
-        name: 'كوب قهوة فاخر',
-        price: '15.50 د.ل',
-        imageUrl: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1037&q=80',
-    },
-    '4752224003195': {
-        id: 2,
-        name: 'منتج تجريبي',
-        price: '45.00 د.ل',
-        imageUrl: null, // منتج بدون صورة
-    },
-};
+import axios from 'axios';
 
 /**
- * دالة تحاكي جلب منتج بواسطة الباركود من الـ API
+ * دالة لجلب منتج بواسطة الباركود من API حقيقي
  * @param {string} barcode 
  * @returns {Promise<object>}
  */
-export const fetchProductByBarcode = (barcode) => {
+export const fetchProductByBarcode = async (barcode) => {
     console.log(`Searching for barcode: ${barcode}`);
 
-    return new Promise((resolve, reject) => {
-        // محاكاة تأخير الشبكة لمدة 1 ثانية
-        setTimeout(() => {
-            const product = mockDatabase[barcode];
-            if (product) {
-                console.log('Product found:', product);
-                resolve(product);
-            } else {
-                console.log('Product not found.');
-                reject(new Error('المنتج غير موجود. يرجى المحاولة مرة أخرى.'));
-            }
-        }, 1000);
-    });
+    try {
+        // استبدل الرابط بالرابط الحقيقي للـ API الخاص بك
+        const response = await axios.get(`http://102.213.180.249:5000/api/v1/products/barcode/${barcode}`);
+
+        if (response.data) {
+            console.log('Product found:', response.data);
+            console.log(response.data);
+            return response.data;
+        } else {
+            throw new Error('المنتج غير موجود. يرجى المحاولة مرة أخرى.');
+        }
+    } catch (error) {
+        console.error('Error fetching product:', error.message || error);
+        throw new Error(error.response?.data?.message || 'حدث خطأ أثناء جلب المنتج.');
+    }
 };
