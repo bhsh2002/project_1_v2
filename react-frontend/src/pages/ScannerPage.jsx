@@ -1,62 +1,65 @@
 // src/pages/ScannerPage.jsx
 
-import { useState, useMemo, useRef, useEffect } from 'react'; // <-- استيراد useRef و useEffect
+import { useState, useMemo, useRef, useEffect } from 'react';
 import BarcodeScanner from '../components/BarcodeScanner';
 import ProductDisplay from '../components/ProductDisplay';
 import { fetchProductByBarcode } from '../api/productService';
 
 // MUI Components
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Backdrop from '@mui/material/Backdrop';
+import Dialog from '@mui/material/Dialog';
+import Fade from '@mui/material/Fade';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Typography from '@mui/material/Typography';
-import Dialog from '@mui/material/Dialog'; // <-- استبدال Drawer بـ Dialog
-import Fade from '@mui/material/Fade'; // <-- لإضافة تأثير دخول ناعم
+
 
 const ScannerPage = () => {
     const [productData, setProductData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [scannerKey, setScannerKey] = useState(1); // <-- state جديد لإعادة تشغيل الماسح
+    const [isScannerOpen, setScannerOpen] = useState(false);
+    const [scannerKey, setScannerKey] = useState(1);
 
-    // useRef لتخزين هوية المؤقت للتحكم فيه
     const timerRef = useRef(null);
-
     const successAudio = useMemo(() => new Audio('/audio/scan-success.mp3'), []);
 
-    // دالة إغلاق النافذة وإعادة تشغيل الماسح
-    const handleCloseDialog = () => {
-        setProductData(null);
-        // مسح أي مؤقت موجود لمنع تشغيله بعد الإغلاق اليدوي
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+    const handleOpenScanner = () => setScannerOpen(true);
+    const handleCloseScanner = () => setScannerOpen(false);
+
+    const handleResetScanner = () => {
         if (timerRef.current) {
             clearTimeout(timerRef.current);
             timerRef.current = null;
         }
-        // تغيير الـ key لإجبار BarcodeScanner على إعادة التحميل
+        setProductData(null);
         setScannerKey(prevKey => prevKey + 1);
+        handleCloseScanner();
     };
 
     const handleScanSuccess = async (decodedText) => {
-        if (isLoading) return;
         setIsLoading(true);
         setError(null);
-
         try {
             const product = await fetchProductByBarcode(decodedText);
             setProductData(product);
             successAudio.play();
-
-            // ضبط المؤقت ليقوم بإغلاق النافذة بعد 3 ثوانٍ
             timerRef.current = setTimeout(() => {
-                handleCloseDialog();
+                handleResetScanner();
             }, 3000);
-
         } catch (err) {
             setError(err.message);
-            // في حالة الخطأ، أعد تشغيل الماسح فورًا
-            setScannerKey(prevKey => prevKey + 1);
+            // On error, immediately close the scanner and show the snackbar
+            handleCloseScanner();
         } finally {
             setIsLoading(false);
         }
@@ -64,14 +67,8 @@ const ScannerPage = () => {
 
     const handleCloseSnackbar = () => {
         setError(null);
-        // أعد تشغيل الماسح أيضًا بعد إغلاق رسالة الخطأ
-        setScannerKey(prevKey => prevKey + 1);
     };
 
-    const isDialogOpen = Boolean(productData);
-    const isSnackbarOpen = Boolean(error);
-
-    // التأكد من مسح المؤقت عند تفكيك المكون
     useEffect(() => {
         return () => {
             if (timerRef.current) {
@@ -80,44 +77,62 @@ const ScannerPage = () => {
         };
     }, []);
 
+    const isProductDialogOpen = Boolean(productData);
+    const isSnackbarOpen = Boolean(error);
 
     return (
-        <Box sx={{ position: 'relative', width: '100%', height: '100%', flexGrow: 1 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: 1, p: 3, textAlign: 'center' }}>
 
-            <Box sx={{ width: '100%', maxWidth: '640px', mx: 'auto' }}>
-                <Typography variant="h6" align="center" sx={{ mb: 2, color: 'text.secondary' }}>
-                    وجه الكاميرا نحو الباركود
-                </Typography>
+            <Typography variant="h4" gutterBottom>
+                Ready to Scan
+            </Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: '400px' }}>
+                Click the button below to open the camera and scan a product barcode.
+            </Typography>
 
-                {/* استخدام key لإعادة التشغيل */}
+            <Button
+                variant="contained"
+                size="large"
+                startIcon={<CameraAltIcon />}
+                onClick={handleOpenScanner}
+            >
+                Start Scan
+            </Button>
+
+            {/* --- Scanner Dialog --- */}
+            <Dialog
+                fullScreen={isMobile}
+                open={isScannerOpen}
+                onClose={handleCloseScanner}
+                PaperProps={{
+                    sx: {
+                        bgcolor: 'common.black', // Force black background for best camera view
+                    }
+                }}
+            >
                 <BarcodeScanner
                     key={scannerKey}
                     onScanSuccess={handleScanSuccess}
+                    onClose={handleCloseScanner} // Pass the close handler
                 />
-            </Box>
-
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1, position: 'absolute' }}
-                open={isLoading}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
-
-            {/* استخدام Dialog لعرض المنتج */}
-            <Dialog
-                open={isDialogOpen}
-                onClose={handleCloseDialog}
-                TransitionComponent={Fade} // تأثير دخول ناعم
-                PaperProps={{
-                    style: {
-                        borderRadius: 16, // استخدام الحواف الدائرية من الثيم
-                    },
-                }}
-            >
-                {/* لا نحتاج لعنوان منفصل، فالتصميم داخل ProductDisplay */}
-                {productData && <ProductDisplay product={productData} onClose={handleCloseDialog} />}
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.tooltip + 1, position: 'absolute' }}
+                    open={isLoading}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
             </Dialog>
 
+            {/* --- Product Display Dialog --- */}
+            <Dialog
+                open={isProductDialogOpen}
+                onClose={handleResetScanner}
+                TransitionComponent={Fade}
+            >
+                {productData && <ProductDisplay product={productData} onClose={handleResetScanner} />}
+            </Dialog>
+
+            {/* --- Error Snackbar --- */}
             <Snackbar
                 open={isSnackbarOpen}
                 autoHideDuration={4000}

@@ -8,7 +8,7 @@ const mockDatabase = {
     },
     '4752224003195': {
         id: 2,
-        name: 'كتاب React للمبتدئين',
+        name: 'منتج تجريبي',
         price: '45.00 د.ل',
         imageUrl: null, // منتج بدون صورة
     },

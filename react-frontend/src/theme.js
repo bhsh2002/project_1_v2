@@ -1,19 +1,18 @@
 // src/theme.js
 import { createTheme } from '@mui/material/styles';
 
-// تعريف ثيم مخصص لتطبيقك
 const theme = createTheme({
     palette: {
-        mode: 'light', // يمكنك التبديل إلى 'dark' للوضع المظلم
+        mode: 'dark', // Switched to dark mode for better camera contrast
         primary: {
-            main: '#007BFF', // لون أزرق جذاب
+            main: '#3f51b5', // A vibrant blue for dark mode
         },
         secondary: {
-            main: '#6c757d', // لون رمادي محايد
+            main: '#f50057', // A bright pink for accents
         },
         background: {
-            default: '#f8f9fa', // خلفية رمادية فاتحة
-            paper: '#ffffff', // لون الخلفيات الورقية (مثل البطاقات واللوح السفلي)
+            default: '#121212', // Standard dark background
+            paper: '#1E1E1E',   // Background for paper-like surfaces (Dialogs, Cards)
         },
     },
     typography: {
@@ -26,28 +25,24 @@ const theme = createTheme({
         },
     },
     shape: {
-        borderRadius: 12, // حواف دائرية أكثر نعومة
+        borderRadius: 12, // Keep the softer border radius
     },
     components: {
-        // تخصيص شكل الـ Drawer (اللوح السفلي)
-        MuiDrawer: {
+        MuiDialog: {
             styleOverrides: {
                 paper: {
-                    borderTopLeftRadius: 16,
-                    borderTopRightRadius: 16,
+                    borderRadius: 16,
                 },
             },
         },
-        // تخصيص شكل الـ AppBar (الشريط العلوي)
         MuiAppBar: {
             styleOverrides: {
-                root: {
-                    boxShadow: 'none', // إزالة الظل الافتراضي
-                    borderBottom: '1px solid #e0e0e0', // إضافة حد سفلي رقيق
-                },
+                root: ({ theme }) => ({
+                    boxShadow: 'none',
+                    borderBottom: `1px solid ${theme.palette.divider}`,
+                }),
             },
         },
-        // تخصيص شكل التنبيهات
         MuiAlert: {
             styleOverrides: {
                 root: {
