@@ -21,7 +21,7 @@ const ProductDisplay = ({ product, onClose }) => {
                 <CloseIcon />
             </IconButton>
 
-            <Stack spacing={2} sx={{ textAlign: 'center' }}>
+            {Object.keys(product).length > 0 ? <Stack spacing={2} sx={{ textAlign: 'center' }}>
                 <Typography variant="h4" component="h2" sx={{ mt: 2 }}>
                     {product.name}
                 </Typography>
@@ -55,7 +55,9 @@ const ProductDisplay = ({ product, onClose }) => {
                         {product.price}
                     </Typography>
                 </Box>
-            </Stack>
+            </Stack> : <Typography variant="h4" component="h2" sx={{ mt: 2 }}>
+                !لم يتم إيجاد المنتج
+            </Typography>}
         </Box>
     );
 };

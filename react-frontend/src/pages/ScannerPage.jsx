@@ -1,6 +1,6 @@
 // src/pages/ScannerPage.jsx
 
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import BarcodeScanner from '../components/BarcodeScanner';
 import ProductDisplay from '../components/ProductDisplay';
 import { fetchProductByBarcode } from '../api/productService';
@@ -33,41 +33,44 @@ const ScannerPage = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const handleOpenScanner = () => setScannerOpen(true);
-    const handleCloseScanner = () => setScannerOpen(false);
+    const handleOpenScanner = useCallback(() => setScannerOpen(true), []);
+    const handleCloseScanner = useCallback(() => setScannerOpen(false), []);
 
-    const handleResetScanner = () => {
+    const handleResetScanner = useCallback(() => {
         if (timerRef.current) {
             clearTimeout(timerRef.current);
             timerRef.current = null;
         }
         setProductData(null);
         setScannerKey(prevKey => prevKey + 1);
-        handleCloseScanner();
-    };
+        // handleCloseScanner();
+    }, [handleCloseScanner]); // تعتمد على handleCloseScanner
 
-    const handleScanSuccess = async (decodedText) => {
+    // 4. تغليف دالة handleScanSuccess
+    const handleScanSuccess = useCallback(async (decodedText) => {
+        // handleCloseScanner(); // أغلق الماسح فورًا لتجربة مستخدم أفضل
         setIsLoading(true);
         setError(null);
         try {
             const product = await fetchProductByBarcode(decodedText);
             setProductData(product);
             successAudio.play();
+            // if (Object.keys(product).length <= 0)
+            //     handleResetScanner();
+            // else
             timerRef.current = setTimeout(() => {
                 handleResetScanner();
             }, 3000);
         } catch (err) {
             setError(err.message);
-            // On error, immediately close the scanner and show the snackbar
-            handleCloseScanner();
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [successAudio, handleResetScanner, handleCloseScanner]); // 5. تحديد الاعتماديات
 
-    const handleCloseSnackbar = () => {
+    const handleCloseSnackbar = useCallback(() => {
         setError(null);
-    };
+    }, []);
 
     useEffect(() => {
         return () => {
@@ -77,6 +80,7 @@ const ScannerPage = () => {
         };
     }, []);
 
+    // const isProductDialogOpen = Object.keys(productData).length > 0;
     const isProductDialogOpen = Boolean(productData);
     const isSnackbarOpen = Boolean(error);
 
@@ -106,7 +110,7 @@ const ScannerPage = () => {
                 onClose={handleCloseScanner}
                 PaperProps={{
                     sx: {
-                        bgcolor: 'common.black', // Force black background for best camera view
+                        // bgcolor: 'common.black', // Force black background for best camera view
                     }
                 }}
             >
@@ -117,7 +121,7 @@ const ScannerPage = () => {
                 />
                 <Backdrop
                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.tooltip + 1, position: 'absolute' }}
-                    open={isLoading}
+                    open={isLoading && isScannerOpen}
                 >
                     <CircularProgress color="inherit" />
                 </Backdrop>
