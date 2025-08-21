@@ -3,17 +3,17 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
     palette: {
-        mode: 'dark', // Switched to dark mode for better camera contrast
-        primary: {
-            main: '#3f51b5', // A vibrant blue for dark mode
-        },
-        secondary: {
-            main: '#f50057', // A bright pink for accents
-        },
-        background: {
-            default: '#121212', // Standard dark background
-            paper: '#1E1E1E',   // Background for paper-like surfaces (Dialogs, Cards)
-        },
+        // mode: 'dark', // Switched to dark mode for better camera contrast
+        // primary: {
+        //     main: '#3f51b5', // A vibrant blue for dark mode
+        // },
+        // secondary: {
+        //     main: '#f50057', // A bright pink for accents
+        // },
+        // background: {
+        //     default: '#121212', // Standard dark background
+        //     paper: '#1E1E1E',   // Background for paper-like surfaces (Dialogs, Cards)
+        // },
     },
     typography: {
         fontFamily: 'system-ui, Avenir, Helvetica, Arial, sans-serif',
