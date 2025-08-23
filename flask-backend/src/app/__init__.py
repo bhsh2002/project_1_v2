@@ -12,7 +12,7 @@ def create_app(config_name="config"):
         __name__,
         title=config[config_name].APIFLASK_TITLE,
         version=config[config_name].APIFLASK_VERSION,
-        openapi_blueprint_url_prefix="/back/openapi.json",
+        openapi_blueprint_url_prefix="/back",
     )
     app.config.from_object(config[config_name])
 
