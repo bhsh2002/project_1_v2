@@ -23,6 +23,7 @@ const ScannerPage = () => {
     const [error, setError] = useState(null);
     const [isScannerOpen, setScannerOpen] = useState(false);
 
+    const scannerRef = useRef(null);
     const timerRef = useRef(null);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -38,6 +39,9 @@ const ScannerPage = () => {
             clearTimeout(timerRef.current);
             timerRef.current = null;
         }
+        setTimeout(() => {
+            scannerRef.current?.resume();
+        }, 500);
         setProductData(null);
     }, []);
 
@@ -96,6 +100,7 @@ const ScannerPage = () => {
                 PaperProps={{ sx: { height: 'auto', width: "90vw" } }}
             >
                 <BarcodeScanner
+                    ref={scannerRef}
                     onScanSuccess={handleScanSuccess}
                     onClose={handleCloseScanner}
                 />

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -12,9 +12,14 @@ const scanningAnimation = keyframes`
   100% { top: 60%; }
 `;
 
-const BarcodeScanner = ({ onScanSuccess, onScanFailure, onClose }) => {
+const BarcodeScanner = forwardRef(({ onScanSuccess, onScanFailure, onClose }, ref) => {
     const scannerRef = useRef(null);
-    const timerRef = useRef(null);
+
+    useImperativeHandle(ref, () => ({
+        resume: () => scannerRef.current?.resume(),
+        pause: () => scannerRef.current?.pause(),
+        stop: () => scannerRef.current?.stop()
+    }));
 
     useEffect(() => {
         scannerRef.current = new Html5Qrcode(qrcodeRegionId);
@@ -26,13 +31,11 @@ const BarcodeScanner = ({ onScanSuccess, onScanFailure, onClose }) => {
             (decodedText) => {
                 onScanSuccess(decodedText);
                 scannerRef.current.pause();
-                timerRef.current = setTimeout(() => scannerRef.current.resume(), 3500);
             },
             (errorMessage) => onScanFailure?.(errorMessage)
         ).catch(err => console.error("Scanner start failed:", err));
 
         return () => {
-            if (timerRef.current) clearTimeout(timerRef.current);
             if (scannerRef.current?.isScanning) scannerRef.current?.stop().catch(err => console.error("Scanner stop failed:", err));
         };
     }, [onScanSuccess, onScanFailure]);
@@ -69,6 +72,6 @@ const BarcodeScanner = ({ onScanSuccess, onScanFailure, onClose }) => {
             </IconButton>
         </Box>
     );
-};
+});
 
 export default BarcodeScanner;
