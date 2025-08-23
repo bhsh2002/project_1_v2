@@ -2,6 +2,7 @@ from dev_kit.database.extensions import db
 from dev_kit.web.jwt import configure_jwt
 from apiflask import APIFlask, APIBlueprint
 from flask_cors import CORS
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from .extensions import migrate, jwt
 from .config import config
@@ -19,6 +20,8 @@ def create_app(config_name="config"):
     app.security_schemes = {
         "jwt": {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
     }
+
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
     CORS(
         app,
