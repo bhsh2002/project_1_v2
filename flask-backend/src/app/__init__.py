@@ -23,10 +23,10 @@ def create_app(config_name="config"):
 
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
-    @app.spec_processor
-    def change_servers(spec):
-        spec["servers"] = [{"url": "/back"}]
-        return spec
+    # @app.spec_processor
+    # def change_servers(spec):
+    #     spec["servers"] = [{"url": "/back"}]
+    #     return spec
 
     CORS(
         app,
