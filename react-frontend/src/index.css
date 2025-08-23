@@ -12,3 +12,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+#barcode-reader * {
+  color: transparent !important;
+  font-size: 0 !important;
+}
