@@ -13,7 +13,7 @@ def create_app(config_name="config"):
         __name__,
         title=config[config_name].APIFLASK_TITLE,
         version=config[config_name].APIFLASK_VERSION,
-        openapi_blueprint_url_prefix="/back",
+        # openapi_blueprint_url_prefix="/back",
     )
     app.config.from_object(config[config_name])
 
@@ -21,7 +21,7 @@ def create_app(config_name="config"):
         "jwt": {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
     }
 
-    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+    # app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
     # @app.spec_processor
     # def change_servers(spec):
