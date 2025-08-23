@@ -12,6 +12,8 @@ const ProductDisplay = ({ product, onClose }) => {
         return null;
     }
 
+    console.log("Displaying product:", product);
+
     return (
         // زيادة الـ padding قليلًا لراحة العين داخل النافذة
         <Box sx={{ p: { xs: 2, sm: 3 }, position: 'relative' }}>
@@ -26,10 +28,10 @@ const ProductDisplay = ({ product, onClose }) => {
                     {product.name}
                 </Typography>
 
-                {product.imageUrl && (
+                {product.image_url && (
                     <Box
                         component="img"
-                        src={product.imageUrl}
+                        src={"https://102.213.180.249/back/api/v1/products" + product.image_url}
                         alt={product.name}
                         sx={{
                             width: '100%',

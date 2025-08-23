@@ -1,6 +1,4 @@
-// src/pages/ScannerPage.jsx
-
-import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import BarcodeScanner from '../components/BarcodeScanner';
 import ProductDisplay from '../components/ProductDisplay';
 import { fetchProductByBarcode } from '../api/productService';
@@ -19,19 +17,18 @@ import Fade from '@mui/material/Fade';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Typography from '@mui/material/Typography';
 
-
 const ScannerPage = () => {
     const [productData, setProductData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [isScannerOpen, setScannerOpen] = useState(false);
-    const [scannerKey, setScannerKey] = useState(1);
 
     const timerRef = useRef(null);
-    const successAudio = useMemo(() => new Audio('/audio/scan-success.mp3'), []);
-
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+    // Audio
+    const successAudio = useMemo(() => new Audio('/audio/scan-success.mp3'), []);
 
     const handleOpenScanner = useCallback(() => setScannerOpen(true), []);
     const handleCloseScanner = useCallback(() => setScannerOpen(false), []);
@@ -42,54 +39,39 @@ const ScannerPage = () => {
             timerRef.current = null;
         }
         setProductData(null);
-        setScannerKey(prevKey => prevKey + 1);
-        // handleCloseScanner();
-    }, [handleCloseScanner]); // تعتمد على handleCloseScanner
+    }, []);
 
-    // 4. تغليف دالة handleScanSuccess
     const handleScanSuccess = useCallback(async (decodedText) => {
-        // handleCloseScanner(); // أغلق الماسح فورًا لتجربة مستخدم أفضل
         setIsLoading(true);
         setError(null);
         try {
             const product = await fetchProductByBarcode(decodedText);
             setProductData(product);
-            successAudio.play();
-            // if (Object.keys(product).length <= 0)
-            //     handleResetScanner();
-            // else
-            timerRef.current = setTimeout(() => {
-                handleResetScanner();
-            }, 3000);
+            // Play success audio safely
+            try { await successAudio.play(); } catch { }
+            // Reset scanner after 3s
+            timerRef.current = setTimeout(() => handleResetScanner(), 3000);
         } catch (err) {
-            setError(err.message);
+            setError(err.message || 'Failed to fetch product');
         } finally {
             setIsLoading(false);
         }
-    }, [successAudio, handleResetScanner, handleCloseScanner]); // 5. تحديد الاعتماديات
+    }, [successAudio, handleResetScanner]);
 
-    const handleCloseSnackbar = useCallback(() => {
-        setError(null);
-    }, []);
+    const handleCloseSnackbar = useCallback(() => setError(null), []);
 
     useEffect(() => {
         return () => {
-            if (timerRef.current) {
-                clearTimeout(timerRef.current);
-            }
+            if (timerRef.current) clearTimeout(timerRef.current);
         };
     }, []);
 
-    // const isProductDialogOpen = Object.keys(productData).length > 0;
     const isProductDialogOpen = Boolean(productData);
     const isSnackbarOpen = Boolean(error);
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: 1, p: 3, textAlign: 'center' }}>
-
-            <Typography variant="h4" gutterBottom>
-                Ready to Scan
-            </Typography>
+            <Typography variant="h4" gutterBottom>Ready to Scan</Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: '400px' }}>
                 Click the button below to open the camera and scan a product barcode.
             </Typography>
@@ -108,19 +90,14 @@ const ScannerPage = () => {
                 fullScreen={isMobile}
                 open={isScannerOpen}
                 onClose={handleCloseScanner}
-                PaperProps={{
-                    sx: {
-                        // bgcolor: 'common.black', // Force black background for best camera view
-                    }
-                }}
+                PaperProps={{ sx: { height: 'auto' } }}
             >
                 <BarcodeScanner
-                    key={scannerKey}
                     onScanSuccess={handleScanSuccess}
-                    onClose={handleCloseScanner} // Pass the close handler
+                    onClose={handleCloseScanner}
                 />
                 <Backdrop
-                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.tooltip + 1, position: 'absolute' }}
+                    sx={{ color: '#fff', zIndex: theme => theme.zIndex.tooltip + 1, position: 'absolute' }}
                     open={isLoading && isScannerOpen}
                 >
                     <CircularProgress color="inherit" />
