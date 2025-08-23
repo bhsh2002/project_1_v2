@@ -14,12 +14,14 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.1",
     "@mui/material": "^7.3.1",
+    "@mui/stylis-plugin-rtl": "^7.3.1",
     "axios": "^1.11.0",
     "html5-qrcode": "^2.3.8",
     "lucide-react": "^0.540.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.8.1"
+    "react-router-dom": "^7.8.1",
+    "stylis": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",

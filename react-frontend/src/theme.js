@@ -1,7 +1,17 @@
 // src/theme.js
 import { createTheme } from '@mui/material/styles';
+import createCache from '@emotion/cache';
+import { prefixer } from 'stylis';
+import rtlPlugin from '@mui/stylis-plugin-rtl';
+
+// Create rtl cache
+export const rtlCache = createCache({
+    key: 'muirtl',
+    stylisPlugins: [prefixer, rtlPlugin],
+});
 
 const theme = createTheme({
+    direction: 'rtl',
     palette: {
         // mode: 'dark', // Switched to dark mode for better camera contrast
         // primary: {
