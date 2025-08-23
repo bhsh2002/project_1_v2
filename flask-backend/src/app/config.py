@@ -51,6 +51,7 @@ class Config(JWTConfig):
     APIFLASK_SWAGGER_UI_LAYOUT = "list"
     APIFLASK_TITLE = "Project-1 V2 API"
     APIFLASK_VERSION = "2.0.0"
+    APPLICATION_ROOT = "/back"
 
     # Public base URL for generating absolute links in exports
     PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "http://localhost:5000")
