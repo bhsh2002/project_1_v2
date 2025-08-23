@@ -9,7 +9,7 @@ import CameraIcon from '@mui/icons-material/Camera';
 
 const MainLayout = ({ children }) => {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.default' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', bgcolor: 'background.default' }}>
             {/* سيستخدم AppBar الآن الألوان والأنماط من الثيم */}
             <AppBar position="static" color="inherit">
                 <Toolbar>
