@@ -12,7 +12,6 @@ def create_app(config_name="config"):
         __name__,
         title=config[config_name].APIFLASK_TITLE,
         version=config[config_name].APIFLASK_VERSION,
-        docs_path="/back/docs",
     )
     app.config.from_object(config[config_name])
 
@@ -71,11 +70,11 @@ def create_app(config_name="config"):
     def hello_api():
         return {"message": "Hello from APIFlask Project-1 V2!"}, 200
 
-    @app.get("/")
-    @app.doc(hide=True)
-    def root_redirect():
-        from flask import redirect, url_for
+    # @app.get("/")
+    # @app.doc(hide=True)
+    # def root_redirect():
+    #     from flask import redirect, url_for
 
-        return redirect(url_for("openapi.docs"))
+    #     return redirect(url_for("openapi.docs"))
 
     return app
