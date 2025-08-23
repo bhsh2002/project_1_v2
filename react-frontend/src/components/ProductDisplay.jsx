@@ -16,12 +16,14 @@ const ProductDisplay = ({ product, onClose }) => {
 
     return (
         // زيادة الـ padding قليلًا لراحة العين داخل النافذة
-        <Box sx={{ p: { xs: 2, sm: 3 }, position: 'relative' }}>
+        <Box sx={{ p: { xs: 2, sm: 3 }, pt: { xs: 5, sm: 6 }, position: 'relative' }} minWidth="80vw" maxWidth={"90vw"}>
 
             {/* زر الإغلاق اليدوي (اختياري لكنه جيد لتجربة المستخدم) */}
-            <IconButton onClick={onClose} sx={{ position: 'absolute', top: 8, right: 8 }}>
+            <IconButton onClick={onClose} sx={{ position: 'absolute', top: 2, right: 2 }}>
                 <CloseIcon />
             </IconButton>
+
+            <Divider />
 
             {Object.keys(product).length > 0 ? <Stack spacing={2} sx={{ textAlign: 'center' }}>
                 <Typography variant="h4" component="h2" sx={{ mt: 2 }}>

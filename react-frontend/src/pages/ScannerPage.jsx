@@ -71,9 +71,12 @@ const ScannerPage = () => {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: 1, p: 3, textAlign: 'center' }}>
-            <Typography variant="h4" gutterBottom>Ready to Scan</Typography>
+            <Typography variant="h4" gutterBottom>قارئ سعر المنتجات</Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ maxWidth: '400px' }}>
+                اضغط على الزر لبدء مسح الباركود الخاص بالمنتج.
+            </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: '400px' }}>
-                Click the button below to open the camera and scan a product barcode.
+                تأكد من منح الإذن لاستخدام الكاميرا عند الطلب.
             </Typography>
 
             <Button
@@ -82,7 +85,7 @@ const ScannerPage = () => {
                 startIcon={<CameraAltIcon />}
                 onClick={handleOpenScanner}
             >
-                Start Scan
+                ابدأ المسح
             </Button>
 
             {/* --- Scanner Dialog --- */}
@@ -90,7 +93,7 @@ const ScannerPage = () => {
                 fullScreen={isMobile}
                 open={isScannerOpen}
                 onClose={handleCloseScanner}
-                PaperProps={{ sx: { height: 'auto' } }}
+                PaperProps={{ sx: { height: 'auto', width: "90vw" } }}
             >
                 <BarcodeScanner
                     onScanSuccess={handleScanSuccess}
