@@ -41,7 +41,7 @@ const ProductDisplay = ({ product, onClose }) => {
                 {product.image_url && (
                     <Box
                         component="img"
-                        src={"https://102.213.180.249/back/api/v1/products" + product.image_url}
+                        src={"https://price.savana.ly/back/api/v1/products" + product.image_url}
                         alt={product.name}
                         sx={{
                             width: '100%',
