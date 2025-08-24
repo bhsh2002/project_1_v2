@@ -6,8 +6,6 @@ import axios from 'axios';
  * @returns {Promise<object>}
  */
 export const fetchProductByBarcode = async (barcode) => {
-    console.log(`Searching for barcode: ${barcode}`);
-
     try {
         // استبدل الرابط بالرابط الحقيقي للـ API الخاص بك
         const response = await axios.get(`https://price.savana.ly/back/api/v1/products/barcode/${barcode}`);

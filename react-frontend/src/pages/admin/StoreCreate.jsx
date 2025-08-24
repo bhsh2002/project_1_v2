@@ -1,0 +1,170 @@
+import { useState } from 'react';
+import {
+    TextField, Button, Paper, Typography, Grid, MenuItem, CircularProgress, Alert
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../api/axios';
+
+export default function StoreCreate() {
+    const navigate = useNavigate();
+
+    const [storeData, setStoreData] = useState({
+        name: '',
+        slug: '',
+        country: '',
+        currency: '',
+        createOwner: false,
+        ownerEmail: '',
+        ownerPassword: '',
+        ownerName: '',
+    });
+
+    const [loading, setLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setStoreData((prev) => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setErrorMsg('');
+        setLoading(true);
+
+        const payload = {
+            name: storeData.name,
+            slug: storeData.slug || undefined,
+            country: storeData.country || undefined,
+            currency: storeData.currency || undefined,
+            createOwner: storeData.createOwner,
+            owner: storeData.createOwner
+                ? {
+                    email: storeData.ownerEmail,
+                    password: storeData.ownerPassword,
+                    name: storeData.ownerName,
+                }
+                : undefined,
+        };
+
+        try {
+            await axiosInstance.post('/markets', payload);
+            navigate('/admin/stores');
+        } catch (error) {
+            setErrorMsg(error.response?.data?.message || 'Error creating store');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <Paper sx={{ p: 4 }}>
+            <Typography variant="h5" gutterBottom>Create New Store</Typography>
+            {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
+            <form onSubmit={handleSubmit}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Store Name"
+                            name="name"
+                            value={storeData.name}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Slug (optional)"
+                            name="slug"
+                            value={storeData.slug}
+                            onChange={handleChange}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Country"
+                            name="country"
+                            value={storeData.country}
+                            onChange={handleChange}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Currency"
+                            name="currency"
+                            value={storeData.currency}
+                            onChange={handleChange}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            select
+                            label="Create Owner?"
+                            name="createOwner"
+                            value={storeData.createOwner}
+                            onChange={handleChange}
+                            fullWidth
+                        >
+                            <MenuItem value={true}>Yes</MenuItem>
+                            <MenuItem value={false}>No</MenuItem>
+                        </TextField>
+                    </Grid>
+
+                    {storeData.createOwner && (
+                        <>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    label="Owner Name"
+                                    name="ownerName"
+                                    value={storeData.ownerName}
+                                    onChange={handleChange}
+                                    required
+                                    fullWidth
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    label="Owner Email"
+                                    name="ownerEmail"
+                                    value={storeData.ownerEmail}
+                                    onChange={handleChange}
+                                    required
+                                    type="email"
+                                    fullWidth
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    label="Owner Password"
+                                    name="ownerPassword"
+                                    value={storeData.ownerPassword}
+                                    onChange={handleChange}
+                                    required
+                                    type="password"
+                                    fullWidth
+                                />
+                            </Grid>
+                        </>
+                    )}
+
+                    <Grid item xs={12}>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            disabled={loading}
+                        >
+                            {loading ? <CircularProgress size={24} /> : 'Create Store'}
+                        </Button>
+                    </Grid>
+                </Grid>
+            </form>
+        </Paper>
+    );
+}
