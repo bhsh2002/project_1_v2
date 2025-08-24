@@ -9,20 +9,23 @@ import theme, { rtlCache } from './theme'; // <-- استيراد الثيم ال
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles'; // <-- استيراد موفر الثيم
 import { CacheProvider } from '@emotion/react';
+import { CartProvider } from './context/CartContext';
 
 function App() {
   return (
     // استخدام ThemeProvider لتطبيق الثيم على كل المكونات
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={theme}>
-        <Router>
-          <CssBaseline /> {/* لتوحيد الأنماط الأساسية */}
-          <MainLayout>
-            <Routes>
-              <Route path="/" element={<ScannerPage />} />
-            </Routes>
-          </MainLayout>
-        </Router>
+        <CartProvider>
+          <Router>
+            <CssBaseline /> {/* لتوحيد الأنماط الأساسية */}
+            <MainLayout>
+              <Routes>
+                <Route path="/" element={<ScannerPage />} />
+              </Routes>
+            </MainLayout>
+          </Router>
+        </CartProvider>
       </ThemeProvider>
     </CacheProvider>
   );

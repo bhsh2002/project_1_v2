@@ -6,13 +6,21 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
+import { useCart } from '../context/CartContext';
+import Button from '@mui/material/Button';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const ProductDisplay = ({ product, onClose }) => {
+    const { addToCart } = useCart();
+
     if (!product) {
         return null;
     }
 
-    console.log("Displaying product:", product);
+    const handleAddToCart = () => {
+        addToCart(product);
+        onClose();
+    };
 
     return (
         // زيادة الـ padding قليلًا لراحة العين داخل النافذة
@@ -59,6 +67,14 @@ const ProductDisplay = ({ product, onClose }) => {
                         {product.price}
                     </Typography>
                 </Box>
+                <Button
+                    variant="contained"
+                    startIcon={<AddShoppingCartIcon />}
+                    onClick={handleAddToCart}
+                    size="large"
+                >
+                    إضافة إلى السلة
+                </Button>
             </Stack> : <Typography variant="h4" component="h2" sx={{ mt: 2 }}>
                 !لم يتم إيجاد المنتج
             </Typography>}

@@ -16,12 +16,15 @@ import Dialog from '@mui/material/Dialog';
 import Fade from '@mui/material/Fade';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Typography from '@mui/material/Typography';
+import CartDialog from '../components/CartDialog';
+import CartBar from '../components/CartBar';
 
 const ScannerPage = () => {
     const [productData, setProductData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [isScannerOpen, setScannerOpen] = useState(false);
+    const [isCartOpen, setCartOpen] = useState(false);
 
     const scannerRef = useRef(null);
     const timerRef = useRef(null);
@@ -75,6 +78,8 @@ const ScannerPage = () => {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: 1, p: 3, textAlign: 'center' }}>
+            <CartBar onOpenCart={() => setCartOpen(true)} />
+
             <Typography variant="h4" gutterBottom>قارئ سعر المنتجات</Typography>
             <Typography variant="body1" color="text.secondary" sx={{ maxWidth: '400px' }}>
                 اضغط على الزر لبدء مسح الباركود الخاص بالمنتج.
@@ -120,6 +125,9 @@ const ScannerPage = () => {
             >
                 {productData && <ProductDisplay product={productData} onClose={handleResetScanner} />}
             </Dialog>
+
+            {/* --- Cart Dialog --- */}
+            <CartDialog open={isCartOpen} onClose={() => setCartOpen(false)} />
 
             {/* --- Error Snackbar --- */}
             <Snackbar

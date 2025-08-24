@@ -1,0 +1,50 @@
+import { useCart } from '../context/CartContext';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+const CartBar = ({ onOpenCart }) => {
+    const { cartCount, totalPrice } = useCart();
+
+    if (cartCount === 0) {
+        return null; // لا تعرض الشريط إذا كانت السلة فارغة
+    }
+
+    return (
+        <Paper
+            sx={{
+                position: 'fixed',
+                top: 60,
+                left: 0,
+                right: 0,
+                zIndex: 2000, // أعلى من أغلب العناصر
+                width: "90vw",
+                p: 1,
+                mx: 'auto',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: 'background.paper',
+            }}
+        >
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <Typography variant="body1">
+                    المنتجات: <strong>{cartCount}</strong>
+                </Typography>
+                <Typography variant="body1">
+                    الإجمالي: <strong>{totalPrice} د.ل</strong>
+                </Typography>
+            </Box>
+            <Button
+                startIcon={<ShoppingCartIcon />}
+                onClick={onOpenCart}
+            >
+                عرض السلة
+            </Button>
+        </Paper>
+    );
+};
+
+export default CartBar;
