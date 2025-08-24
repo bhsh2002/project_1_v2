@@ -87,7 +87,7 @@ const CartDialog = ({ open, onClose }) => {
                                     <CardMedia
                                         component="img"
                                         sx={{ width: 80, height: 80, objectFit: 'contain', p: 0.5 }}
-                                        image={"https://102.213.180.249/back/api/v1/products" + item.image_url}
+                                        image={"https://price.savana.ly/back/api/v1/products" + item.image_url}
                                         alt={item.name}
                                     />
                                     <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, p: 1 }}>
