@@ -39,7 +39,7 @@ export default function UserCreate() {
         setLoading(true);
 
         try {
-            await axiosInstance.post('/admin/users', userData);
+            await axiosInstance.post('/users', userData);
             navigate('/admin/users');
         } catch (error) {
             setErrorMsg(error.response?.data?.message || 'Error creating user');

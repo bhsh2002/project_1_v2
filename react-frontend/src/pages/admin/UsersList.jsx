@@ -12,7 +12,7 @@ export default function UsersList() {
 
     const fetchUsers = async () => {
         try {
-            const response = await axiosInstance.get('/admin/users');
+            const response = await axiosInstance.get('/users');
             setUsers(response.data.data || []);
         } catch (error) {
             console.error(error);
