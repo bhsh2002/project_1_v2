@@ -53,7 +53,7 @@ export default function StoresList() {
                                 <TableCell>{store.owner?.email || '-'}</TableCell>
                                 <TableCell>{store.phone_number || '-'}</TableCell>
                                 <TableCell>
-                                    <Button component={Link} to={`/admin/stores/${store.id}`} size="small">
+                                    <Button component={Link} to={`/admin/stores/${store.uuid}`} size="small">
                                         View
                                     </Button>
                                     {/* يمكن إضافة Edit/Delete لاحقًا */}

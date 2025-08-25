@@ -38,7 +38,7 @@ function App() {
                     <Route path="login" element={<LoginPage />} />
                     <Route path="stores" element={<StoresList />} />
                     <Route path="stores/new" element={<StoreCreate />} />
-                    <Route path="stores/:storeId" element={<StoreDetails />} />
+                    <Route path="stores/:storeUuid" element={<StoreDetails />} />
                     <Route path="users" element={<UsersList />} />
                     <Route path="users/new" element={<UserCreate />} />
                     <Route path="users/:userId/edit" element={<UserEdit />} />

@@ -15,7 +15,7 @@ import {
 import axiosInstance from '../../api/axios';
 
 export default function StoreDetails() {
-    const { id } = useParams();
+    const { storeUuid } = useParams();
     const [store, setStore] = useState(null);
     const [tab, setTab] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ export default function StoreDetails() {
     const [usersLoading, setUsersLoading] = useState(false);
 
     useEffect(() => {
-        axiosInstance.get(`/stores/${id}/`)
+        axiosInstance.get(`/stores/${storeUuid}/`)
             .then((res) => {
                 setStore(res.data);
                 setLoading(false);
@@ -32,19 +32,19 @@ export default function StoreDetails() {
                 console.error(err);
                 setLoading(false);
             });
-    }, [id]);
+    }, [storeUuid]);
 
     useEffect(() => {
-        if (tab === 1 && id) {
+        if (tab === 1 && storeUuid) {
             setUsersLoading(true);
-            axiosInstance.get(`/markets/${id}/users`)
+            axiosInstance.get(`/markets/${storeUuid}/users`)
                 .then(res => {
                     setUsers(res.data.items || []);
                 })
                 .catch(err => console.error("Failed to fetch users", err))
                 .finally(() => setUsersLoading(false));
         }
-    }, [tab, id]);
+    }, [tab, storeUuid]);
 
     if (loading) return <CircularProgress />;
     if (!store) return <Typography>المتجر غير موجود</Typography>;
@@ -76,7 +76,7 @@ export default function StoreDetails() {
                         <List>
                             {users.length > 0 ? (
                                 users.map((u) => (
-                                    <div key={u.id}>
+                                    <div key={u.storeUuid}>
                                         <ListItem>
                                             <ListItemText primary={u.name} secondary={u.email} />
                                         </ListItem>
