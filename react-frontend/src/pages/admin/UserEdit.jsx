@@ -24,7 +24,7 @@ export default function UserEdit() {
 
     const fetchUser = async () => {
         try {
-            const response = await axiosInstance.get(`/admin/users/${userId}`);
+            const response = await axiosInstance.get(`/users/${userId}`);
             setUserData(response.data);
         } catch (error) {
             setErrorMsg('Failed to load user');

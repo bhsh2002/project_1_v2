@@ -19,9 +19,11 @@ export default function StoreDetails() {
     const [store, setStore] = useState(null);
     const [tab, setTab] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [users, setUsers] = useState([]);
+    const [usersLoading, setUsersLoading] = useState(false);
 
     useEffect(() => {
-        axiosInstance.get(`/admin/stores/${id}`)
+        axiosInstance.get(`/stores/${id}`)
             .then((res) => {
                 setStore(res.data);
                 setLoading(false);
@@ -31,6 +33,18 @@ export default function StoreDetails() {
                 setLoading(false);
             });
     }, [id]);
+
+    useEffect(() => {
+        if (tab === 1 && id) {
+            setUsersLoading(true);
+            axiosInstance.get(`/markets/${id}/users`)
+                .then(res => {
+                    setUsers(res.data.items || []);
+                })
+                .catch(err => console.error("Failed to fetch users", err))
+                .finally(() => setUsersLoading(false));
+        }
+    }, [tab, id]);
 
     if (loading) return <CircularProgress />;
     if (!store) return <Typography>المتجر غير موجود</Typography>;
@@ -50,29 +64,30 @@ export default function StoreDetails() {
             {tab === 0 && (
                 <Box>
                     <Typography variant="body1">📌 الاسم: {store.name}</Typography>
-                    <Typography variant="body1">📍 الموقع: {store.location}</Typography>
-                    <Typography variant="body1">👤 المالك: {store.owner?.name}</Typography>
-                    <Typography variant="body1">📧 البريد: {store.owner?.email}</Typography>
+                    <Typography variant="body1">📞 الهاتف: {store.phone_number}</Typography>
+                    <Typography variant="body1">👤 المالك: {store.owner?.username}</Typography>
                 </Box>
             )}
 
             {tab === 1 && (
                 <Box>
                     <Typography variant="subtitle1" gutterBottom>المستخدمون المرتبطون:</Typography>
-                    <List>
-                        {store.users && store.users.length > 0 ? (
-                            store.users.map((u) => (
-                                <div key={u.id}>
-                                    <ListItem>
-                                        <ListItemText primary={u.name} secondary={u.email} />
-                                    </ListItem>
-                                    <Divider />
-                                </div>
-                            ))
-                        ) : (
-                            <Typography>لا يوجد مستخدمون</Typography>
-                        )}
-                    </List>
+                    {usersLoading ? <CircularProgress /> : (
+                        <List>
+                            {users.length > 0 ? (
+                                users.map((u) => (
+                                    <div key={u.id}>
+                                        <ListItem>
+                                            <ListItemText primary={u.name} secondary={u.email} />
+                                        </ListItem>
+                                        <Divider />
+                                    </div>
+                                ))
+                            ) : (
+                                <Typography>لا يوجد مستخدمون</Typography>
+                            )}
+                        </List>
+                    )}
                 </Box>
             )}
 

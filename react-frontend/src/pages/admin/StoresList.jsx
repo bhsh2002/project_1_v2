@@ -41,7 +41,7 @@ export default function StoresList() {
                             <TableCell>ID</TableCell>
                             <TableCell>Name</TableCell>
                             <TableCell>Owner</TableCell>
-                            <TableCell>Status</TableCell>
+                            <TableCell>Phone Number</TableCell>
                             <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
@@ -51,7 +51,7 @@ export default function StoresList() {
                                 <TableCell>{store.id}</TableCell>
                                 <TableCell>{store.name}</TableCell>
                                 <TableCell>{store.owner?.email || '-'}</TableCell>
-                                <TableCell>{store.status}</TableCell>
+                                <TableCell>{store.phone_number || '-'}</TableCell>
                                 <TableCell>
                                     <Button component={Link} to={`/admin/stores/${store.id}`} size="small">
                                         View

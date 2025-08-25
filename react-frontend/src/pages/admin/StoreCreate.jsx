@@ -10,13 +10,10 @@ export default function StoreCreate() {
 
     const [storeData, setStoreData] = useState({
         name: '',
-        slug: '',
-        country: '',
-        currency: '',
+        phone_number: '',
         createOwner: false,
-        ownerEmail: '',
+        ownerUsername: '',
         ownerPassword: '',
-        ownerName: '',
     });
 
     const [loading, setLoading] = useState(false);
@@ -37,15 +34,12 @@ export default function StoreCreate() {
 
         const payload = {
             name: storeData.name,
-            slug: storeData.slug || undefined,
-            country: storeData.country || undefined,
-            currency: storeData.currency || undefined,
+            phone_number: storeData.phone_number || undefined,
             createOwner: storeData.createOwner,
             owner: storeData.createOwner
                 ? {
-                    email: storeData.ownerEmail,
+                    username: storeData.ownerUsername,
                     password: storeData.ownerPassword,
-                    name: storeData.ownerName,
                 }
                 : undefined,
         };
@@ -78,28 +72,11 @@ export default function StoreCreate() {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
-                            label="Slug (optional)"
-                            name="slug"
-                            value={storeData.slug}
+                            label="Phone Number"
+                            name="phone_number"
+                            value={storeData.phone_number}
                             onChange={handleChange}
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            label="Country"
-                            name="country"
-                            value={storeData.country}
-                            onChange={handleChange}
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            label="Currency"
-                            name="currency"
-                            value={storeData.currency}
-                            onChange={handleChange}
+                            required
                             fullWidth
                         />
                     </Grid>
@@ -121,22 +98,11 @@ export default function StoreCreate() {
                         <>
                             <Grid item xs={12} sm={4}>
                                 <TextField
-                                    label="Owner Name"
-                                    name="ownerName"
-                                    value={storeData.ownerName}
+                                    label="Owner Username"
+                                    name="ownerUsername"
+                                    value={storeData.ownerUsername}
                                     onChange={handleChange}
                                     required
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <TextField
-                                    label="Owner Email"
-                                    name="ownerEmail"
-                                    value={storeData.ownerEmail}
-                                    onChange={handleChange}
-                                    required
-                                    type="email"
                                     fullWidth
                                 />
                             </Grid>
