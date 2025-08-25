@@ -35,13 +35,13 @@ export default function StoreCreate() {
         const payload = {
             name: storeData.name,
             phone_number: storeData.phone_number || undefined,
-            createOwner: storeData.createOwner,
-            owner: storeData.createOwner
-                ? {
-                    username: storeData.ownerUsername,
-                    password: storeData.ownerPassword,
-                }
-                : undefined,
+            // createOwner: storeData.createOwner,
+            // owner: storeData.createOwner
+            //     ? {
+            //         username: storeData.ownerUsername,
+            //         password: storeData.ownerPassword,
+            //     }
+            //     : undefined,
         };
 
         try {
