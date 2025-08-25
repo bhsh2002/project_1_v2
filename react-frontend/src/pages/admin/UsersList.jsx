@@ -53,8 +53,7 @@ export default function UsersList() {
                     <TableHead>
                         <TableRow>
                             <TableCell>ID</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Email</TableCell>
+                            <TableCell>Username</TableCell>
                             <TableCell>Roles</TableCell>
                             <TableCell>Status</TableCell>
                             <TableCell>Actions</TableCell>
@@ -64,8 +63,7 @@ export default function UsersList() {
                         {users.map((user) => (
                             <TableRow key={user.id}>
                                 <TableCell>{user.id}</TableCell>
-                                <TableCell>{user.name}</TableCell>
-                                <TableCell>{user.email}</TableCell>
+                                <TableCell>{user.username}</TableCell>
                                 <TableCell>{user.roles?.join(', ')}</TableCell>
                                 <TableCell>{user.is_active ? 'Active' : 'Inactive'}</TableCell>
                                 <TableCell>
