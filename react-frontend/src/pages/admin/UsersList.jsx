@@ -17,7 +17,7 @@ export default function UsersList() {
     const fetchUsers = async () => {
         try {
             const response = await axiosInstance.get('/users/');
-            setUsers(response.data.data || []);
+            setUsers(response.data.items || []);
         } catch (error) {
             setErrorMsg('Failed to fetch users');
         } finally {
