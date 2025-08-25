@@ -31,7 +31,7 @@ export default function UsersList() {
 
     const handleDeleteUser = async () => {
         try {
-            await axiosInstance.delete(`/users/${deleteDialog.userId}/`);
+            await axiosInstance.delete(`/users/${deleteDialog.userId}`);
             setDeleteDialog({ open: false, userId: null });
             fetchUsers();
         } catch (error) {

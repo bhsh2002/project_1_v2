@@ -23,7 +23,7 @@ export default function StoreDetails() {
     const [usersLoading, setUsersLoading] = useState(false);
 
     useEffect(() => {
-        axiosInstance.get(`/markets/${storeUuid}/`)
+        axiosInstance.get(`/markets/${storeUuid}`)
             .then((res) => {
                 setStore(res.data);
                 setLoading(false);
