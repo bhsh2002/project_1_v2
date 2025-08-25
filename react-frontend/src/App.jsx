@@ -16,28 +16,38 @@ import StoreCreate from './pages/admin/StoreCreate';
 import StoreDetails from './pages/admin/StoreDetails';
 import UsersList from './pages/admin/UsersList';
 import UserCreate from './pages/admin/UserCreate';
+import UserEdit from './pages/admin/UserEdit';
+import Dashboard from './pages/admin/Dashboard';
+import ProtectedRoute from './components/ProtectedRoute';
+import LoginPage from './pages/auth/LoginPage';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={theme}>
         <CartProvider>
-          <Router>
-            <CssBaseline />
-            <MainLayout>
-              <Routes>
-                <Route path="/" element={<ScannerPage />} />
-                <Route path="/admin" element={<AdminLayout />}>
-                  <Route path="stores" element={<StoresList />} />
-                  <Route path="stores/new" element={<StoreCreate />} />
-                  <Route path="stores/:storeId" element={<StoreDetails />} />
-                  <Route path="users" element={<UsersList />} />
-                  <Route path="users/new" element={<UserCreate />} />
-                  {/* يمكن إضافة بقية الصفحات لاحقًا */}
-                </Route>
-              </Routes>
-            </MainLayout>
-          </Router>
+          <AuthProvider>
+            <Router>
+              <CssBaseline />
+              <MainLayout>
+                <Routes>
+                  <Route path="/" element={<ScannerPage />} />
+                  <Route path="/admin" element={<AdminLayout />}>
+                    <Route index element={<Dashboard />} />
+                    <Route path="login" element={<LoginPage />} />
+                    <Route path="stores" element={<StoresList />} />
+                    <Route path="stores/new" element={<StoreCreate />} />
+                    <Route path="stores/:storeId" element={<StoreDetails />} />
+                    <Route path="users" element={<UsersList />} />
+                    <Route path="users/new" element={<UserCreate />} />
+                    <Route path="users/:userId/edit" element={<UserEdit />} />
+                    {/* يمكن إضافة بقية الصفحات لاحقًا */}
+                  </Route>
+                </Routes>
+              </MainLayout>
+            </Router>
+          </AuthProvider>
         </CartProvider>
       </ThemeProvider>
     </CacheProvider>

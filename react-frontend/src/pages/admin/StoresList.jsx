@@ -12,8 +12,9 @@ export default function StoresList() {
 
     const fetchStores = async () => {
         try {
-            const response = await axiosInstance.get('/markets');
-            setStores(response.data.data || []);
+            const response = await axiosInstance.get('/markets/');
+            console.log(response.data);
+            setStores(response.data.items || []);
         } catch (error) {
             console.error(error);
         } finally {
