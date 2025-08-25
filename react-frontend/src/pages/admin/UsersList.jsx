@@ -16,7 +16,7 @@ export default function UsersList() {
 
     const fetchUsers = async () => {
         try {
-            const response = await axiosInstance.get('/users');
+            const response = await axiosInstance.get('/users/');
             setUsers(response.data.data || []);
         } catch (error) {
             setErrorMsg('Failed to fetch users');
@@ -31,7 +31,7 @@ export default function UsersList() {
 
     const handleDeleteUser = async () => {
         try {
-            await axiosInstance.delete(`/users/${deleteDialog.userId}`);
+            await axiosInstance.delete(`/users/${deleteDialog.userId}/`);
             setDeleteDialog({ open: false, userId: null });
             fetchUsers();
         } catch (error) {

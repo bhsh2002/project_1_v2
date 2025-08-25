@@ -45,7 +45,7 @@ export default function StoreCreate() {
         };
 
         try {
-            await axiosInstance.post('/markets', payload);
+            await axiosInstance.post('/markets/', payload);
             navigate('/admin/stores');
         } catch (error) {
             setErrorMsg(error.response?.data?.message || 'Error creating store');
