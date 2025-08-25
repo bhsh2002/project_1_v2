@@ -4,9 +4,10 @@ from dev_kit.web.routing import register_crud_routes
 from dev_kit.modules.users.schemas import user_schemas as dk_user_schemas
 
 from .schemas import market_schemas, MarketUsersPagination
-from .services import market_service
+from .services import MarketService
 
 markets_bp = APIBlueprint("market", __name__, url_prefix="/markets")
+market_service = MarketService()
 
 register_crud_routes(
     bp=markets_bp,
