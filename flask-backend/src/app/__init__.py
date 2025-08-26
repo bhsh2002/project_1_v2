@@ -2,10 +2,35 @@ from dev_kit.database.extensions import db
 from dev_kit.web.jwt import configure_jwt
 from apiflask import APIFlask, APIBlueprint
 from flask_cors import CORS
-from werkzeug.middleware.proxy_fix import ProxyFix
+import logging
+from logging.handlers import RotatingFileHandler
+import os
 
 from .extensions import migrate, jwt
 from .config import config
+
+
+def setup_logging(app):
+    if not os.path.exists("logs"):
+        os.mkdir("logs")
+
+    formatter = logging.Formatter(
+        "%(asctime)s [%(levelname)s] in %(module)s: %(message)s"
+    )
+
+    file_handler = RotatingFileHandler(
+        "logs/app.log", maxBytes=10240, backupCount=10, encoding="utf-8"
+    )
+    file_handler.setLevel(logging.INFO)
+    file_handler.setFormatter(formatter)
+
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.DEBUG)
+    console_handler.setFormatter(formatter)
+
+    app.logger.setLevel(logging.DEBUG)
+    app.logger.addHandler(file_handler)
+    app.logger.addHandler(console_handler)
 
 
 def create_app(config_name="config"):
@@ -39,6 +64,7 @@ def create_app(config_name="config"):
     migrate.init_app(app, db)
     jwt.init_app(app)
     configure_jwt(jwt)
+    setup_logging(app)
 
     from app.markets import models as _markets_models  # noqa: F401
     from app.shelves import models as _shelves_models  # noqa: F401

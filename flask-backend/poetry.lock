@@ -435,8 +435,8 @@ sqlalchemy = ">=2.0.42,<3.0.0"
 [package.source]
 type = "git"
 url = "https://github.com/bhsh2002/dev-kit.git"
-reference = "v0.1.2"
-resolved_reference = "ef67ec750277618e706864a20f24bd657d1915af"
+reference = "v0.1.3"
+resolved_reference = "80472c05ca85abbc292934882ca4e149d369c8b5"
 
 [[package]]
 name = "et-xmlfile"
@@ -2613,4 +2613,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11, <3.14"
-content-hash = "c187c7252755daa8d2f952b2f17f79362409d50f178f0abd9a8b06d243f19451"
+content-hash = "d43c7c6c166c4a46f3a70e0f5077e1efdc58ec6bf6f1e3c9468d1dee8f1be3b0"

@@ -3,6 +3,7 @@ from apiflask import APIBlueprint
 from dev_kit.web.routing import register_crud_routes
 from dev_kit.modules.users.schemas import user_schemas as dk_user_schemas
 from dev_kit.web.decorators import permission_required
+from dev_kit.database.extensions import db
 
 from .schemas import market_schemas, MarketUsersPagination
 from .services import MarketService
@@ -48,4 +49,5 @@ def create_market_with_owner(json_data):
     else:
         new = market_service.create(json_data)
 
+    db.session.commit()
     return new

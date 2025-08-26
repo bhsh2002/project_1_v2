@@ -23,6 +23,10 @@ celerybeat-schedule
 instance/
 /app/instance/temp
 
+# Logs
+logs/*.log
+logs/*.log.*
+
 # Environment variables
 .env
 .env.*
