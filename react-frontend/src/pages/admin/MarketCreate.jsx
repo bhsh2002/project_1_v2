@@ -67,8 +67,8 @@ export default function MarketCreate() {
                     <Grid item xs={12} sm={6}>
                         <TextField
                             label="Phone Number"
-                            name="phone_number"
-                            value={marketData.phone_number}
+                            name="phoneNumber"
+                            value={marketData.phoneNumber}
                             onChange={handleChange}
                             required
                             fullWidth

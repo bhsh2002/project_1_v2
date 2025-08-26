@@ -40,11 +40,12 @@ def list_market_users(market_uuid, query_args):
 @markets_bp.doc(summary="Create a new market with an owner")
 @permission_required("create:market")
 def create_market_with_owner(json_data):
-    owner_data = json_data.get("owner_username", None) + json_data.get(
-        "owner_password", None
-    )
-    if not owner_data:
-        new = market_service.create(json_data)
-    else:
+    owner_username = json_data.get("owner_username")
+    owner_password = json_data.get("owner_password")
+
+    if owner_username and owner_password:
         new = market_service.create_market_with_owner(json_data)
+    else:
+        new = market_service.create(json_data)
+
     return new
