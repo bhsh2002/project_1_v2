@@ -53,7 +53,7 @@ class MarketRepository(BaseRepository[Market]):
             has_prev=page > 1,
         )
 
-    # @handle_db_errors
+    @handle_db_errors
     def create_market_owner(self, market_id: int, username: str, password: str) -> User:
         """Create a market owner user and associate with the market."""
         new_user = User(username=username, password=password)

@@ -23,7 +23,7 @@ class MarketService(BaseService[Market]):
         owner_password = data.pop("owner_password")
         new_market = self.create(data)
         self.repo.create_market_owner(new_market.id, owner_username, owner_password)
-        db.session.commit()
+        # db.session.commit()
         return new_market
 
 
