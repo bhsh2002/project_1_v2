@@ -5,13 +5,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axios';
 
-export default function StoreCreate() {
+export default function MarketCreate() {
     const navigate = useNavigate();
 
-    const [storeData, setStoreData] = useState({
+    const [marketData, setMarketData] = useState({
         name: '',
-        phone_number: '',
-        createOwner: false,
+        phoneNumber: '',
         ownerUsername: '',
         ownerPassword: '',
     });
@@ -21,7 +20,7 @@ export default function StoreCreate() {
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setStoreData((prev) => ({
+        setMarketData((prev) => ({
             ...prev,
             [name]: type === 'checkbox' ? checked : value,
         }));
@@ -33,22 +32,17 @@ export default function StoreCreate() {
         setLoading(true);
 
         const payload = {
-            name: storeData.name,
-            phone_number: storeData.phone_number || undefined,
-            // createOwner: storeData.createOwner,
-            // owner: storeData.createOwner
-            //     ? {
-            //         username: storeData.ownerUsername,
-            //         password: storeData.ownerPassword,
-            //     }
-            //     : undefined,
+            name: marketData.name,
+            phone_number: marketData.phoneNumber || undefined,
+            owner_username: marketData.ownerUsername || undefined,
+            owner_password: marketData.ownerPassword || undefined,
         };
 
         try {
             await axiosInstance.post('/markets/', payload);
-            navigate('/admin/stores');
+            navigate('/admin/markets');
         } catch (error) {
-            setErrorMsg(error.response?.data?.message || 'Error creating store');
+            setErrorMsg(error.response?.data?.message || 'Error creating market');
         } finally {
             setLoading(false);
         }
@@ -56,15 +50,15 @@ export default function StoreCreate() {
 
     return (
         <Paper sx={{ p: 4 }}>
-            <Typography variant="h5" gutterBottom>Create New Store</Typography>
+            <Typography variant="h5" gutterBottom>Create New Market</Typography>
             {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField
-                            label="Store Name"
+                            label="Market Name"
                             name="name"
-                            value={storeData.name}
+                            value={marketData.name}
                             onChange={handleChange}
                             required
                             fullWidth
@@ -74,7 +68,7 @@ export default function StoreCreate() {
                         <TextField
                             label="Phone Number"
                             name="phone_number"
-                            value={storeData.phone_number}
+                            value={marketData.phone_number}
                             onChange={handleChange}
                             required
                             fullWidth
@@ -85,7 +79,7 @@ export default function StoreCreate() {
                             select
                             label="Create Owner?"
                             name="createOwner"
-                            value={storeData.createOwner}
+                            value={marketData.createOwner}
                             onChange={handleChange}
                             fullWidth
                         >
@@ -94,13 +88,13 @@ export default function StoreCreate() {
                         </TextField>
                     </Grid>
 
-                    {storeData.createOwner && (
+                    {marketData.createOwner && (
                         <>
                             <Grid item xs={12} sm={4}>
                                 <TextField
                                     label="Owner Username"
                                     name="ownerUsername"
-                                    value={storeData.ownerUsername}
+                                    value={marketData.ownerUsername}
                                     onChange={handleChange}
                                     required
                                     fullWidth
@@ -110,7 +104,7 @@ export default function StoreCreate() {
                                 <TextField
                                     label="Owner Password"
                                     name="ownerPassword"
-                                    value={storeData.ownerPassword}
+                                    value={marketData.ownerPassword}
                                     onChange={handleChange}
                                     required
                                     type="password"
@@ -126,7 +120,7 @@ export default function StoreCreate() {
                             variant="contained"
                             disabled={loading}
                         >
-                            {loading ? <CircularProgress size={24} /> : 'Create Store'}
+                            {loading ? <CircularProgress size={24} /> : 'Create Market'}
                         </Button>
                     </Grid>
                 </Grid>

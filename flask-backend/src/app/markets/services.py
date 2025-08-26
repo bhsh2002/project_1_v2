@@ -18,5 +18,13 @@ class MarketService(BaseService[Market]):
         per_page = query_args.get("per_page", 10)
         return self.repo.list_market_users(market_uuid, page=page, per_page=per_page)
 
+    def create_market_with_owner(self, data: Dict[str, Any]) -> Market:
+        owner_username = data.pop("owner_username")
+        owner_password = data.pop("owner_password")
+        new_market = self.create(data)
+        self.repo.create_market_owner(new_market.id, owner_username, owner_password)
+        db.session.commit()
+        return new_market
+
 
 market_service = MarketService()

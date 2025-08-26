@@ -1,6 +1,7 @@
 from dev_kit.web.schemas import create_crud_schemas, create_pagination_schema
 from dev_kit.modules.users.schemas import user_schemas as dk_user_schemas
 from .models import Market
+from apiflask.fields import String
 
 market_schemas = create_crud_schemas(
     model_class=Market,
@@ -9,3 +10,17 @@ market_schemas = create_crud_schemas(
 
 # Pagination schema for listing market users
 MarketUsersPagination = create_pagination_schema(dk_user_schemas["main"])
+
+
+class MarketWithOwnerSchema(market_schemas["input"]):
+    owner_username = String(
+        required=True, metadata={"description": "User ID of the market owner."}
+    )
+    owner_password = String(
+        required=True,
+        load_only=True,
+        metadata={"description": "Password for the market owner."},
+    )
+
+
+market_schemas["input_with_owner"] = MarketWithOwnerSchema

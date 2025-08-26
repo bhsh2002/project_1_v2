@@ -18,7 +18,7 @@ export default function UserCreate() {
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
-    const roleOptions = ['SUPER_ADMIN', 'STORE_OWNER', 'STORE_MANAGER', 'STORE_STAFF'];
+    const roleOptions = ['SUPER_ADMIN', 'MARKET_OWNER', 'MARKET_MANAGER', 'MARKET_STAFF'];
 
     const handleChange = (e) => {
         const { name, value } = e.target;

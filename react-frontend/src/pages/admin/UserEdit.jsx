@@ -20,7 +20,7 @@ export default function UserEdit() {
     const [saving, setSaving] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
-    const roleOptions = ['SUPER_ADMIN', 'STORE_OWNER', 'STORE_MANAGER', 'STORE_STAFF'];
+    const roleOptions = ['SUPER_ADMIN', 'MARKET_OWNER', 'MARKET_MANAGER', 'MARKET_STAFF'];
 
     const fetchUser = async () => {
         try {

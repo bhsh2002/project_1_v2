@@ -2,19 +2,19 @@ import { useState, useEffect } from 'react';
 import axiosInstance from '../../api/axios';
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-    Button, Typography, CircularProgress
+    Button, Typography, CircularProgress,
+    Box
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export default function StoresList() {
-    const [stores, setStores] = useState([]);
+export default function MarketsList() {
+    const [markets, setMarkets] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchStores = async () => {
+    const fetchMarkets = async () => {
         try {
             const response = await axiosInstance.get('/markets/');
-            console.log(response.data);
-            setStores(response.data.items || []);
+            setMarkets(response.data.items || []);
         } catch (error) {
             console.error(error);
         } finally {
@@ -23,16 +23,16 @@ export default function StoresList() {
     };
 
     useEffect(() => {
-        fetchStores();
+        fetchMarkets();
     }, []);
 
     if (loading) return <CircularProgress />;
 
     return (
-        <div>
-            <Typography variant="h5" gutterBottom>Stores</Typography>
-            <Button component={Link} to="/admin/stores/new" variant="contained" sx={{ mb: 2 }}>
-                New Store
+        <Box>
+            <Typography variant="h5" gutterBottom>Markets</Typography>
+            <Button component={Link} to="/admin/markets/new" variant="contained" sx={{ mb: 2 }}>
+                New Market
             </Button>
             <TableContainer component={Paper}>
                 <Table>
@@ -46,23 +46,22 @@ export default function StoresList() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {stores.map((store) => (
-                            <TableRow key={store.id}>
-                                <TableCell>{store.id}</TableCell>
-                                <TableCell>{store.name}</TableCell>
-                                <TableCell>{store.owner?.email || '-'}</TableCell>
-                                <TableCell>{store.phone_number || '-'}</TableCell>
+                        {markets.map((market) => (
+                            <TableRow key={market.id}>
+                                <TableCell>{market.id}</TableCell>
+                                <TableCell>{market.name}</TableCell>
+                                <TableCell>{market.owner?.email || '-'}</TableCell>
+                                <TableCell>{market.phone_number || '-'}</TableCell>
                                 <TableCell>
-                                    <Button component={Link} to={`/admin/stores/${store.uuid}`} size="small">
+                                    <Button component={Link} to={`/admin/markets/${market.uuid}`} size="small">
                                         View
                                     </Button>
-                                    {/* يمكن إضافة Edit/Delete لاحقًا */}
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-        </div>
+        </Box>
     );
 }

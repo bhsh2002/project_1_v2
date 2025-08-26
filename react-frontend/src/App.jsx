@@ -11,9 +11,9 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
 import { CartProvider } from './context/CartContext';
 import AdminLayout from './layouts/AdminLayout';
-import StoresList from './pages/admin/StoresList';
-import StoreCreate from './pages/admin/StoreCreate';
-import StoreDetails from './pages/admin/StoreDetails';
+import MarketsList from './pages/admin/MarketsList';
+import MarketCreate from './pages/admin/MarketCreate';
+import MarketDetails from './pages/admin/MarketDetails';
 import UsersList from './pages/admin/UsersList';
 import UserCreate from './pages/admin/UserCreate';
 import UserEdit from './pages/admin/UserEdit';
@@ -36,9 +36,9 @@ function App() {
                   <Route path="/admin" element={<AdminLayout />}>
                     <Route index element={<Dashboard />} />
                     <Route path="login" element={<LoginPage />} />
-                    <Route path="stores" element={<StoresList />} />
-                    <Route path="stores/new" element={<StoreCreate />} />
-                    <Route path="stores/:storeUuid" element={<StoreDetails />} />
+                    <Route path="markets" element={<MarketsList />} />
+                    <Route path="markets/new" element={<MarketCreate />} />
+                    <Route path="markets/:marketUuid" element={<MarketDetails />} />
                     <Route path="users" element={<UsersList />} />
                     <Route path="users/new" element={<UserCreate />} />
                     <Route path="users/:userId/edit" element={<UserEdit />} />

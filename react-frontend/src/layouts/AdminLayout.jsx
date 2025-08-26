@@ -73,8 +73,8 @@ export default function AdminLayout() {
                 </Toolbar>
                 <List>
                     <ListItem disablePadding>
-                        <ListItemButton component={Link} to="/admin/stores">
-                            <ListItemText primary="Stores" />
+                        <ListItemButton component={Link} to="/admin/markets">
+                            <ListItemText primary="Markets" />
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
@@ -84,7 +84,7 @@ export default function AdminLayout() {
                     </ListItem>
                 </List>
             </Drawer>
-            <Main open={open}>
+            <Main>
                 <Toolbar />
                 <Outlet />
             </Main>

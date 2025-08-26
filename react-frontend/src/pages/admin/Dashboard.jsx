@@ -10,7 +10,7 @@ import {
     ListItemText,
     Divider,
 } from "@mui/material";
-import StorefrontIcon from "@mui/icons-material/Storefront";
+import MarketfrontIcon from "@mui/icons-material/Storefront";
 import PeopleIcon from "@mui/icons-material/People";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import axiosInstance from '../../api/axios';
@@ -44,9 +44,9 @@ export default function Dashboard() {
             <Grid container spacing={2} sx={{ mb: 3 }}>
                 <Grid item xs={12} sm={4}>
                     <Paper sx={{ p: 3, textAlign: "center" }}>
-                        <StorefrontIcon fontSize="large" color="primary" />
+                        <MarketfrontIcon fontSize="large" color="primary" />
                         <Typography variant="h6">عدد المتاجر</Typography>
-                        <Typography variant="h4">{stats.totalStores}</Typography>
+                        <Typography variant="h4">{stats.totalMarkets}</Typography>
                     </Paper>
                 </Grid>
 

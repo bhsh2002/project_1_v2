@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import axiosInstance from '../../api/axios';
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-    Button, Typography, CircularProgress, IconButton, Alert, Dialog, DialogTitle, DialogContent, DialogActions
+    Button, Typography, CircularProgress, IconButton, Alert, Dialog, DialogTitle, DialogContent, DialogActions,
+    Box
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -42,7 +43,7 @@ export default function UsersList() {
     if (loading) return <CircularProgress />;
 
     return (
-        <div>
+        <Box>
             <Typography variant="h5" gutterBottom>Users</Typography>
             {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
             <Button component={Link} to="/admin/users/new" variant="contained" sx={{ mb: 2 }}>
@@ -96,6 +97,6 @@ export default function UsersList() {
                     <Button onClick={handleDeleteUser} color="error" variant="contained">Delete</Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </Box>
     );
 }

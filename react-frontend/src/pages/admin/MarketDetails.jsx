@@ -14,45 +14,45 @@ import {
 } from '@mui/material';
 import axiosInstance from '../../api/axios';
 
-export default function StoreDetails() {
-    const { storeUuid } = useParams();
-    const [store, setStore] = useState(null);
+export default function MarketDetails() {
+    const { marketUuid } = useParams();
+    const [market, setMarket] = useState(null);
     const [tab, setTab] = useState(0);
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
     const [usersLoading, setUsersLoading] = useState(false);
 
     useEffect(() => {
-        axiosInstance.get(`/markets/${storeUuid}`)
+        axiosInstance.get(`/markets/${marketUuid}`)
             .then((res) => {
-                setStore(res.data);
+                setMarket(res.data);
                 setLoading(false);
             })
             .catch((err) => {
                 console.error(err);
                 setLoading(false);
             });
-    }, [storeUuid]);
+    }, [marketUuid]);
 
     useEffect(() => {
-        if (tab === 1 && storeUuid) {
+        if (tab === 1 && marketUuid) {
             setUsersLoading(true);
-            axiosInstance.get(`/markets/${storeUuid}/users`)
+            axiosInstance.get(`/markets/${marketUuid}/users`)
                 .then(res => {
                     setUsers(res.data.items || []);
                 })
                 .catch(err => console.error("Failed to fetch users", err))
                 .finally(() => setUsersLoading(false));
         }
-    }, [tab, storeUuid]);
+    }, [tab, marketUuid]);
 
     if (loading) return <CircularProgress />;
-    if (!store) return <Typography>المتجر غير موجود</Typography>;
+    if (!market) return <Typography>المتجر غير موجود</Typography>;
 
     return (
         <Paper sx={{ p: 3 }}>
             <Typography variant="h6" gutterBottom>
-                تفاصيل المتجر: {store.name}
+                تفاصيل المتجر: {market.name}
             </Typography>
 
             <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ mb: 2 }}>
@@ -63,9 +63,9 @@ export default function StoreDetails() {
 
             {tab === 0 && (
                 <Box>
-                    <Typography variant="body1">📌 الاسم: {store.name}</Typography>
-                    <Typography variant="body1">📞 الهاتف: {store.phone_number}</Typography>
-                    <Typography variant="body1">👤 المالك: {store.owner?.username}</Typography>
+                    <Typography variant="body1">📌 الاسم: {market.name}</Typography>
+                    <Typography variant="body1">📞 الهاتف: {market.phone_number}</Typography>
+                    <Typography variant="body1">👤 المالك: {market.owner?.username}</Typography>
                 </Box>
             )}
 
@@ -76,7 +76,7 @@ export default function StoreDetails() {
                         <List>
                             {users.length > 0 ? (
                                 users.map((u) => (
-                                    <div key={u.storeUuid}>
+                                    <div key={u.marketUuid}>
                                         <ListItem>
                                             <ListItemText primary={u.name} secondary={u.email} />
                                         </ListItem>
@@ -95,8 +95,8 @@ export default function StoreDetails() {
                 <Box>
                     <Typography variant="subtitle1" gutterBottom>سجل النشاطات:</Typography>
                     <List>
-                        {store.logs && store.logs.length > 0 ? (
-                            store.logs.map((log, i) => (
+                        {market.logs && market.logs.length > 0 ? (
+                            market.logs.map((log, i) => (
                                 <div key={i}>
                                     <ListItem>
                                         <ListItemText
