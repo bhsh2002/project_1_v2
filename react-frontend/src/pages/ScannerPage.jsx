@@ -33,6 +33,7 @@ const ScannerPage = () => {
 
     // Audio
     const successAudio = useMemo(() => new Audio('/audio/scan-success.mp3'), []);
+    const errorAudio = useMemo(() => new Audio('/audio/error.mp3'), []);
 
     const handleOpenScanner = useCallback(() => setScannerOpen(true), []);
     const handleCloseScanner = useCallback(() => setScannerOpen(false), []);
@@ -54,8 +55,12 @@ const ScannerPage = () => {
         try {
             const product = await fetchProductByBarcode(decodedText);
             setProductData(product);
+            console.log("Product fetched:", product);
             // Play success audio safely
-            try { await successAudio.play(); } catch { }
+            if (Object.keys(product).length > 0)
+                try { await successAudio.play(); } catch { }
+            else
+                try { await errorAudio.play(); } catch { }
             // Reset scanner after 3s
             timerRef.current = setTimeout(() => handleResetScanner(), 3000);
         } catch (err) {
@@ -63,7 +68,7 @@ const ScannerPage = () => {
         } finally {
             setIsLoading(false);
         }
-    }, [successAudio, handleResetScanner]);
+    }, [successAudio, errorAudio, handleResetScanner]);
 
     const handleCloseSnackbar = useCallback(() => setError(null), []);
 
