@@ -2,9 +2,13 @@ from typing import Any, Dict
 
 from dev_kit.services import BaseService
 from dev_kit.database.extensions import db
+from dev_kit.modules.users.services import UserService
+from dev_kit.modules.users.models import User
 
 from .models import Market
 from .repositories import MarketRepository
+
+user_service = UserService(User, db.session)
 
 
 class MarketService(BaseService[Market]):
@@ -22,7 +26,10 @@ class MarketService(BaseService[Market]):
         owner_username = data.pop("owner_username")
         owner_password = data.pop("owner_password")
         new_market = self.create(data)
-        self.repo.create_market_owner(new_market.id, owner_username, owner_password)
+        new_user = user_service.create(
+            {"username": owner_username, "password": owner_password}
+        )
+        self.repo.create_market_owner(new_market.id, new_user.id)
         # db.session.commit()
         return new_market
 

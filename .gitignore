@@ -26,6 +26,8 @@ instance/
 # Logs
 logs/*.log
 logs/*.log.*
+src/logs/*.log
+src/logs/*.log.*
 
 # Environment variables
 .env

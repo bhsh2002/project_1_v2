@@ -54,13 +54,10 @@ class MarketRepository(BaseRepository[Market]):
         )
 
     @handle_db_errors
-    def create_market_owner(self, market_id: int, username: str, password: str) -> User:
+    def create_market_owner(self, market_id: int, user_id: int) -> MarketUsers:
         """Create a market owner user and associate with the market."""
-        new_user = User(username=username, password=password)
-        self._db_session.add(new_user)
-        self._db_session.flush()
 
-        market_user = MarketUsers(market_id=market_id, user_id=new_user.id)
+        market_user = MarketUsers(market_id=market_id, user_id=user_id)
         self._db_session.add(market_user)
 
-        return new_user
+        return market_user
