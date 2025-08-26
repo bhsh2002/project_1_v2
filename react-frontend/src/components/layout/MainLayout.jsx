@@ -11,14 +11,14 @@ const MainLayout = ({ children }) => {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', bgcolor: 'background.default' }}>
             {/* سيستخدم AppBar الآن الألوان والأنماط من الثيم */}
-            <AppBar position="static" color="inherit">
+            {/* <AppBar position="static" color="inherit">
                 <Toolbar>
                     <CameraIcon sx={{ mr: 2, color: 'primary.main' }} />
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         ماسح الباركود
                     </Typography>
                 </Toolbar>
-            </AppBar>
+            </AppBar> */}
 
             {/* منطقة المحتوى الرئيسي للصفحة */}
             <Box

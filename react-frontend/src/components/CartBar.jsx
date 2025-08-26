@@ -16,7 +16,7 @@ const CartBar = ({ onOpenCart }) => {
         <Paper
             sx={{
                 position: 'fixed',
-                top: 60,
+                top: 20,
                 left: 0,
                 right: 0,
                 zIndex: 2000, // أعلى من أغلب العناصر
@@ -27,19 +27,21 @@ const CartBar = ({ onOpenCart }) => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 backgroundColor: 'background.paper',
+                boxShadow: "none"
             }}
         >
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                <Typography variant="body1">
+                <Typography variant="h6">
                     المنتجات: <strong>{cartCount}</strong>
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="h6">
                     الإجمالي: <strong>{totalPrice} د.ل</strong>
                 </Typography>
             </Box>
             <Button
                 startIcon={<ShoppingCartIcon />}
                 onClick={onOpenCart}
+                sx={{ fontSize: '1.1rem' }}
             >
                 عرض السلة
             </Button>

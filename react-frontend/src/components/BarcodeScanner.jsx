@@ -32,7 +32,7 @@ const BarcodeScanner = forwardRef(({ onScanSuccess, onScanFailure, onClose }, re
                 onScanSuccess(decodedText);
                 scannerRef.current.pause();
             },
-            (errorMessage) => onScanFailure?.(errorMessage)
+            (errorMessage) => { onScanFailure?.(errorMessage); scannerRef.current?.resume() }
         ).catch(err => console.error("Scanner start failed:", err));
 
         return () => {

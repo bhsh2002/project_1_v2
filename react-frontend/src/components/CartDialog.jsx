@@ -91,22 +91,22 @@ const CartDialog = ({ open, onClose }) => {
                                         alt={item.name}
                                     />
                                     <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, p: 1 }}>
-                                        <Typography component="div" sx={{ fontWeight: 'bold' }}>
+                                        <Typography component="div" variant='h6' sx={{ fontWeight: 'bold' }}>
                                             {item.name}
                                         </Typography>
-                                        <Typography variant="caption" color="text.secondary" component="div">
+                                        <Typography variant="body1" color="text.secondary" component="div">
                                             {`الإجمالي: ${(item.price * item.quantity).toFixed(2)} د.ل`}
                                         </Typography>
                                         {/* --- Quantity Controls --- */}
                                         <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                            <IconButton size="small" onClick={() => removeFromCart(item.id)}><RemoveIcon fontSize="inherit" /></IconButton>
+                                            <IconButton size="medium" onClick={() => removeFromCart(item.id)}><RemoveIcon fontSize="inherit" /></IconButton>
                                             <Typography sx={{ px: 1.5 }} variant="body2">{item.quantity}</Typography>
-                                            <IconButton size="small" onClick={() => addToCart(item)}><AddIcon fontSize="inherit" /></IconButton>
+                                            <IconButton size="medium" onClick={() => addToCart(item)}><AddIcon fontSize="inherit" /></IconButton>
                                         </Box>
                                     </Box>
                                     <Tooltip title="حذف المنتج">
-                                        <IconButton onClick={() => deleteFromCart(item.id)} size="small" sx={{ alignSelf: 'flex-start', m: 0.5 }}>
-                                            <DeleteForeverIcon color="error" />
+                                        <IconButton onClick={() => deleteFromCart(item.id)} size="large" sx={{ mr: 2 }}>
+                                            <DeleteForeverIcon color="error" fontSize='inherit' />
                                         </IconButton>
                                     </Tooltip>
                                 </Card>
@@ -119,7 +119,7 @@ const CartDialog = ({ open, onClose }) => {
                 {cartItems.length > 0 && (
                     <Box sx={{ p: 2, backgroundColor: 'background.default', borderTop: '1px solid', borderColor: 'divider' }}>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                            <Typography variant="body1">الإجمالي النهائي</Typography>
+                            <Typography variant="h6">الإجمالي النهائي</Typography>
                             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{totalPrice} د.ل</Typography>
                         </Box>
                         <DialogActions sx={{ p: 0, justifyContent: 'space-between', gap: 1 }}>
@@ -130,7 +130,7 @@ const CartDialog = ({ open, onClose }) => {
                             >
                                 تفريغ السلة
                             </Button>
-                            <Button variant="contained" onClick={onClose} sx={{ flexGrow: 1 }}>
+                            <Button variant="contained" onClick={onClose} sx={{ flexGrow: 1, fontSize: '1.1rem' }}>
                                 متابعة
                             </Button>
                         </DialogActions>
@@ -155,7 +155,7 @@ const CartDialog = ({ open, onClose }) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setConfirmOpen(false)}>إلغاء</Button>
-                    <Button onClick={handleConfirmClear} color="error" autoFocus>
+                    <Button onClick={handleConfirmClear} color="error" autoFocus sx={{ fontSize: '1rem' }}>
                         تأكيد الحذف
                     </Button>
                 </DialogActions>
