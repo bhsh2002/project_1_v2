@@ -14,10 +14,10 @@ MarketUsersPagination = create_pagination_schema(dk_user_schemas["main"])
 
 class MarketWithOwnerSchema(market_schemas["input"]):
     owner_username = String(
-        required=True, metadata={"description": "User ID of the market owner."}
+        required=False, metadata={"description": "User ID of the market owner."}
     )
     owner_password = String(
-        required=True,
+        required=False,
         load_only=True,
         metadata={"description": "Password for the market owner."},
     )
