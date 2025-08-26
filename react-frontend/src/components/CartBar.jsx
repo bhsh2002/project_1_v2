@@ -8,10 +8,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 const CartBar = ({ onOpenCart }) => {
     const { cartCount, totalPrice } = useCart();
 
-    if (cartCount === 0) {
-        return null; // لا تعرض الشريط إذا كانت السلة فارغة
-    }
-
     return (
         <Paper
             sx={{
@@ -30,14 +26,14 @@ const CartBar = ({ onOpenCart }) => {
                 boxShadow: "none"
             }}
         >
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            {cartCount > 0 ? <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 <Typography variant="h6">
                     المنتجات: <strong>{cartCount}</strong>
                 </Typography>
                 <Typography variant="h6">
                     الإجمالي: <strong>{totalPrice} د.ل</strong>
                 </Typography>
-            </Box>
+            </Box> : <Typography variant="h6" color='error'>السلة فارغة</Typography>}
             <Button
                 startIcon={<ShoppingCartIcon />}
                 onClick={onOpenCart}

@@ -26,7 +26,7 @@ const theme = createTheme({
         // },
     },
     typography: {
-        fontFamily: 'system-ui, Avenir, Helvetica, Arial, sans-serif',
+        fontFamily: 'Cairo, system-ui, Avenir, Helvetica, Arial, sans-serif',
         h4: {
             fontWeight: 700,
         },

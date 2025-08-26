@@ -55,7 +55,6 @@ const ScannerPage = () => {
         try {
             const product = await fetchProductByBarcode(decodedText);
             setProductData(product);
-            console.log("Product fetched:", product);
             // Play success audio safely
             if (Object.keys(product).length > 0)
                 try { await successAudio.play(); } catch { }
@@ -86,11 +85,8 @@ const ScannerPage = () => {
             <CartBar onOpenCart={() => setCartOpen(true)} />
 
             <Typography variant="h4" gutterBottom>قارئ سعر المنتجات</Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ maxWidth: '400px' }}>
-                اضغط على الزر لبدء مسح الباركود الخاص بالمنتج.
-            </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: '400px' }}>
-                تأكد من منح الإذن لاستخدام الكاميرا عند الطلب.
+                قم بتوجيه الكاميرا على باركود المنتج.
             </Typography>
 
             <Button

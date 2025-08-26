@@ -41,7 +41,6 @@ const CartDialog = ({ open, onClose }) => {
             <Dialog
                 open={open}
                 onClose={onClose}
-                fullWidth
                 maxWidth="sm" // Good for tablets and desktops
                 fullScreen // Use fullScreen for small screens
                 sx={{ zIndex: 2100 }} // أعلى من CartBar
@@ -57,6 +56,8 @@ const CartDialog = ({ open, onClose }) => {
                         },
                         display: 'flex',
                         flexDirection: 'column',
+                        maxHeight: '90dvh',
+                        width: '90vw',
                     },
                 }}
             >
@@ -83,7 +84,7 @@ const CartDialog = ({ open, onClose }) => {
                     ) : (
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                             {cartItems.map(item => (
-                                <Card key={item.id} sx={{ display: 'flex', alignItems: 'center' }} elevation={1}>
+                                <Card key={item.id} sx={{ display: 'flex', alignItems: 'center', boxShadow: "none" }} elevation={1}>
                                     <CardMedia
                                         component="img"
                                         sx={{ width: 80, height: 80, objectFit: 'contain', p: 0.5 }}
