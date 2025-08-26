@@ -76,9 +76,9 @@ export default function MarketDetails() {
                         <List>
                             {users.length > 0 ? (
                                 users.map((u) => (
-                                    <div key={u.marketUuid}>
+                                    <div key={u.id}>
                                         <ListItem>
-                                            <ListItemText primary={u.name} secondary={u.email} />
+                                            <ListItemText primary={u.username} />
                                         </ListItem>
                                         <Divider />
                                     </div>
