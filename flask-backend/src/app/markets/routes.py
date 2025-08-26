@@ -34,7 +34,7 @@ def list_market_users(market_uuid, query_args):
     return market_service.list_market_users(str(market_uuid), query_args)
 
 
-@markets_bp.post("/markets")
+@markets_bp.post("/")
 @markets_bp.input(market_schemas["input_with_owner"])
 @markets_bp.output(market_schemas["main"], status_code=201)
 @markets_bp.doc(summary="Create a new market with an owner")
