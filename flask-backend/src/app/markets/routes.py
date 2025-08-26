@@ -32,7 +32,7 @@ register_crud_routes(
 @markets_bp.output(MarketUsersPagination)
 @markets_bp.doc(summary="List users for a market")
 def list_market_users(market_uuid, query_args):
-    return market_service.list_market_users(str(market_uuid), query_args)
+    return market_service.list_market_users(str(market_uuid), query_args), 200
 
 
 @markets_bp.post("/")
