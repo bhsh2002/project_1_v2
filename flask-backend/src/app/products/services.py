@@ -6,6 +6,7 @@ import pandas as pd
 from dev_kit.services import BaseService
 from dev_kit.database.extensions import db
 
+from ..markets.services import market_service
 from ..shelves.services import shelf_service
 from .models import Product
 from .repositories import ProductRepository
@@ -18,21 +19,33 @@ class ProductService(BaseService[Product]):
         )
 
     def pre_create_hook(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        market_uuid = data.pop("market_uuid", None)
+        if market_uuid:
+            market = market_service.get_by_uuid(market_uuid)
+
         shelf_code = data.pop("shelf_code", None)
         if shelf_code:
             shelf = shelf_service.get_by_code(shelf_code)
             if not shelf:
-                shelf = shelf_service.create({"code": shelf_code, "market_id": 1})
+                shelf = shelf_service.create(
+                    {"code": shelf_code, "market_id": market.id}
+                )
             if shelf:
                 data["shelf_id"] = shelf.id
         return data
 
     def pre_update_hook(self, instance: Product, data: Dict[str, Any]) -> None:
+        market_uuid = data.pop("market_uuid", None)
+        if market_uuid:
+            market = market_service.get_by_uuid(market_uuid)
+
         shelf_code = data.pop("shelf_code", None)
         if shelf_code:
             shelf = shelf_service.get_by_code(shelf_code)
             if not shelf:
-                shelf = shelf_service.create({"code": shelf_code, "market_id": 1})
+                shelf = shelf_service.create(
+                    {"code": shelf_code, "market_id": market.id}
+                )
             if shelf:
                 instance.shelf_id = shelf.id
 

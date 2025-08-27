@@ -3,7 +3,8 @@ import uuid
 from pathlib import Path
 
 from apiflask import APIBlueprint
-from flask import send_from_directory, current_app
+from flask import send_from_directory, current_app, abort
+from flask_jwt_extended import get_jwt, verify_jwt_in_request
 
 from dev_kit.database.extensions import db
 
@@ -54,6 +55,16 @@ register_crud_routes(
 )
 def create_product_with_image(form_and_files_data):
     try:
+        verify_jwt_in_request()
+        claims = get_jwt()
+
+        markets = claims.get("markets", [])
+        market_uuid = markets[0] if markets else None
+        form_and_files_data["market_uuid"] = market_uuid
+
+        if not markets:
+            abort(403, "User is not assigned to any market.")
+
         # In testing, avoid file I/O and background task to keep tests fast/stable
         if current_app.config.get("TESTING"):
             form_and_files_data.pop("image", None)
@@ -95,10 +106,18 @@ def create_product_with_image(form_and_files_data):
 )
 def update_product(id, form_and_files_data):
     try:
+        verify_jwt_in_request()
+        claims = get_jwt()
+
+        markets = claims.get("markets", [])
+        market_uuid = markets[0] if markets else None
+        form_and_files_data["market_uuid"] = market_uuid
+
+        if not markets:
+            abort(403, "User is not assigned to any market.")
+
         product = product_service.get_by_uuid(id)
         if not product:
-            from apiflask import abort
-
             abort(404, f"Product with UUID {id} not found.")
 
         image_file = form_and_files_data.pop("image", None)
