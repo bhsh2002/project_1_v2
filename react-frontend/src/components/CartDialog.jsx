@@ -17,7 +17,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Tooltip from '@mui/material/Tooltip';
 import Slide from '@mui/material/Slide';
 import { forwardRef, useState } from 'react';
-import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import DialogContentText from '@mui/material/DialogContentText';
 
 // Transition for a smoother dialog opening on mobile
@@ -85,12 +85,12 @@ const CartDialog = ({ open, onClose }) => {
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                             {cartItems.map(item => (
                                 <Card key={item.id} sx={{ display: 'flex', alignItems: 'center', boxShadow: "none" }} elevation={1}>
-                                    <CardMedia
+                                    {item.image_url ? <CardMedia
                                         component="img"
                                         sx={{ width: 80, height: 80, objectFit: 'contain', p: 0.5 }}
                                         image={"https://price.savana.ly/back/api/v1/products" + item.image_url}
                                         alt={item.name}
-                                    />
+                                    /> : <ImageNotSupportedIcon sx={{ width: 80, height: 80, p: 1 }} color="disabled" />}
                                     <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, p: 1 }}>
                                         <Typography component="div" variant='h6' sx={{ fontWeight: 'bold' }}>
                                             {item.name}
@@ -100,13 +100,13 @@ const CartDialog = ({ open, onClose }) => {
                                         </Typography>
                                         {/* --- Quantity Controls --- */}
                                         <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                            <IconButton size="medium" onClick={() => removeFromCart(item.id)}><RemoveIcon fontSize="inherit" /></IconButton>
+                                            <IconButton size="medium" color='error' onClick={() => removeFromCart(item.id)}><RemoveIcon fontSize="inherit" /></IconButton>
                                             <Typography sx={{ px: 1.5 }} variant="body2">{item.quantity}</Typography>
-                                            <IconButton size="medium" onClick={() => addToCart(item)}><AddIcon fontSize="inherit" /></IconButton>
+                                            <IconButton size="medium" color='success' onClick={() => addToCart(item)}><AddIcon fontSize="inherit" /></IconButton>
                                         </Box>
                                     </Box>
                                     <Tooltip title="حذف المنتج">
-                                        <IconButton onClick={() => deleteFromCart(item.id)} size="large" sx={{ mr: 2 }}>
+                                        <IconButton onClick={() => deleteFromCart(item.id)} size="large" sx={{ mr: 1 }}>
                                             <DeleteForeverIcon color="error" fontSize='inherit' />
                                         </IconButton>
                                     </Tooltip>

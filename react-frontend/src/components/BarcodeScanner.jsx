@@ -12,7 +12,7 @@ const scanningAnimation = keyframes`
   100% { top: 60%; }
 `;
 
-const BarcodeScanner = forwardRef(({ onScanSuccess, onScanFailure, onClose }, ref) => {
+const BarcodeScanner = forwardRef(({ onScanSuccess, onScanFailure, onClose, onReady }, ref) => {
     const scannerRef = useRef(null);
 
     useImperativeHandle(ref, () => ({
@@ -33,7 +33,8 @@ const BarcodeScanner = forwardRef(({ onScanSuccess, onScanFailure, onClose }, re
                 scannerRef.current.pause();
             },
             (errorMessage) => { onScanFailure?.(errorMessage); scannerRef.current?.resume() }
-        ).catch(err => console.error("Scanner start failed:", err));
+        ).then(() => { onReady?.(); }
+        ).catch(err => { console.error("Scanner start failed:", err); scannerRef.current?.resume() });
 
         return () => {
             if (scannerRef.current?.isScanning) scannerRef.current?.stop().catch(err => console.error("Scanner stop failed:", err));

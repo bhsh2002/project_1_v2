@@ -32,7 +32,7 @@ function App() {
               <CssBaseline />
               <MainLayout>
                 <Routes>
-                  <Route path="/" element={<ScannerPage />} />
+                  <Route path="/:marketUuid" element={<ScannerPage />} />
                   <Route path="/admin" element={<AdminLayout />}>
                     <Route index element={<Dashboard />} />
                     <Route path="login" element={<LoginPage />} />

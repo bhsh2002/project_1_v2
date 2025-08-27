@@ -11,11 +11,6 @@ const CartBar = ({ onOpenCart }) => {
     return (
         <Paper
             sx={{
-                position: 'fixed',
-                top: 20,
-                left: 0,
-                right: 0,
-                zIndex: 2000, // أعلى من أغلب العناصر
                 width: "90vw",
                 p: 1,
                 mx: 'auto',

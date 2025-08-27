@@ -76,7 +76,7 @@ const ProductDisplay = ({ product, onClose }) => {
                     إضافة إلى السلة
                 </Button>
             </Stack> : <Typography variant="h4" component="h2" sx={{ mt: 2 }}>
-                !لم يتم إيجاد المنتج
+                لم يتم إيجاد المنتج!
             </Typography>}
         </Box>
     );

@@ -18,12 +18,16 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Typography from '@mui/material/Typography';
 import CartDialog from '../components/CartDialog';
 import CartBar from '../components/CartBar';
+import { Divider } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 const ScannerPage = () => {
+    const { marketUuid } = useParams();
     const [productData, setProductData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [isScannerOpen, setScannerOpen] = useState(false);
+    const [isScannerReady, setScannerReady] = useState(false);
     const [isCartOpen, setCartOpen] = useState(false);
 
     const scannerRef = useRef(null);
@@ -35,8 +39,8 @@ const ScannerPage = () => {
     const successAudio = useMemo(() => new Audio('/audio/scan-success.mp3'), []);
     const errorAudio = useMemo(() => new Audio('/audio/error.mp3'), []);
 
-    const handleOpenScanner = useCallback(() => setScannerOpen(true), []);
-    const handleCloseScanner = useCallback(() => setScannerOpen(false), []);
+    const handleOpenScanner = useCallback(() => { setScannerOpen(true); setScannerReady(false); }, []);
+    const handleCloseScanner = useCallback(() => { setScannerOpen(false); setScannerReady(false); }, []);
 
     const handleResetScanner = useCallback(() => {
         if (timerRef.current) {
@@ -53,7 +57,7 @@ const ScannerPage = () => {
         setIsLoading(true);
         setError(null);
         try {
-            const product = await fetchProductByBarcode(decodedText);
+            const product = await fetchProductByBarcode(marketUuid, decodedText);
             setProductData(product);
             // Play success audio safely
             if (Object.keys(product).length > 0)
@@ -81,66 +85,85 @@ const ScannerPage = () => {
     const isSnackbarOpen = Boolean(error);
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: 1, p: 3, textAlign: 'center' }}>
-            <CartBar onOpenCart={() => setCartOpen(true)} />
+        <Box sx={{ height: '100dvh', display: 'flex', flexDirection: 'column', bgcolor: 'background.default', pt: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: "5rem" }}>
+                {!isScannerOpen && <CartBar onOpenCart={() => setCartOpen(true)} />}
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: 1, p: 3, textAlign: 'center' }}>
 
-            <Typography variant="h4" gutterBottom>قارئ سعر المنتجات</Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: '400px' }}>
-                قم بتوجيه الكاميرا على باركود المنتج.
-            </Typography>
+                <Typography variant="h4" gutterBottom>مرحبا بك في سوق عكاظ</Typography>
+                <Divider sx={{ width: '80px', mb: 10, borderBottomWidth: 3, borderColor: 'primary.main', mx: 'auto' }} />
+                <Typography variant="h4" gutterBottom>قارئ أسعار المنتجات</Typography>
+                <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: '400px' }}>
+                    قم بتوجيه الكاميرا نحو باركود المنتج.
+                </Typography>
 
-            <Button
-                variant="contained"
-                size="large"
-                startIcon={<CameraAltIcon />}
-                onClick={handleOpenScanner}
-            >
-                ابدأ المسح
-            </Button>
-
-            {/* --- Scanner Dialog --- */}
-            <Dialog
-                fullScreen={isMobile}
-                open={isScannerOpen}
-                onClose={handleCloseScanner}
-                PaperProps={{ sx: { height: 'auto', width: "90vw" } }}
-            >
-                <BarcodeScanner
-                    ref={scannerRef}
-                    onScanSuccess={handleScanSuccess}
-                    onClose={handleCloseScanner}
-                />
-                <Backdrop
-                    sx={{ color: '#fff', zIndex: theme => theme.zIndex.tooltip + 1, position: 'absolute' }}
-                    open={isLoading && isScannerOpen}
+                <Button
+                    variant="contained"
+                    size="large"
+                    startIcon={<CameraAltIcon />}
+                    onClick={handleOpenScanner}
                 >
-                    <CircularProgress color="inherit" />
-                </Backdrop>
-            </Dialog>
+                    ابدأ المسح
+                </Button>
 
-            {/* --- Product Display Dialog --- */}
-            <Dialog
-                open={isProductDialogOpen}
-                onClose={handleResetScanner}
-                TransitionComponent={Fade}
-            >
-                {productData && <ProductDisplay product={productData} onClose={handleResetScanner} />}
-            </Dialog>
+                {/* --- Scanner Dialog --- */}
+                <Dialog
+                    fullScreen={isMobile}
+                    open={isScannerOpen}
+                    onClose={handleCloseScanner}
+                    PaperProps={{ sx: { height: 'auto', width: "90vw", position: "relative" } }}
+                >
+                    <CartBar onOpenCart={() => setCartOpen(true)} />
 
-            {/* --- Cart Dialog --- */}
-            <CartDialog open={isCartOpen} onClose={() => setCartOpen(false)} />
+                    {/* الـ Scanner دايمًا موجود */}
+                    <BarcodeScanner
+                        ref={scannerRef}
+                        onScanSuccess={handleScanSuccess}
+                        onClose={handleCloseScanner}
+                        onReady={() => setScannerReady(true)} // يستدعى من داخل BarcodeScanner
+                    />
 
-            {/* --- Error Snackbar --- */}
-            <Snackbar
-                open={isSnackbarOpen}
-                autoHideDuration={4000}
-                onClose={handleCloseSnackbar}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            >
-                <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
-                    {error}
-                </Alert>
-            </Snackbar>
+                    {/* Overlay التحميل */}
+                    {!isScannerReady && (
+                        <Backdrop
+                            open
+                            sx={{
+                                bgcolor: "#fff",
+                                zIndex: theme => theme.zIndex.drawer + 1,
+                                position: 'absolute'
+                            }}
+                        >
+                            <CircularProgress color="inherit" />
+                            <Typography sx={{ mt: 2 }}>جاري تشغيل الكاميرا...</Typography>
+                        </Backdrop>
+                    )}
+                </Dialog>
+
+                {/* --- Product Display Dialog --- */}
+                <Dialog
+                    open={isProductDialogOpen}
+                    onClose={handleResetScanner}
+                    TransitionComponent={Fade}
+                >
+                    {productData && <ProductDisplay product={productData} onClose={handleResetScanner} />}
+                </Dialog>
+
+                {/* --- Cart Dialog --- */}
+                <CartDialog open={isCartOpen} onClose={() => setCartOpen(false)} />
+
+                {/* --- Error Snackbar --- */}
+                <Snackbar
+                    open={isSnackbarOpen}
+                    autoHideDuration={4000}
+                    onClose={handleCloseSnackbar}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                >
+                    <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+                        {error}
+                    </Alert>
+                </Snackbar>
+            </Box>
         </Box>
     );
 };

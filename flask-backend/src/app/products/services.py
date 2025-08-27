@@ -44,6 +44,13 @@ class ProductService(BaseService[Product]):
     ) -> Product | None:
         return self.repo.get_by_barcode(barcode_, include_soft_deleted)
 
+    def get_by_market_uuid_and_barcode(
+        self, market_uuid_: Any, barcode_: Any, include_soft_deleted: bool = False
+    ) -> Product | None:
+        return self.repo.get_by_market_uuid_and_barcode(
+            market_uuid_, barcode_, include_soft_deleted
+        )
+
     def process_bulk_file(self, file_storage, batch_size: int = 1000) -> Dict[str, Any]:
         try:
             filename = file_storage.filename

@@ -147,6 +147,16 @@ def get_product_by_barcode(barcode: str):
     return product_service.get_by_barcode(barcode)
 
 
+@products_bp.get("/market/<string:market_uuid>/barcode/<string:barcode>")
+@products_bp.output(product_schemas["main"])
+@products_bp.doc(
+    summary="Get Product by Barcode",
+    description="Fetches a single product by its unique barcode.",
+)
+def get_market_product_by_barcode(market_uuid: str, barcode: str):
+    return product_service.get_by_market_uuid_and_barcode(market_uuid, barcode)
+
+
 @products_bp.post("/bulk-upload")
 @products_bp.input(BulkUploadSchema, location="files")
 @products_bp.output(BulkUploadResponseSchema)

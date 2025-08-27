@@ -25,7 +25,7 @@ const MainLayout = ({ children }) => {
                 component="main"
                 sx={{
                     flexGrow: 1,
-                    p: { xs: 2, sm: 3 }, // زيادة الـ padding قليلًا
+                    // p: { xs: 2, sm: 3 }, // زيادة الـ padding قليلًا
                     display: 'flex',
                     flexDirection: 'column'
                 }}
