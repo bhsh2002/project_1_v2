@@ -9,16 +9,21 @@ from dev_kit.exceptions import AuthenticationError
 from dev_kit.modules.users.models import User
 from dev_kit.database.extensions import db
 
-from ..markets.models import MarketUsers
+from ..markets.models import Market, MarketUsers
 
 
 class UserServiceExtra(BaseService[User]):
     def login_market_user(self, username: str, password: str) -> Tuple[User, str]:
         user = self.repo._query().filter(User.username == username).first()
         user_markets = (
-            self._db_session.query(MarketUsers)
-            .filter(MarketUsers.user_id == user.id)
-            .all()
+            (
+                db.session.query(Market)
+                .join(MarketUsers, Market.id == MarketUsers.market_id)
+                .filter(MarketUsers.user_id == user.id)
+                .all()
+            )
+            if user
+            else []
         )
 
         if not user or not user.check_password(password):
