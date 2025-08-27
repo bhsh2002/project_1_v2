@@ -9,10 +9,17 @@ from dev_kit.exceptions import AuthenticationError
 from dev_kit.modules.users.models import User
 from dev_kit.database.extensions import db
 
+from ..markets.models import MarketUsers
+
 
 class UserServiceExtra(BaseService[User]):
     def login_market_user(self, username: str, password: str) -> Tuple[User, str]:
         user = self.repo._query().filter(User.username == username).first()
+        user_markets = (
+            self._db_session.query(MarketUsers)
+            .filter(MarketUsers.user_id == user.id)
+            .all()
+        )
 
         if not user or not user.check_password(password):
             raise AuthenticationError("Invalid credentials.")
@@ -25,8 +32,7 @@ class UserServiceExtra(BaseService[User]):
         self._db_session.add(user)
         self._db_session.commit()
 
-        markets = list(getattr(user, "markets", []))
-        current_app.logger.error(f"User markets: {[m.uuid for m in markets]}")
+        current_app.logger.error(f"User markets: {[m.uuid for m in user_markets]}")
         roles = list(getattr(user, "roles", []))
         is_super_admin = any(getattr(role, "is_system_role", False) for role in roles)
         # Aggregate permissions from roles if available
@@ -40,7 +46,7 @@ class UserServiceExtra(BaseService[User]):
         permissions = sorted(set(permissions))
         additional_claims = {
             "user_id": user.id,
-            "markets": [market.uuid for market in markets],
+            "markets": [market.uuid for market in user_markets],
             "roles": [role.name for role in roles],
             "is_super_admin": is_super_admin,
             "permissions": permissions,
