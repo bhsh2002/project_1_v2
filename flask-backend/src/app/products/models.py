@@ -6,7 +6,7 @@ from sqlalchemy.dialects.mysql import INTEGER, VARCHAR, TEXT, DECIMAL
 class Product(db.Model, IDMixin, UUIDMixin, TimestampMixin, SoftDeleteMixin):
     __tablename__ = "products"
 
-    barcode = db.Column(VARCHAR(100), unique=True, nullable=False, index=True)
+    barcode = db.Column(VARCHAR(100), nullable=False, index=True)
     name = db.Column(VARCHAR(100), nullable=False, index=True)
     description = db.Column(TEXT, nullable=True)
     price = db.Column(DECIMAL(precision=7, scale=2), nullable=False)
@@ -20,7 +20,16 @@ class Product(db.Model, IDMixin, UUIDMixin, TimestampMixin, SoftDeleteMixin):
         INTEGER, db.ForeignKey("shelves.id", ondelete="CASCADE"), nullable=False
     )
 
+    market_id = db.Column(
+        INTEGER, db.ForeignKey("markets.id", ondelete="CASCADE"), nullable=False
+    )
+
     shelf = db.relationship("Shelf", back_populates="products")
+    market = db.relationship("Market", back_populates="products")
+
+    __table_args__ = (
+        db.UniqueConstraint("barcode", "market_id", name="uq_barcode_market"),
+    )
 
     @property
     def shelf_code(self) -> str | None:

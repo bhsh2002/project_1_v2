@@ -22,6 +22,9 @@ class Market(db.Model, IDMixin, UUIDMixin, TimestampMixin, SoftDeleteMixin):
     shelves = db.relationship(
         "Shelf", back_populates="market", cascade="all, delete-orphan"
     )
+    products = db.relationship(
+        "Product", back_populates="market", cascade="all, delete-orphan"
+    )
 
     def __repr__(self):
         return f"<Market {self.name}>"
