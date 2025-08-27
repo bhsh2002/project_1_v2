@@ -26,7 +26,7 @@ class UserServiceExtra(BaseService[User]):
         self._db_session.commit()
 
         markets = list(getattr(user, "markets", []))
-        current_app.logger.debug(f"User markets: {[m.uuid for m in markets]}")
+        current_app.logger.error(f"User markets: {[m.uuid for m in markets]}")
         roles = list(getattr(user, "roles", []))
         is_super_admin = any(getattr(role, "is_system_role", False) for role in roles)
         # Aggregate permissions from roles if available
