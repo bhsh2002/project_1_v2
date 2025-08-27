@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from typing import Tuple
-from flask import current_app
 
 from flask_jwt_extended import create_access_token, create_refresh_token
 
@@ -25,6 +24,7 @@ class UserServiceExtra(BaseService[User]):
             if user
             else []
         )
+        market_uuid = user_markets[0].uuid if user_markets else None
 
         if not user or not user.check_password(password):
             raise AuthenticationError("Invalid credentials.")
@@ -37,7 +37,6 @@ class UserServiceExtra(BaseService[User]):
         self._db_session.add(user)
         self._db_session.commit()
 
-        current_app.logger.error(f"User markets: {[m.uuid for m in user_markets]}")
         roles = list(getattr(user, "roles", []))
         is_super_admin = any(getattr(role, "is_system_role", False) for role in roles)
         # Aggregate permissions from roles if available
@@ -65,7 +64,7 @@ class UserServiceExtra(BaseService[User]):
         refresh_token = create_refresh_token(
             identity=str(getattr(user, "uuid", user.id))
         )
-        return user, access_token, refresh_token
+        return user, market_uuid, access_token, refresh_token
 
 
 user_service_extra = UserServiceExtra(model=User, db_session=db.session)

@@ -29,14 +29,17 @@ def legacy_list_market_users(market_uuid, query_args):
 @users_extra_bp.output(AuthTokenSchema)
 @users_extra_bp.doc(summary="User Login")
 def login(json_data):
-    user, access_token, refresh_token = user_service_extra.login_market_user(
-        username=json_data["username"], password=json_data["password"]
+    user, market_uuid, access_token, refresh_token = (
+        user_service_extra.login_market_user(
+            username=json_data["username"], password=json_data["password"]
+        )
     )
     user_data = user_schemas["main"]().dump(user)
     resp = make_response(
         jsonify(
             {
                 "user": user_data,
+                "market_uuid": market_uuid,
                 "access_token": access_token,
                 "refresh_token": refresh_token,
             }
