@@ -7,12 +7,13 @@ load_dotenv(os.path.join(basedir, ".env.dev"))
 
 class JWTConfig:
     JWT_SECRET_KEY = os.environ.get("SECRET_KEY")
-    JWT_TOKEN_LOCATION = "cookies"
-    JWT_COOKIE_CSRF_PROTECT = True
-    JWT_ACCESS_COOKIE_NAME = "ka"
-    JWT_ACCESS_CSRF_COOKIE_NAME = "cka"
-    JWT_REFRESH_COOKIE_NAME = "rk"
-    JWT_REFRESH_CSRF_COOKIE_NAME = "crk"
+    JWT_TOKEN_LOCATION = ["headers"]
+    # JWT_TOKEN_LOCATION = "cookies"
+    # JWT_COOKIE_CSRF_PROTECT = True
+    # JWT_ACCESS_COOKIE_NAME = "ka"
+    # JWT_ACCESS_CSRF_COOKIE_NAME = "cka"
+    # JWT_REFRESH_COOKIE_NAME = "rk"
+    # JWT_REFRESH_CSRF_COOKIE_NAME = "crk"
 
 
 class Config(JWTConfig):
