@@ -32,7 +32,7 @@ product_schemas = create_crud_schemas(
 
 
 class ProductWithImageSchema(product_schemas["input"]):
-    image = File(required=True, metadata={"description": "An image file"})
+    image = File(required=False, metadata={"description": "An image file"})
 
 
 class ProductUpdateSchema(product_schemas["input"]):

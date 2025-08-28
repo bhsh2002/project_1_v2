@@ -1,6 +1,5 @@
 from decimal import Decimal, InvalidOperation
 from typing import Any, Dict
-from flask import current_app
 
 import pandas as pd
 
@@ -140,9 +139,6 @@ class ProductService(BaseService[Product]):
                             )
                         if shelf:
                             product_data["shelf_id"] = shelf.id
-
-                        current_app.logger.error(f"product_data: {product_data}")
-                        current_app.logger.error(f"shelf: {shelf}")
 
                         if barcode in existing_products_map:
                             # تحديث
