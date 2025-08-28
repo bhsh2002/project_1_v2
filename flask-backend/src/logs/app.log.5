@@ -1,48 +1,11 @@
-2025-08-28 07:49:48,157 [ERROR] in routing: Unhandled exception: 
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 435, in parse
-    data = self._process_location_data(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 389, in _process_location_data
-    data = schema.load(preprocessed_data, **load_kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 149, in load
-    return cast("ma.Schema", super()).load(_cast_data(data), **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/marshmallow/schema.py", line 730, in load
-    return self._do_load(
-           ^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/marshmallow/schema.py", line 938, in _do_load
-    raise exc
-marshmallow.exceptions.ValidationError: {'market_id': ['Missing data for required field.']}
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 638, in wrapper
-    parsed_args = self.parse(
-                  ^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 439, in parse
-    self._on_validation_error(
-  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 265, in _on_validation_error
-    error_handler(
-  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 51, in handle_error
-    raise _ValidationError(
-apiflask.exceptions._ValidationError
-2025-08-28 07:51:58,717 [ERROR] in routing: Unhandled exception: (mysql.connector.errors.ProgrammingError) 1054 (42S22): Unknown column 'market_id' in 'field list'
-[SQL: INSERT INTO products (barcode, name, description, price, stock_quantity, image_url, image_processing_status, shelf_id, market_id, uuid, deleted_at) VALUES (%(barcode)s, %(name)s, %(description)s, %(price)s, %(stock_quantity)s, %(image_url)s, %(image_processing_status)s, %(shelf_id)s, %(market_id)s, %(uuid)s, %(deleted_at)s)]
-[parameters: {'barcode': '1', 'name': 't', 'description': None, 'price': Decimal('1.00'), 'stock_quantity': 0, 'image_url': None, 'image_processing_status': 'PENDING', 'shelf_id': 1, 'market_id': 1, 'uuid': '307c1a8d-eb1e-4673-a415-7a76938af71b', 'deleted_at': None}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-08-27 11:34:16,455 [ERROR] in routing: Unhandled exception: (mysql.connector.errors.IntegrityError) 1062 (23000): Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
+[SQL: INSERT INTO products (barcode, name, description, price, stock_quantity, image_url, image_processing_status, shelf_id, uuid, deleted_at) VALUES (%(barcode)s, %(name)s, %(description)s, %(price)s, %(stock_quantity)s, %(image_url)s, %(image_processing_status)s, %(shelf_id)s, %(uuid)s, %(deleted_at)s)]
+[parameters: {'barcode': '6240000403041', 'name': 't', 'description': None, 'price': Decimal('1.00'), 'stock_quantity': 0, 'image_url': None, 'image_processing_status': 'PENDING', 'shelf_id': 4, 'uuid': '6b8831af-ebd9-420c-9d49-881d55195d3c', 'deleted_at': None}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
 Traceback (most recent call last):
   File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 772, in cmd_query
     self._cmysql.query(
-_mysql_connector.MySQLInterfaceError: Unknown column 'market_id' in 'field list'
+_mysql_connector.MySQLInterfaceError: Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
 
 The above exception was the direct cause of the following exception:
 
@@ -58,7 +21,7 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 781, in cmd_query
     raise get_mysql_exception(
-mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'market_id' in 'field list'
+mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
 
 The above exception was the direct cause of the following exception:
 
@@ -131,8 +94,31 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 781, in cmd_query
     raise get_mysql_exception(
-sqlalchemy.exc.ProgrammingError: (mysql.connector.errors.ProgrammingError) 1054 (42S22): Unknown column 'market_id' in 'field list'
-[SQL: INSERT INTO products (barcode, name, description, price, stock_quantity, image_url, image_processing_status, shelf_id, market_id, uuid, deleted_at) VALUES (%(barcode)s, %(name)s, %(description)s, %(price)s, %(stock_quantity)s, %(image_url)s, %(image_processing_status)s, %(shelf_id)s, %(market_id)s, %(uuid)s, %(deleted_at)s)]
-[parameters: {'barcode': '1', 'name': 't', 'description': None, 'price': Decimal('1.00'), 'stock_quantity': 0, 'image_url': None, 'image_processing_status': 'PENDING', 'shelf_id': 1, 'market_id': 1, 'uuid': '307c1a8d-eb1e-4673-a415-7a76938af71b', 'deleted_at': None}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-2025-08-28 08:16:19,893 [INFO] in tasks: Successfully processed image for product 1
+sqlalchemy.exc.IntegrityError: (mysql.connector.errors.IntegrityError) 1062 (23000): Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
+[SQL: INSERT INTO products (barcode, name, description, price, stock_quantity, image_url, image_processing_status, shelf_id, uuid, deleted_at) VALUES (%(barcode)s, %(name)s, %(description)s, %(price)s, %(stock_quantity)s, %(image_url)s, %(image_processing_status)s, %(shelf_id)s, %(uuid)s, %(deleted_at)s)]
+[parameters: {'barcode': '6240000403041', 'name': 't', 'description': None, 'price': Decimal('1.00'), 'stock_quantity': 0, 'image_url': None, 'image_processing_status': 'PENDING', 'shelf_id': 4, 'uuid': '6b8831af-ebd9-420c-9d49-881d55195d3c', 'deleted_at': None}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-08-27 12:31:48,509 [ERROR] in routing: Unhandled exception: 403 Forbidden: User is not assigned to any market.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 650, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 556, in _response
+    rv = f(*args, **kwargs)
+         ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
+    return current_app.ensure_sync(f)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/app/products/routes.py", line 66, in create_product_with_image
+    abort(403, "User is not assigned to any market.")
+  File "/usr/local/lib/python3.11/site-packages/flask/helpers.py", line 284, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/werkzeug/exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.Forbidden: 403 Forbidden: User is not assigned to any market.

@@ -1,30 +1,4 @@
-2025-08-27 11:34:16,455 [ERROR] in routing: Unhandled exception: (mysql.connector.errors.IntegrityError) 1062 (23000): Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
-[SQL: INSERT INTO products (barcode, name, description, price, stock_quantity, image_url, image_processing_status, shelf_id, uuid, deleted_at) VALUES (%(barcode)s, %(name)s, %(description)s, %(price)s, %(stock_quantity)s, %(image_url)s, %(image_processing_status)s, %(shelf_id)s, %(uuid)s, %(deleted_at)s)]
-[parameters: {'barcode': '6240000403041', 'name': 't', 'description': None, 'price': Decimal('1.00'), 'stock_quantity': 0, 'image_url': None, 'image_processing_status': 'PENDING', 'shelf_id': 4, 'uuid': '6b8831af-ebd9-420c-9d49-881d55195d3c', 'deleted_at': None}]
-(Background on this error at: https://sqlalche.me/e/20/gkpj)
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 772, in cmd_query
-    self._cmysql.query(
-_mysql_connector.MySQLInterfaceError: Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
-    cursor.execute(statement, parameters)
-  File "/usr/local/lib/python3.11/site-packages/mysql/connector/cursor_cext.py", line 353, in execute
-    self._connection.cmd_query(
-  File "/usr/local/lib/python3.11/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
-    return method(cnx, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 781, in cmd_query
-    raise get_mysql_exception(
-mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
-
-The above exception was the direct cause of the following exception:
-
+2025-08-28 08:16:59,678 [ERROR] in routing: Unhandled exception: 403 Forbidden: User is not assigned to any market.
 Traceback (most recent call last):
   File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
     rv = self.dispatch_request()
@@ -41,64 +15,14 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
     return current_app.ensure_sync(f)(*args, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/products/routes.py", line 85, in create_product_with_image
-    new_product = product_service.create(form_and_files_data)
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/dev_kit/services.py", line 69, in create
-    self._db_session.flush()  # Use flush to get the ID before commit
-    ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/scoping.py", line 938, in flush
-    return self._proxied.flush(objects=objects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4345, in flush
-    self._flush(objects)
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4480, in _flush
-    with util.safe_reraise():
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
-    raise exc_value.with_traceback(exc_tb)
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4441, in _flush
-    flush_context.execute()
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
-    rec.execute(self)
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
-    util.preloaded.orm_persistence.save_obj(
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
-    _emit_insert_statements(
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 1233, in _emit_insert_statements
-    result = connection.execute(
-             ^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
-    return meth(
-           ^^^^^
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
-    return connection._execute_clauseelement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
-    ret = self._execute_context(
-          ^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
-    return self._exec_single_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
-    cursor.execute(statement, parameters)
-  File "/usr/local/lib/python3.11/site-packages/mysql/connector/cursor_cext.py", line 353, in execute
-    self._connection.cmd_query(
-  File "/usr/local/lib/python3.11/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
-    return method(cnx, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 781, in cmd_query
-    raise get_mysql_exception(
-sqlalchemy.exc.IntegrityError: (mysql.connector.errors.IntegrityError) 1062 (23000): Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
-[SQL: INSERT INTO products (barcode, name, description, price, stock_quantity, image_url, image_processing_status, shelf_id, uuid, deleted_at) VALUES (%(barcode)s, %(name)s, %(description)s, %(price)s, %(stock_quantity)s, %(image_url)s, %(image_processing_status)s, %(shelf_id)s, %(uuid)s, %(deleted_at)s)]
-[parameters: {'barcode': '6240000403041', 'name': 't', 'description': None, 'price': Decimal('1.00'), 'stock_quantity': 0, 'image_url': None, 'image_processing_status': 'PENDING', 'shelf_id': 4, 'uuid': '6b8831af-ebd9-420c-9d49-881d55195d3c', 'deleted_at': None}]
-(Background on this error at: https://sqlalche.me/e/20/gkpj)
-2025-08-27 12:31:48,509 [ERROR] in routing: Unhandled exception: 403 Forbidden: User is not assigned to any market.
+  File "/app/src/app/products/routes.py", line 66, in create_product_with_image
+    abort(403, "User is not assigned to any market.")
+  File "/usr/local/lib/python3.11/site-packages/flask/helpers.py", line 284, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/werkzeug/exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.Forbidden: 403 Forbidden: User is not assigned to any market.
+2025-08-28 08:17:16,119 [ERROR] in routing: Unhandled exception: 403 Forbidden: User is not assigned to any market.
 Traceback (most recent call last):
   File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
     rv = self.dispatch_request()

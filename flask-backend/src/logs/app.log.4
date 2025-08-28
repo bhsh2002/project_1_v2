@@ -1,4 +1,109 @@
-2025-08-26 09:54:11,824 [ERROR] in routing: Unhandled exception: 'password' is an invalid keyword argument for User
+2025-08-28 07:32:52,315 [ERROR] in repository: Database error in get_by_barcode for Product: (mysql.connector.errors.ProgrammingError) 1054 (42S22): Unknown column 'products.market_id' in 'field list'
+[SQL: SELECT products.barcode AS products_barcode, products.name AS products_name, products.description AS products_description, products.price AS products_price, products.stock_quantity AS products_stock_quantity, products.image_url AS products_image_url, products.image_processing_status AS products_image_processing_status, products.shelf_id AS products_shelf_id, products.market_id AS products_market_id, products.id AS products_id, products.uuid AS products_uuid, products.created_at AS products_created_at, products.updated_at AS products_updated_at, products.deleted_at AS products_deleted_at 
+FROM products 
+WHERE products.barcode = %(barcode_1)s AND products.deleted_at IS NULL 
+ LIMIT %(param_1)s]
+[parameters: {'barcode_1': '4752224003195', 'param_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 772, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'products.market_id' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/local/lib/python3.11/site-packages/mysql/connector/cursor_cext.py", line 353, in execute
+    self._connection.cmd_query(
+  File "/usr/local/lib/python3.11/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 781, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'products.market_id' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/dev_kit/database/repository.py", line 41, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/app/products/repositories.py", line 19, in get_by_barcode
+    return query.first()
+           ^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2759, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/local/lib/python3.11/site-packages/mysql/connector/cursor_cext.py", line 353, in execute
+    self._connection.cmd_query(
+  File "/usr/local/lib/python3.11/site-packages/mysql/connector/opentelemetry/context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 781, in cmd_query
+    raise get_mysql_exception(
+sqlalchemy.exc.ProgrammingError: (mysql.connector.errors.ProgrammingError) 1054 (42S22): Unknown column 'products.market_id' in 'field list'
+[SQL: SELECT products.barcode AS products_barcode, products.name AS products_name, products.description AS products_description, products.price AS products_price, products.stock_quantity AS products_stock_quantity, products.image_url AS products_image_url, products.image_processing_status AS products_image_processing_status, products.shelf_id AS products_shelf_id, products.market_id AS products_market_id, products.id AS products_id, products.uuid AS products_uuid, products.created_at AS products_created_at, products.updated_at AS products_updated_at, products.deleted_at AS products_deleted_at 
+FROM products 
+WHERE products.barcode = %(barcode_1)s AND products.deleted_at IS NULL 
+ LIMIT %(param_1)s]
+[parameters: {'barcode_1': '4752224003195', 'param_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-08-28 07:33:25,130 [ERROR] in routing: Unhandled exception: 
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 435, in parse
+    data = self._process_location_data(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 389, in _process_location_data
+    data = schema.load(preprocessed_data, **load_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 149, in load
+    return cast("ma.Schema", super()).load(_cast_data(data), **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/marshmallow/schema.py", line 730, in load
+    return self._do_load(
+           ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/marshmallow/schema.py", line 938, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'market_id': ['Missing data for required field.']}
+
+During handling of the above exception, another exception occurred:
+
 Traceback (most recent call last):
   File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
     rv = self.dispatch_request()
@@ -6,118 +111,13 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 650, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 556, in _response
-    rv = f(*args, **kwargs)
-         ^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
-    return current_app.ensure_sync(f)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/dev_kit/web/decorators.py", line 69, in wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/markets/routes.py", line 48, in create_market_with_owner
-    new = market_service.create_market_with_owner(json_data)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/markets/services.py", line 25, in create_market_with_owner
-    self.repo.create_market_owner(new_market.id, owner_username, owner_password)
-  File "/usr/local/lib/python3.11/site-packages/dev_kit/database/repository.py", line 41, in wrapper
-    return func(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/markets/repositories.py", line 59, in create_market_owner
-    new_user = User(username=username, password=password)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "<string>", line 4, in __init__
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
-    with util.safe_reraise():
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
-    raise exc_value.with_traceback(exc_tb)
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
-    manager.original_init(*mixed[1:], **kwargs)
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
-    raise TypeError(
-TypeError: 'password' is an invalid keyword argument for User
-2025-08-26 09:54:20,117 [ERROR] in routing: Unhandled exception: 'password' is an invalid keyword argument for User
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 650, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 556, in _response
-    rv = f(*args, **kwargs)
-         ^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
-    return current_app.ensure_sync(f)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/dev_kit/web/decorators.py", line 69, in wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/markets/routes.py", line 48, in create_market_with_owner
-    new = market_service.create_market_with_owner(json_data)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/markets/services.py", line 25, in create_market_with_owner
-    self.repo.create_market_owner(new_market.id, owner_username, owner_password)
-  File "/usr/local/lib/python3.11/site-packages/dev_kit/database/repository.py", line 41, in wrapper
-    return func(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/markets/repositories.py", line 59, in create_market_owner
-    new_user = User(username=username, password=password)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "<string>", line 4, in __init__
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
-    with util.safe_reraise():
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
-    raise exc_value.with_traceback(exc_tb)
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
-    manager.original_init(*mixed[1:], **kwargs)
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
-    raise TypeError(
-TypeError: 'password' is an invalid keyword argument for User
-2025-08-26 10:07:58,391 [ERROR] in routing: Unhandled exception: 'password' is an invalid keyword argument for User
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 650, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 556, in _response
-    rv = f(*args, **kwargs)
-         ^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
-    return current_app.ensure_sync(f)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/dev_kit/web/decorators.py", line 69, in wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/markets/routes.py", line 48, in create_market_with_owner
-    new = market_service.create_market_with_owner(json_data)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/markets/services.py", line 25, in create_market_with_owner
-    self.repo.create_market_owner(new_market.id, owner_username, owner_password)
-  File "/usr/local/lib/python3.11/site-packages/dev_kit/database/repository.py", line 41, in wrapper
-    return func(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/markets/repositories.py", line 59, in create_market_owner
-    new_user = User(username=username, password=password)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "<string>", line 4, in __init__
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
-    with util.safe_reraise():
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
-    raise exc_value.with_traceback(exc_tb)
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
-    manager.original_init(*mixed[1:], **kwargs)
-  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
-    raise TypeError(
-TypeError: 'password' is an invalid keyword argument for User
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 638, in wrapper
+    parsed_args = self.parse(
+                  ^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 439, in parse
+    self._on_validation_error(
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 265, in _on_validation_error
+    error_handler(
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 51, in handle_error
+    raise _ValidationError(
+apiflask.exceptions._ValidationError
