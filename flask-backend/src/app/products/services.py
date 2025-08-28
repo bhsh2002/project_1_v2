@@ -130,20 +130,19 @@ class ProductService(BaseService[Product]):
                         if pd.isna(product_data["name"]):
                             raise ValueError("name is required.")
 
-                        if (
-                            shelf_service.get_by_code(product_data["shelf_code"])
-                            is None
-                        ):
+                        shelf = shelf_service.get_by_code(product_data["shelf_code"])
+                        if shelf is None:
                             shelf = shelf_service.create(
                                 {
                                     "code": product_data["shelf_code"],
                                     "market_id": market_id,
                                 }
                             )
-                            if shelf:
-                                product_data["shelf_id"] = shelf.id
+                        if shelf:
+                            product_data["shelf_id"] = shelf.id
 
                         current_app.logger.error(f"product_data: {product_data}")
+                        current_app.logger.error(f"shelf: {shelf}")
 
                         if barcode in existing_products_map:
                             # تحديث
