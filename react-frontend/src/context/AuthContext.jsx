@@ -8,17 +8,17 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
+        const access_token = localStorage.getItem("access_token");
+        if (access_token) {
             axiosInstance.get("/auth/me")
                 .then((res) => {
                     setUser(res.data);
                 })
                 .catch(() => {
-                    localStorage.removeItem("token");
+                    localStorage.removeItem("access_token");
                     setUser(null);
                 })
-                .finally(() => setLoading(false));
+                .finally(() => { setLoading(false); console.log("Finished auth check", user) });
         } else {
             setLoading(false);
         }
@@ -26,12 +26,12 @@ export function AuthProvider({ children }) {
 
     const login = async (username, password) => {
         const res = await axiosInstance.post("/auth/login", { username, password });
-        localStorage.setItem("token", res.data.access_token);
+        localStorage.setItem("access_token", res.data.access_token);
         setUser(res.data.user);
     };
 
     const logout = () => {
-        localStorage.removeItem("token");
+        localStorage.removeItem("access_token");
         setUser(null);
     };
 
