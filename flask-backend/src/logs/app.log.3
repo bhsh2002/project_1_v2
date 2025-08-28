@@ -1,11 +1,52 @@
-2025-08-27 11:34:16,455 [ERROR] in routing: Unhandled exception: (mysql.connector.errors.IntegrityError) 1062 (23000): Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
+2025-08-26 10:09:58,227 [ERROR] in routing: Unhandled exception: 'password' is an invalid keyword argument for User
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 650, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 556, in _response
+    rv = f(*args, **kwargs)
+         ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
+    return current_app.ensure_sync(f)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/dev_kit/web/decorators.py", line 69, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/app/src/app/markets/routes.py", line 48, in create_market_with_owner
+    new = market_service.create_market_with_owner(json_data)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/app/markets/services.py", line 25, in create_market_with_owner
+    self.repo.create_market_owner(new_market.id, owner_username, owner_password)
+  File "/usr/local/lib/python3.11/site-packages/dev_kit/database/repository.py", line 41, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/app/markets/repositories.py", line 59, in create_market_owner
+    new_user = User(username=username, password=password)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 4, in __init__
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
+    raise TypeError(
+TypeError: 'password' is an invalid keyword argument for User
+2025-08-26 11:36:45,210 [ERROR] in routing: Unhandled exception: (mysql.connector.errors.IntegrityError) 1048 (23000): Column 'shelf_id' cannot be null
 [SQL: INSERT INTO products (barcode, name, description, price, stock_quantity, image_url, image_processing_status, shelf_id, uuid, deleted_at) VALUES (%(barcode)s, %(name)s, %(description)s, %(price)s, %(stock_quantity)s, %(image_url)s, %(image_processing_status)s, %(shelf_id)s, %(uuid)s, %(deleted_at)s)]
-[parameters: {'barcode': '6240000403041', 'name': 't', 'description': None, 'price': Decimal('1.00'), 'stock_quantity': 0, 'image_url': None, 'image_processing_status': 'PENDING', 'shelf_id': 4, 'uuid': '6b8831af-ebd9-420c-9d49-881d55195d3c', 'deleted_at': None}]
+[parameters: {'barcode': '6970871400022', 'name': 'قلم سبورة', 'description': None, 'price': Decimal('3.00'), 'stock_quantity': 0, 'image_url': None, 'image_processing_status': 'PENDING', 'shelf_id': None, 'uuid': '0719860d-fb49-404a-bfdf-5c0d826c6852', 'deleted_at': None}]
 (Background on this error at: https://sqlalche.me/e/20/gkpj)
 Traceback (most recent call last):
   File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 772, in cmd_query
     self._cmysql.query(
-_mysql_connector.MySQLInterfaceError: Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
+_mysql_connector.MySQLInterfaceError: Column 'shelf_id' cannot be null
 
 The above exception was the direct cause of the following exception:
 
@@ -21,7 +62,7 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 781, in cmd_query
     raise get_mysql_exception(
-mysql.connector.errors.IntegrityError: 1062 (23000): Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
+mysql.connector.errors.IntegrityError: 1048 (23000): Column 'shelf_id' cannot be null
 
 The above exception was the direct cause of the following exception:
 
@@ -41,7 +82,7 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
     return current_app.ensure_sync(f)(*args, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/products/routes.py", line 85, in create_product_with_image
+  File "/app/src/app/products/routes.py", line 74, in create_product_with_image
     new_product = product_service.create(form_and_files_data)
                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/usr/local/lib/python3.11/site-packages/dev_kit/services.py", line 69, in create
@@ -94,31 +135,10 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/usr/local/lib/python3.11/site-packages/mysql/connector/connection_cext.py", line 781, in cmd_query
     raise get_mysql_exception(
-sqlalchemy.exc.IntegrityError: (mysql.connector.errors.IntegrityError) 1062 (23000): Duplicate entry '6240000403041' for key 'products.ix_products_barcode'
+sqlalchemy.exc.IntegrityError: (mysql.connector.errors.IntegrityError) 1048 (23000): Column 'shelf_id' cannot be null
 [SQL: INSERT INTO products (barcode, name, description, price, stock_quantity, image_url, image_processing_status, shelf_id, uuid, deleted_at) VALUES (%(barcode)s, %(name)s, %(description)s, %(price)s, %(stock_quantity)s, %(image_url)s, %(image_processing_status)s, %(shelf_id)s, %(uuid)s, %(deleted_at)s)]
-[parameters: {'barcode': '6240000403041', 'name': 't', 'description': None, 'price': Decimal('1.00'), 'stock_quantity': 0, 'image_url': None, 'image_processing_status': 'PENDING', 'shelf_id': 4, 'uuid': '6b8831af-ebd9-420c-9d49-881d55195d3c', 'deleted_at': None}]
+[parameters: {'barcode': '6970871400022', 'name': 'قلم سبورة', 'description': None, 'price': Decimal('3.00'), 'stock_quantity': 0, 'image_url': None, 'image_processing_status': 'PENDING', 'shelf_id': None, 'uuid': '0719860d-fb49-404a-bfdf-5c0d826c6852', 'deleted_at': None}]
 (Background on this error at: https://sqlalche.me/e/20/gkpj)
-2025-08-27 12:31:48,509 [ERROR] in routing: Unhandled exception: 403 Forbidden: User is not assigned to any market.
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 650, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 556, in _response
-    rv = f(*args, **kwargs)
-         ^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
-    return current_app.ensure_sync(f)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/app/src/app/products/routes.py", line 66, in create_product_with_image
-    abort(403, "User is not assigned to any market.")
-  File "/usr/local/lib/python3.11/site-packages/flask/helpers.py", line 284, in abort
-    current_app.aborter(code, *args, **kwargs)
-  File "/usr/local/lib/python3.11/site-packages/werkzeug/exceptions.py", line 876, in __call__
-    raise self.mapping[code](*args, **kwargs)
-werkzeug.exceptions.Forbidden: 403 Forbidden: User is not assigned to any market.
+2025-08-26 11:37:21,861 [INFO] in tasks: Successfully processed image for product 9369
+2025-08-26 16:31:25,017 [INFO] in tasks: Successfully processed image for product 4812
+2025-08-26 16:56:15,803 [INFO] in tasks: Successfully processed image for product 9370

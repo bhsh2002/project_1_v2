@@ -1,0 +1,125 @@
+2025-08-26 16:58:15,879 [INFO] in tasks: Successfully processed image for product 9370
+2025-08-27 10:30:33,800 [ERROR] in routing: Unhandled exception: 403 Forbidden: User is not assigned to any market.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 650, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 556, in _response
+    rv = f(*args, **kwargs)
+         ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
+    return current_app.ensure_sync(f)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/app/products/routes.py", line 66, in create_product_with_image
+    abort(403, "User is not assigned to any market.")
+  File "/usr/local/lib/python3.11/site-packages/flask/helpers.py", line 284, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/werkzeug/exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.Forbidden: 403 Forbidden: User is not assigned to any market.
+2025-08-27 10:35:33,968 [ERROR] in routing: Unhandled exception: 403 Forbidden: User is not assigned to any market.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 650, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 556, in _response
+    rv = f(*args, **kwargs)
+         ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
+    return current_app.ensure_sync(f)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/app/products/routes.py", line 66, in create_product_with_image
+    abort(403, "User is not assigned to any market.")
+  File "/usr/local/lib/python3.11/site-packages/flask/helpers.py", line 284, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/werkzeug/exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.Forbidden: 403 Forbidden: User is not assigned to any market.
+2025-08-27 10:43:02,140 [ERROR] in routing: Unhandled exception: 403 Forbidden: User is not assigned to any market.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 650, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 556, in _response
+    rv = f(*args, **kwargs)
+         ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
+    return current_app.ensure_sync(f)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/app/products/routes.py", line 66, in create_product_with_image
+    abort(403, "User is not assigned to any market.")
+  File "/usr/local/lib/python3.11/site-packages/flask/helpers.py", line 284, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/werkzeug/exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.Forbidden: 403 Forbidden: User is not assigned to any market.
+2025-08-27 10:46:20,260 [ERROR] in routing: Unhandled exception: 403 Forbidden: User is not assigned to any market.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 650, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 556, in _response
+    rv = f(*args, **kwargs)
+         ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
+    return current_app.ensure_sync(f)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/app/products/routes.py", line 66, in create_product_with_image
+    abort(403, "User is not assigned to any market.")
+  File "/usr/local/lib/python3.11/site-packages/flask/helpers.py", line 284, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/werkzeug/exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.Forbidden: 403 Forbidden: User is not assigned to any market.
+2025-08-27 10:51:44,517 [ERROR] in routing: Unhandled exception: 403 Forbidden: User is not assigned to any market.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/webargs/core.py", line 650, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 556, in _response
+    rv = f(*args, **kwargs)
+         ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/apiflask/scaffold.py", line 97, in wrapper
+    return current_app.ensure_sync(f)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/app/products/routes.py", line 66, in create_product_with_image
+    abort(403, "User is not assigned to any market.")
+  File "/usr/local/lib/python3.11/site-packages/flask/helpers.py", line 284, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/werkzeug/exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.Forbidden: 403 Forbidden: User is not assigned to any market.
+2025-08-27 10:52:10,229 [ERROR] in services_extra: User markets: []
+2025-08-27 11:04:21,405 [ERROR] in services_extra: User markets: []
+2025-08-27 11:16:22,818 [ERROR] in services_extra: User markets: ['d7417954-52f3-4a5b-a614-e67a389987f7']
+2025-08-27 11:17:29,354 [INFO] in tasks: Successfully processed image for product 9371

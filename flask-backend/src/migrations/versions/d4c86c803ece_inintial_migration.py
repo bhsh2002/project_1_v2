@@ -1,8 +1,8 @@
-"""auto
+"""Inintial Migration
 
-Revision ID: 789ea42fa7df
+Revision ID: d4c86c803ece
 Revises: 
-Create Date: 2025-08-14 17:29:45.695284
+Create Date: 2025-08-27 12:22:04.241110
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision = '789ea42fa7df'
+revision = 'd4c86c803ece'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,11 +21,11 @@ def upgrade():
     op.create_table('markets',
     sa.Column('name', mysql.VARCHAR(length=100), nullable=False),
     sa.Column('phone_number', mysql.VARCHAR(length=15), nullable=False),
-    sa.Column('id', mysql.INTEGER(), autoincrement=True, nullable=False),
-    sa.Column('uuid', mysql.CHAR(length=36), nullable=False),
-    sa.Column('created_at', mysql.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
-    sa.Column('updated_at', mysql.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
-    sa.Column('deleted_at', mysql.TIMESTAMP(), nullable=True),
+    sa.Column('id', sa.INTEGER(), autoincrement=True, nullable=False),
+    sa.Column('uuid', sa.CHAR(length=36), nullable=False),
+    sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
+    sa.Column('updated_at', sa.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
+    sa.Column('deleted_at', sa.TIMESTAMP(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     with op.batch_alter_table('markets', schema=None) as batch_op:
@@ -47,11 +47,11 @@ def upgrade():
     op.create_table('shelves',
     sa.Column('code', mysql.VARCHAR(length=100), nullable=False),
     sa.Column('market_id', mysql.INTEGER(), nullable=False),
-    sa.Column('id', mysql.INTEGER(), autoincrement=True, nullable=False),
-    sa.Column('uuid', mysql.CHAR(length=36), nullable=False),
-    sa.Column('created_at', mysql.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
-    sa.Column('updated_at', mysql.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
-    sa.Column('deleted_at', mysql.TIMESTAMP(), nullable=True),
+    sa.Column('id', sa.INTEGER(), autoincrement=True, nullable=False),
+    sa.Column('uuid', sa.CHAR(length=36), nullable=False),
+    sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
+    sa.Column('updated_at', sa.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
+    sa.Column('deleted_at', sa.TIMESTAMP(), nullable=True),
     sa.ForeignKeyConstraint(['market_id'], ['markets.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
@@ -70,11 +70,11 @@ def upgrade():
     sa.Column('image_url', mysql.VARCHAR(length=100), nullable=True),
     sa.Column('image_processing_status', mysql.VARCHAR(length=20), server_default='PENDING', nullable=False),
     sa.Column('shelf_id', mysql.INTEGER(), nullable=False),
-    sa.Column('id', mysql.INTEGER(), autoincrement=True, nullable=False),
-    sa.Column('uuid', mysql.CHAR(length=36), nullable=False),
-    sa.Column('created_at', mysql.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
-    sa.Column('updated_at', mysql.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
-    sa.Column('deleted_at', mysql.TIMESTAMP(), nullable=True),
+    sa.Column('id', sa.INTEGER(), autoincrement=True, nullable=False),
+    sa.Column('uuid', sa.CHAR(length=36), nullable=False),
+    sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
+    sa.Column('updated_at', sa.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
+    sa.Column('deleted_at', sa.TIMESTAMP(), nullable=True),
     sa.ForeignKeyConstraint(['shelf_id'], ['shelves.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
@@ -85,21 +85,21 @@ def upgrade():
         batch_op.create_index(batch_op.f('ix_products_name'), ['name'], unique=False)
         batch_op.create_index(batch_op.f('ix_products_uuid'), ['uuid'], unique=True)
 
+    with op.batch_alter_table('user_roles', schema=None) as batch_op:
+        batch_op.drop_index(batch_op.f('ix_user_roles_assigned_by_user_id'))
+
+    op.drop_table('user_roles')
+    op.drop_table('role_permissions')
     with op.batch_alter_table('roles', schema=None) as batch_op:
         batch_op.drop_index(batch_op.f('ix_roles_created_at'))
         batch_op.drop_index(batch_op.f('name'))
 
     op.drop_table('roles')
-    with op.batch_alter_table('user_roles', schema=None) as batch_op:
-        batch_op.drop_index(batch_op.f('ix_user_roles_assigned_by_user_id'))
-
-    op.drop_table('user_roles')
     with op.batch_alter_table('permissions', schema=None) as batch_op:
         batch_op.drop_index(batch_op.f('ix_permissions_created_at'))
         batch_op.drop_index(batch_op.f('name'))
 
     op.drop_table('permissions')
-    op.drop_table('role_permissions')
     with op.batch_alter_table('users', schema=None) as batch_op:
         batch_op.drop_index(batch_op.f('ix_users_created_at'))
         batch_op.drop_index(batch_op.f('ix_users_deleted_at'))
@@ -133,16 +133,6 @@ def downgrade():
         batch_op.create_index(batch_op.f('ix_users_deleted_at'), ['deleted_at'], unique=False)
         batch_op.create_index(batch_op.f('ix_users_created_at'), ['created_at'], unique=False)
 
-    op.create_table('role_permissions',
-    sa.Column('role_id', mysql.INTEGER(), autoincrement=False, nullable=False),
-    sa.Column('permission_id', mysql.INTEGER(), autoincrement=False, nullable=False),
-    sa.ForeignKeyConstraint(['permission_id'], ['permissions.id'], name=op.f('role_permissions_ibfk_2'), ondelete='CASCADE'),
-    sa.ForeignKeyConstraint(['role_id'], ['roles.id'], name=op.f('role_permissions_ibfk_1'), ondelete='CASCADE'),
-    sa.PrimaryKeyConstraint('role_id', 'permission_id'),
-    mysql_collate='utf8mb4_0900_ai_ci',
-    mysql_default_charset='utf8mb4',
-    mysql_engine='InnoDB'
-    )
     op.create_table('permissions',
     sa.Column('name', mysql.VARCHAR(length=100), nullable=False),
     sa.Column('description', mysql.TEXT(), nullable=True),
@@ -157,22 +147,6 @@ def downgrade():
     with op.batch_alter_table('permissions', schema=None) as batch_op:
         batch_op.create_index(batch_op.f('name'), ['name'], unique=True)
         batch_op.create_index(batch_op.f('ix_permissions_created_at'), ['created_at'], unique=False)
-
-    op.create_table('user_roles',
-    sa.Column('user_id', mysql.INTEGER(), autoincrement=False, nullable=False),
-    sa.Column('role_id', mysql.INTEGER(), autoincrement=False, nullable=False),
-    sa.Column('assigned_at', mysql.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
-    sa.Column('assigned_by_user_id', mysql.INTEGER(), autoincrement=False, nullable=True),
-    sa.ForeignKeyConstraint(['assigned_by_user_id'], ['users.id'], name=op.f('user_roles_ibfk_3'), ondelete='SET NULL'),
-    sa.ForeignKeyConstraint(['role_id'], ['roles.id'], name=op.f('user_roles_ibfk_2'), ondelete='CASCADE'),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('user_roles_ibfk_1'), ondelete='CASCADE'),
-    sa.PrimaryKeyConstraint('user_id', 'role_id'),
-    mysql_collate='utf8mb4_0900_ai_ci',
-    mysql_default_charset='utf8mb4',
-    mysql_engine='InnoDB'
-    )
-    with op.batch_alter_table('user_roles', schema=None) as batch_op:
-        batch_op.create_index(batch_op.f('ix_user_roles_assigned_by_user_id'), ['assigned_by_user_id'], unique=False)
 
     op.create_table('roles',
     sa.Column('name', mysql.VARCHAR(length=50), nullable=False),
@@ -190,6 +164,32 @@ def downgrade():
     with op.batch_alter_table('roles', schema=None) as batch_op:
         batch_op.create_index(batch_op.f('name'), ['name'], unique=True)
         batch_op.create_index(batch_op.f('ix_roles_created_at'), ['created_at'], unique=False)
+
+    op.create_table('role_permissions',
+    sa.Column('role_id', mysql.INTEGER(), autoincrement=False, nullable=False),
+    sa.Column('permission_id', mysql.INTEGER(), autoincrement=False, nullable=False),
+    sa.ForeignKeyConstraint(['permission_id'], ['permissions.id'], name=op.f('role_permissions_ibfk_2'), ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['role_id'], ['roles.id'], name=op.f('role_permissions_ibfk_1'), ondelete='CASCADE'),
+    sa.PrimaryKeyConstraint('role_id', 'permission_id'),
+    mysql_collate='utf8mb4_0900_ai_ci',
+    mysql_default_charset='utf8mb4',
+    mysql_engine='InnoDB'
+    )
+    op.create_table('user_roles',
+    sa.Column('user_id', mysql.INTEGER(), autoincrement=False, nullable=False),
+    sa.Column('role_id', mysql.INTEGER(), autoincrement=False, nullable=False),
+    sa.Column('assigned_at', mysql.TIMESTAMP(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
+    sa.Column('assigned_by_user_id', mysql.INTEGER(), autoincrement=False, nullable=True),
+    sa.ForeignKeyConstraint(['assigned_by_user_id'], ['users.id'], name=op.f('user_roles_ibfk_3'), ondelete='SET NULL'),
+    sa.ForeignKeyConstraint(['role_id'], ['roles.id'], name=op.f('user_roles_ibfk_2'), ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('user_roles_ibfk_1'), ondelete='CASCADE'),
+    sa.PrimaryKeyConstraint('user_id', 'role_id'),
+    mysql_collate='utf8mb4_0900_ai_ci',
+    mysql_default_charset='utf8mb4',
+    mysql_engine='InnoDB'
+    )
+    with op.batch_alter_table('user_roles', schema=None) as batch_op:
+        batch_op.create_index(batch_op.f('ix_user_roles_assigned_by_user_id'), ['assigned_by_user_id'], unique=False)
 
     with op.batch_alter_table('products', schema=None) as batch_op:
         batch_op.drop_index(batch_op.f('ix_products_uuid'))
