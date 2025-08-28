@@ -9,7 +9,7 @@ function Footer() {
         <Box component="footer" sx={{ py: 4, bgcolor: '#1c1917', color: 'white' }}>
             <Container sx={{ textAlign: 'center' }}>
                 <Typography variant="body2">
-                    &copy; {new Date().getFullYear()} Pricely Scan. جميع الحقوق محفوظة.
+                    &copy; {new Date().getFullYear()} ساوملي. جميع الحقوق محفوظة.
                 </Typography>
                 <Stack direction="row" justifyContent="center" spacing={1} sx={{ mt: 2 }}>
                     <IconButton href="#" sx={{ color: 'white' }}><LinkIcon /></IconButton>

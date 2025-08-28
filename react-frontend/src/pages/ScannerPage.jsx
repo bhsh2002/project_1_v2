@@ -93,8 +93,11 @@ const ScannerPage = () => {
 
                 <Typography variant="h4" gutterBottom>مرحبا بك في سوق عكاظ</Typography>
                 <Divider sx={{ width: '80px', mb: 10, borderBottomWidth: 3, borderColor: 'primary.main', mx: 'auto' }} />
-                <Typography variant="h4" gutterBottom>قارئ أسعار المنتجات</Typography>
-                <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: '400px' }}>
+                <Typography variant="h4" color='primary' gutterBottom>ساوملي</Typography>
+                <Typography variant="body1" color="text.secondary" sx={{ maxWidth: '400px' }}>
+                    اضغط الزر للبدء.
+                </Typography>
+                <Typography variant="body1" color="text.secondary" sx={{ mb: 2, maxWidth: '400px' }}>
                     قم بتوجيه الكاميرا نحو باركود المنتج.
                 </Typography>
 

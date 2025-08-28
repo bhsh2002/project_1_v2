@@ -18,7 +18,7 @@ function Header() {
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
             <Typography variant="h6" sx={{ my: 2, color: 'primary.main', fontWeight: 'bold' }}>
-                Pricely Scan
+                ساوملي
             </Typography>
             <List>
                 {navItems.map((item) => (
@@ -43,7 +43,7 @@ function Header() {
                 <Container>
                     <Toolbar sx={{ justifyContent: 'space-between' }}>
                         <Typography variant="h5" component="h1" sx={{ color: 'primary.main', fontWeight: 'bold' }}>
-                            Pricely Scan
+                            ساوملي
                         </Typography>
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
                             {navItems.map((item) => (
