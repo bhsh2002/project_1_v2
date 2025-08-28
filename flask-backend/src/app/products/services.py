@@ -121,6 +121,7 @@ class ProductService(BaseService[Product]):
                             "price": Decimal(row.get("price")),
                             "stock_quantity": int(row.get("stock_quantity", 1)),
                             "description": row.get("description", ""),
+                            "market_id": row.get("market_id", market_id),
                             "shelf_code": str(row.get("shelf_code", "null")),
                             "image_processing_status": "NOIMAGE",
                         }
