@@ -21,6 +21,7 @@ import Dashboard from './pages/admin/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/auth/LoginPage';
 import { AuthProvider } from './context/AuthContext';
+import HomePage from './pages/website/HomePage';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               <CssBaseline />
               <MainLayout>
                 <Routes>
+                  <Route path="/" element={<HomePage />} />
                   <Route path="/:marketUuid" element={<ScannerPage />} />
                   <Route path="/admin" element={<AdminLayout />}>
                     <Route index element={<Dashboard />} />
