@@ -138,7 +138,7 @@ class ProductService(BaseService[Product]):
                                 }
                             )
                         if shelf:
-                            product_data["shelf_id"] = shelf.id
+                            product_data["shelf_id"] = shelf["id"]
 
                         if barcode in existing_products_map:
                             # تحديث
