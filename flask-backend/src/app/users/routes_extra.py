@@ -8,10 +8,10 @@ from ..markets.services import market_service
 from .services_extra import user_service_extra
 
 from flask import jsonify, make_response
-from flask_jwt_extended import (
-    set_access_cookies,
-    set_refresh_cookies,
-)
+# from flask_jwt_extended import (
+#     set_access_cookies,
+#     set_refresh_cookies,
+# )
 
 users_extra_bp = APIBlueprint("users_extra", __name__, url_prefix="/users")
 
@@ -45,6 +45,6 @@ def login(json_data):
             }
         )
     )
-    set_access_cookies(resp, access_token)
-    set_refresh_cookies(resp, refresh_token)
+    # set_access_cookies(resp, access_token)
+    # set_refresh_cookies(resp, refresh_token)
     return resp

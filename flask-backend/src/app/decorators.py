@@ -5,7 +5,7 @@ from typing import Optional
 from dev_kit.exceptions import PermissionDeniedError
 
 
-def permission_required(market_uuid: Optional[str] = None):
+def owner_required(market_uuid: Optional[str] = None):
     def decorator(fn):
         @wraps(fn)
         def wrapper(*args, **kwargs):

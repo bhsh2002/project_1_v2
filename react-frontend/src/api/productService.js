@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from "./axios";
 
 /**
  * دالة لجلب منتج بواسطة الباركود من API حقيقي
@@ -9,11 +9,9 @@ import axios from 'axios';
 export const fetchProductByBarcode = async (market_uuid, barcode) => {
     try {
         // استبدل الرابط بالرابط الحقيقي للـ API الخاص بك
-        const response = await axios.get(`https://price.savana.ly/back/api/v1/products/market/${market_uuid}/barcode/${barcode}`);
+        const response = await axiosInstance.get(`https://price.savana.ly/back/api/v1/products/market/${market_uuid}/barcode/${barcode}`);
 
         if (response.data) {
-            console.log('Product found:', response.data);
-            console.log(response.data);
             return response.data;
         } else {
             throw new Error('المنتج غير موجود. يرجى المحاولة مرة أخرى.');
