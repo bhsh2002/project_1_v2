@@ -129,7 +129,7 @@ class ProductService(BaseService[Product]):
                         if pd.isna(product_data["name"]):
                             raise ValueError("name is required.")
 
-                        shelf = shelf_service.get_by_code(product_data["shelf_code"])
+                        shelf = {"shelf_id": 8}
                         if shelf is None:
                             shelf = shelf_service.create(
                                 {
