@@ -66,7 +66,9 @@ class ProductService(BaseService[Product]):
             market_uuid_, barcode_, include_soft_deleted
         )
 
-    def process_bulk_file(self, file_storage, batch_size: int = 1000) -> Dict[str, Any]:
+    def process_bulk_file(
+        self, market_id, file_storage, batch_size: int = 1000
+    ) -> Dict[str, Any]:
         try:
             filename = file_storage.filename
             if filename.endswith(".csv"):
@@ -120,12 +122,24 @@ class ProductService(BaseService[Product]):
                             "stock_quantity": int(row.get("stock_quantity", 1)),
                             "description": row.get("description", ""),
                             "shelf_code": str(row.get("shelf_code", "null")),
-                            "shelf_id": 72,
                             "image_processing_status": "NOIMAGE",
                         }
 
                         if pd.isna(product_data["name"]):
                             raise ValueError("name is required.")
+
+                        if (
+                            shelf_service.get_by_code(product_data["shelf_code"])
+                            is None
+                        ):
+                            shelf = shelf_service.create(
+                                {
+                                    "code": product_data["shelf_code"],
+                                    "market_id": market_id,
+                                }
+                            )
+                            if shelf:
+                                product_data["shelf_id"] = shelf.id
 
                         if barcode in existing_products_map:
                             # تحديث

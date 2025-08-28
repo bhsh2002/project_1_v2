@@ -176,7 +176,7 @@ def get_market_product_by_barcode(market_uuid: str, barcode: str):
     return product_service.get_by_market_uuid_and_barcode(market_uuid, barcode)
 
 
-@products_bp.post("/bulk-upload")
+@products_bp.post("/<string:market_id>/bulk-upload")
 @products_bp.input(BulkUploadSchema, location="files")
 @products_bp.output(BulkUploadResponseSchema)
 @products_bp.doc(
@@ -187,7 +187,7 @@ def get_market_product_by_barcode(market_uuid: str, barcode: str):
     ),
     tags=["Product", "Bulk Operations"],
 )
-def bulk_upload_products(files_data):
+def bulk_upload_products(market_id, files_data):
     product_file = files_data["product_file"]
-    result = product_service.process_bulk_file(product_file)
+    result = product_service.process_bulk_file(market_id, product_file)
     return result
