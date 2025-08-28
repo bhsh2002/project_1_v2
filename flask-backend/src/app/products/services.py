@@ -22,6 +22,7 @@ class ProductService(BaseService[Product]):
         market_uuid = data.pop("market_uuid", None)
         if market_uuid:
             market = market_service.get_by_uuid(market_uuid)
+            data["market_id"] = market.id
 
         shelf_code = data.pop("shelf_code", None)
         if shelf_code:
