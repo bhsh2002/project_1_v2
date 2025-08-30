@@ -58,6 +58,7 @@ class Config(JWTConfig):
     PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "http://localhost:5000")
 
     # File uploads
+    MAX_CONTENT_LENGTH = 100 * 1024 * 1024  # 100 MB
     UPLOAD_FOLDER = os.environ.get(
         "UPLOAD_FOLDER", os.path.join(basedir, "src/static/uploads")
     )
