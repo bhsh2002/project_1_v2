@@ -1,5 +1,5 @@
 import io
-from typing import Any
+from typing import Any, Dict
 
 import pandas as pd
 
@@ -16,7 +16,9 @@ class ShelfService(BaseService[Shelf]):
             model=Shelf, db_session=db.session, repository_class=ShelfRepository
         )
 
-    def list_by_market_uuid(self, market_uuid: str, page: int, per_page: int):
+    def list_by_market_uuid(self, market_uuid: str, query_args: Dict[str, Any]):
+        page = query_args.get("page", 1)
+        per_page = query_args.get("per_page", 10)
         return self.repo.list_by_market_uuid(market_uuid, page, per_page)
 
     def get_by_code(
