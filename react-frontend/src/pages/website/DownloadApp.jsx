@@ -3,7 +3,7 @@ import { Box, Button, Paper, Typography, Container } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import AndroidIcon from '@mui/icons-material/Android';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://price.savana.ly/back/api/v1';
 
 export default function DownloadApp() {
     const handleDownload = () => {
