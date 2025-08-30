@@ -1,3 +1,5 @@
+// UsersList.jsx
+
 import { useState, useEffect } from 'react';
 import axiosInstance from '../../api/axios';
 import {
@@ -42,6 +44,12 @@ export default function UsersList() {
 
     if (loading) return <CircularProgress />;
 
+    // تم إضافة هذه الخاصية لتطبيقها على خلايا الرأس
+    const headCellStyle = {
+        whiteSpace: 'nowrap', // منع التفاف النص
+        fontWeight: 'bold', // جعل الخط عريضًا للتميز
+    };
+
     return (
         <Box>
             <Typography variant="h5" gutterBottom>Users</Typography>
@@ -49,41 +57,56 @@ export default function UsersList() {
             <Button component={Link} to="/admin/users/new" variant="contained" sx={{ mb: 2 }}>
                 New User
             </Button>
-            <TableContainer component={Paper}>
-                <Table>
+            <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell>Username</TableCell>
-                            <TableCell>Roles</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Actions</TableCell>
+                            <TableCell sx={headCellStyle}>ID</TableCell>
+                            <TableCell sx={headCellStyle}>Username</TableCell>
+                            <TableCell sx={headCellStyle}>Roles</TableCell>
+                            <TableCell sx={headCellStyle}>Status</TableCell>
+                            <TableCell sx={headCellStyle}>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {users.map((user) => (
-                            <TableRow key={user.id}>
-                                <TableCell>{user.id}</TableCell>
-                                <TableCell>{user.username}</TableCell>
-                                <TableCell>{user.roles?.join(', ')}</TableCell>
-                                <TableCell>{user.is_active ? 'Active' : 'Inactive'}</TableCell>
-                                <TableCell>
-                                    <IconButton
-                                        component={Link}
-                                        to={`/admin/users/${user.id}/edit`}
-                                        color="primary"
-                                    >
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton
-                                        onClick={() => setDeleteDialog({ open: true, userId: user.id })}
-                                        color="error"
-                                    >
-                                        <DeleteIcon />
-                                    </IconButton>
+                        {users.length > 0 ? (
+                            users.map((user) => (
+                                <TableRow key={user.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                    <TableCell>{user.id}</TableCell>
+                                    <TableCell>{user.username}</TableCell>
+                                    <TableCell>{user.roles?.join(', ')}</TableCell>
+                                    <TableCell>
+                                        <Box
+                                            sx={{
+                                                backgroundColor: user.is_active ? 'success.light' : 'error.light',
+                                                color: 'white',
+                                                padding: '4px 8px',
+                                                borderRadius: '12px',
+                                                textAlign: 'center',
+                                                display: 'inline-block',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
+                                            {user.is_active ? 'Active' : 'Inactive'}
+                                        </Box>
+                                    </TableCell>
+                                    <TableCell>
+                                        <IconButton component={Link} to={`/admin/users/${user.id}/edit`} color="primary">
+                                            <EditIcon />
+                                        </IconButton>
+                                        <IconButton onClick={() => setDeleteDialog({ open: true, userId: user.id })} color="error">
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={5} align="center">
+                                    <Typography>No users found.</Typography>
                                 </TableCell>
                             </TableRow>
-                        ))}
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>

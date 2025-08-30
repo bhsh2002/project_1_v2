@@ -19,6 +19,7 @@ export default function MarketDetails() {
     const [market, setMarket] = useState(null);
     const [tab, setTab] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [errorMsg, setErrorMsg] = useState('');
     const [users, setUsers] = useState([]);
     const [usersLoading, setUsersLoading] = useState(false);
 
@@ -30,6 +31,7 @@ export default function MarketDetails() {
             })
             .catch((err) => {
                 console.error(err);
+                setErrorMsg("Failed to load market details.");
                 setLoading(false);
             });
     }, [marketUuid]);
@@ -47,6 +49,7 @@ export default function MarketDetails() {
     }, [tab, marketUuid]);
 
     if (loading) return <CircularProgress />;
+    if (errorMsg) return <Alert severity="error">{errorMsg}</Alert>;
     if (!market) return <Typography>المتجر غير موجود</Typography>;
 
     return (
