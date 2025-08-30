@@ -54,7 +54,7 @@ export default function MarketCreate() {
             {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                             label="Market Name"
                             name="name"
@@ -64,7 +64,7 @@ export default function MarketCreate() {
                             fullWidth
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                             label="Phone Number"
                             name="phoneNumber"
@@ -74,7 +74,7 @@ export default function MarketCreate() {
                             fullWidth
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid size={{ xs: 12 }}>
                         <TextField
                             select
                             label="Create Owner?"
@@ -90,7 +90,7 @@ export default function MarketCreate() {
 
                     {marketData.createOwner && (
                         <>
-                            <Grid item xs={12} sm={4}>
+                            <Grid size={{ xs: 12, sm: 6 }}>
                                 <TextField
                                     label="Owner Username"
                                     name="ownerUsername"
@@ -100,7 +100,7 @@ export default function MarketCreate() {
                                     fullWidth
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={4}>
+                            <Grid size={{ xs: 12, sm: 6 }}>
                                 <TextField
                                     label="Owner Password"
                                     name="ownerPassword"
@@ -114,7 +114,7 @@ export default function MarketCreate() {
                         </>
                     )}
 
-                    <Grid item xs={12}>
+                    <Grid size={{ xs: 12 }}>
                         <Button
                             type="submit"
                             variant="contained"

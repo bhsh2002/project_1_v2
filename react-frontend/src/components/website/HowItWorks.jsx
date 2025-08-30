@@ -20,7 +20,7 @@ function HowItWorks() {
                 </Typography>
                 <Grid container spacing={5}>
                     {steps.map((step, index) => (
-                        <Grid item xs={12} md={4} key={index}>
+                        <Grid size={{ xs: 12, md: 4 }} key={index}>
                             <Box>
                                 <Typography variant="h1" sx={{ mb: 2, color: 'primary.main' }}>{step.icon}</Typography>
                                 <Typography variant="h5" component="h4" sx={{ mb: 1 }}>{step.title}</Typography>

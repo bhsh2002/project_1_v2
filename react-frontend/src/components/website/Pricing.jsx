@@ -65,7 +65,7 @@ function Pricing() {
                 </Typography>
                 <Grid container spacing={4} alignItems="center" justifyContent="center">
                     {plans.map(plan => (
-                        <Grid item xs={12} md={4} key={plan.name}>
+                        <Grid size={{ xs: 12, md: 4 }} key={plan.name}>
                             <PricingCard plan={plan} />
                         </Grid>
                     ))}

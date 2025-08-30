@@ -48,26 +48,26 @@ export default function QrCodeGenerator() {
 
     return (
         <Grid container spacing={3}>
-            <Grid item xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
                 <Paper sx={{ p: 2 }}>
                     <Typography variant="h6" gutterBottom>Print Settings</Typography>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}><TextField fullWidth label="URL" name="url" value={settings.url} onChange={handleChange} /></Grid>
-                        <Grid item xs={6}><TextField fullWidth label="Columns" name="cols" type="number" value={settings.cols} onChange={handleChange} /></Grid>
-                        <Grid item xs={6}><TextField fullWidth label="Rows" name="rows" type="number" value={settings.rows} onChange={handleChange} /></Grid>
-                        <Grid item xs={6}><TextField fullWidth label="Horizontal Margin" name="margin_x" type="number" value={settings.margin_x} onChange={handleChange} /></Grid>
-                        <Grid item xs={6}><TextField fullWidth label="Vertical Margin" name="margin_y" type="number" value={settings.margin_y} onChange={handleChange} /></Grid>
-                        <Grid item xs={6}><TextField fullWidth label="Horizontal Spacing" name="spacing_x" type="number" value={settings.spacing_x} onChange={handleChange} /></Grid>
-                        <Grid item xs={6}><TextField fullWidth label="Vertical Spacing" name="spacing_y" type="number" value={settings.spacing_y} onChange={handleChange} /></Grid>
-                        <Grid item xs={12}>
+                        <Grid item size={{ xs: 12 }}><TextField fullWidth label="URL" name="url" value={settings.url} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Columns" name="cols" type="number" value={settings.cols} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Rows" name="rows" type="number" value={settings.rows} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Horizontal Margin" name="margin_x" type="number" value={settings.margin_x} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Vertical Margin" name="margin_y" type="number" value={settings.margin_y} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Horizontal Spacing" name="spacing_x" type="number" value={settings.spacing_x} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Vertical Spacing" name="spacing_y" type="number" value={settings.spacing_y} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 12 }}>
                             <Button variant="contained" onClick={handlePreview} sx={{ mr: 1 }}>Preview</Button>
                             <Button variant="outlined" onClick={handlePrint} disabled={!pdfUrl}>Print</Button>
                         </Grid>
                     </Grid>
                 </Paper>
             </Grid>
-            <Grid item xs={12} md={8}>
-                <Paper sx={{ height: '80vh', p: 1 }}>
+            <Grid size={{ xs: 12, md: 8 }}>
+                <Paper sx={{ height: '80dvh', p: 1 }}>
                     {pdfUrl ? (
                         <iframe
                             id="pdf-preview"

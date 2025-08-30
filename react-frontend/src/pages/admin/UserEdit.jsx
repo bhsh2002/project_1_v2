@@ -73,7 +73,7 @@ export default function UserEdit() {
             {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={4}>
+                    <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
                             label="Name"
                             name="name"
@@ -83,7 +83,7 @@ export default function UserEdit() {
                             fullWidth
                         />
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
                             label="Email"
                             name="email"
@@ -94,7 +94,7 @@ export default function UserEdit() {
                             fullWidth
                         />
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
                             select
                             label="Roles"
@@ -109,7 +109,7 @@ export default function UserEdit() {
                             ))}
                         </TextField>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item size={{ xs: 12 }}>
                         <TextField
                             select
                             label="Status"
@@ -122,7 +122,7 @@ export default function UserEdit() {
                             <MenuItem value="false">Inactive</MenuItem>
                         </TextField>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item size={{ xs: 12 }}>
                         <Button type="submit" variant="contained" disabled={saving}>
                             {saving ? <CircularProgress size={24} /> : 'Update User'}
                         </Button>

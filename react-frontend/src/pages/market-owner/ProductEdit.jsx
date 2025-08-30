@@ -74,14 +74,14 @@ export default function ProductEdit() {
             <Typography variant="h5" gutterBottom>Edit Product</Typography>
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}><TextField fullWidth required label="Product Name" name="name" value={productData.name} onChange={handleChange} /></Grid>
-                    <Grid item xs={12} sm={6}><TextField fullWidth required label="Barcode" name="barcode" value={productData.barcode} onChange={handleChange} /></Grid>
-                    <Grid item xs={12} sm={6}><TextField fullWidth required label="Price" name="price" type="number" value={productData.price} onChange={handleChange} /></Grid>
-                    <Grid item xs={12} sm={6}><TextField fullWidth required label="Stock Quantity" name="stock_quantity" type="number" value={productData.stock_quantity} onChange={handleChange} /></Grid>
-                    <Grid item xs={12} sm={6}><TextField fullWidth required label="Shelf Code" name="shelf_code" value={productData.shelf_code} onChange={handleChange} /></Grid>
-                    <Grid item xs={12} sm={6}><Button variant="contained" component="label">Upload Image<input type="file" hidden name="image" onChange={handleFileChange} /></Button></Grid>
-                    {productData.image && <Grid item xs={12}><Typography>Selected: {productData.image.name}</Typography></Grid>}
-                    <Grid item xs={12}>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="Product Name" name="name" value={productData.name} onChange={handleChange} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="Barcode" name="barcode" value={productData.barcode} onChange={handleChange} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="Price" name="price" type="number" value={productData.price} onChange={handleChange} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="Stock Quantity" name="stock_quantity" type="number" value={productData.stock_quantity} onChange={handleChange} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="Shelf Code" name="shelf_code" value={productData.shelf_code} onChange={handleChange} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><Button variant="contained" component="label">Upload Image<input type="file" hidden name="image" onChange={handleFileChange} /></Button></Grid>
+                    {productData.image && <Grid size={{ xs: 12 }}><Typography>Selected: {productData.image.name}</Typography></Grid>}
+                    <Grid size={{ xs: 12 }}>
                         <Button type="submit" variant="contained" disabled={loading}>
                             {loading ? <CircularProgress size={24} /> : 'Save Changes'}
                         </Button>

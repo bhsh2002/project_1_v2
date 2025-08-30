@@ -48,10 +48,10 @@ export default function Dashboard() {
             </Typography>
 
             <Grid container spacing={3} sx={{ mb: 3 }}>
-                <Grid item xs={12} sm={6} md={3}><StatCard icon={<StorefrontIcon fontSize="large" color="primary" />} title="Total Markets" value={stats.total_markets} /></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard icon={<PeopleIcon fontSize="large" color="secondary" />} title="Total Users" value={stats.total_users} /></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard icon={<InventoryIcon fontSize="large" color="success" />} title="Total Products" value={stats.total_products} /></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard icon={<ViewQuiltIcon fontSize="large" color="warning" />} title="Total Shelves" value={stats.total_shelves} /></Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<StorefrontIcon fontSize="large" color="primary" />} title="Total Markets" value={stats.total_markets} /></Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<PeopleIcon fontSize="large" color="secondary" />} title="Total Users" value={stats.total_users} /></Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<InventoryIcon fontSize="large" color="success" />} title="Total Products" value={stats.total_products} /></Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<ViewQuiltIcon fontSize="large" color="warning" />} title="Total Shelves" value={stats.total_shelves} /></Grid>
             </Grid>
 
             <Paper sx={{ p: 2 }}>

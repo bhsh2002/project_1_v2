@@ -57,7 +57,7 @@ export default function Dashboard() {
             </Box>
 
             <Grid container spacing={3} sx={{ mb: 3 }}>
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                     <Paper sx={{ p: 3, textAlign: "center" }}>
                         <InventoryIcon fontSize="large" color="primary" />
                         <Typography variant="h6">إجمالي المنتجات</Typography>
@@ -65,7 +65,7 @@ export default function Dashboard() {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                     <Paper sx={{ p: 3, textAlign: "center" }}>
                         <ViewQuiltIcon fontSize="large" color="secondary" />
                         <Typography variant="h6">إجمالي الرفوف</Typography>
