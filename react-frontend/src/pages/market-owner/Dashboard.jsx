@@ -6,10 +6,12 @@ import {
     Paper,
     Typography,
     CircularProgress,
-    Alert
+    Alert,
+    Button
 } from "@mui/material";
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
+import QrCodeIcon from '@mui/icons-material/QrCode';
 import axiosInstance from '../../api/axios';
 
 export default function Dashboard() {
@@ -23,7 +25,6 @@ export default function Dashboard() {
             axiosInstance.get(`/markets/${marketUuid}/dashboard`)
                 .then((res) => {
                     setStats(res.data);
-                    console.log("Dashboard stats:", res);
                 })
                 .catch((err) => {
                     console.error("Error fetching dashboard stats:", err);
@@ -35,15 +36,25 @@ export default function Dashboard() {
         }
     }, [marketUuid]);
 
+    const handlePrintQR = () => {
+        const url = `https://price.savana.ly/api/v1/markets/generate_qr_pdf?url=https://price.savana.ly/${marketUuid}`;
+        window.open(url, '_blank');
+    };
+
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">{error}</Alert>;
     if (!stats) return <Typography>No statistics available.</Typography>;
 
     return (
         <Box>
-            <Typography variant="h5" gutterBottom>
-                لوحة التحكم
-            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                <Typography variant="h5" gutterBottom>
+                    لوحة التحكم
+                </Typography>
+                <Button variant="contained" startIcon={<QrCodeIcon />} onClick={handlePrintQR}>
+                    طباعة QR للمتجر
+                </Button>
+            </Box>
 
             <Grid container spacing={3} sx={{ mb: 3 }}>
                 <Grid item xs={12} sm={6}>

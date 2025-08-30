@@ -1,7 +1,8 @@
 from dev_kit.web.schemas import create_crud_schemas, create_pagination_schema
 from dev_kit.modules.users.schemas import user_schemas as dk_user_schemas
 from .models import Market
-from apiflask.fields import String
+from apiflask.fields import String, Integer
+from apiflask import Schema
 
 market_schemas = create_crud_schemas(
     model_class=Market,
@@ -24,3 +25,11 @@ class MarketWithOwnerSchema(market_schemas["input"]):
 
 
 market_schemas["input_with_owner"] = MarketWithOwnerSchema
+
+
+class MarketDashboardStatsSchema(Schema):
+    total_products = Integer(required=True)
+    total_shelves = Integer(required=True)
+
+
+market_schemas["dashboard_stats"] = MarketDashboardStatsSchema
