@@ -18,7 +18,7 @@ register_crud_routes(
     entity_name="shelf",
     id_field="uuid",
     routes_config={
-        "list": {"enabled": False}, # Disabled to be replaced by custom one
+        "list": {"enabled": False},  # Disabled to be replaced by custom one
         "get": {"auth_required": True, "permission": "read:shelf"},
         "create": {"auth_required": True, "permission": "create:shelf"},
         "update": {"auth_required": True, "permission": "update:shelf"},
@@ -26,16 +26,17 @@ register_crud_routes(
     },
 )
 
+
 @shelves_bp.get("/")
-@shelves_bp.output(shelf_schemas["pagination"])
+@shelves_bp.output(shelf_schemas["pagination_out"])
 @shelves_bp.doc(summary="List shelves for the current user's market")
 def list_market_shelves():
     verify_jwt_in_request()
     claims = get_jwt()
-    market_uuid = claims.get("markets", [])[0] # Get the first market of the user
-    page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 10, type=int)
-    
+    market_uuid = claims.get("markets", [])[0]  # Get the first market of the user
+    page = request.args.get("page", 1, type=int)
+    per_page = request.args.get("per_page", 10, type=int)
+
     paginated_shelves = shelf_service.list_by_market_uuid(market_uuid, page, per_page)
     return paginated_shelves
 
