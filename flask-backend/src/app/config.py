@@ -61,6 +61,9 @@ class Config(JWTConfig):
     UPLOAD_FOLDER = os.environ.get(
         "UPLOAD_FOLDER", os.path.join(basedir, "src/static/uploads")
     )
+    APK_FOLDER = os.environ.get(
+        "APK_FOLDER", os.path.join(basedir, "src/static/app")
+    )
     TEMP_UPLOADS_FOLDER = os.environ.get("TEMP_UPLOADS_FOLDER", "/app/instance/temp")
 
 

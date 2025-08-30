@@ -25,13 +25,15 @@ python - <<'PY'
 import os
 from app import create_app
 from dev_kit.database.extensions import db
-from app.seed import seed_entity_permissions
+from app.seed import seed_entity_permissions, seed_single_permission
 from app.seed import ensure_admin_role_assigned
 
 app = create_app()
 with app.app_context():
     res = seed_entity_permissions(db.session, entities=["market", "shelf", "product"])
     print({"seed_entity_permissions": res})
+    res_single = seed_single_permission(db.session, permission_name="upload:app")
+    print({"seed_single_permission": res_single})
     res2 = ensure_admin_role_assigned(db.session, admin_username=os.getenv("DEVKIT_ADMIN_USERNAME", "admin"))
     print({"ensure_admin_role_assigned": res2})
 PY

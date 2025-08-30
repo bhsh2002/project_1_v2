@@ -93,12 +93,14 @@ def create_app(config_name="config"):
     from .products.routes import products_bp
     from .users.routes_extra import users_extra_bp
     from .admin.routes import admin_bp
+    from .app_management.routes import app_management_bp
 
     api_v1.register_blueprint(markets_bp)
     api_v1.register_blueprint(shelves_bp)
     api_v1.register_blueprint(products_bp)
     api_v1.register_blueprint(users_extra_bp)
     api_v1.register_blueprint(admin_bp)
+    api_v1.register_blueprint(app_management_bp)
 
     app.register_blueprint(api_v1)
 

@@ -83,6 +83,11 @@ export default function AdminLayout() {
                             <ListItemText primary="المستخدمون" />
                         </ListItemButton>
                     </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemButton component={Link} to="/admin/app-upload">
+                            <ListItemText primary="رفع التطبيق" />
+                        </ListItemButton>
+                    </ListItem>
                 </List>
             </Drawer>
             <Main>

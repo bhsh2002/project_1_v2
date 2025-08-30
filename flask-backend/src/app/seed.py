@@ -43,6 +43,29 @@ def seed_entity_permissions(session: Session, entities: Iterable[str]) -> dict:
     }
 
 
+def seed_single_permission(session: Session, permission_name: str) -> dict:
+    """Ensure a single permission exists and is attached to the admin role."""
+    admin_role = session.query(Role).filter(Role.name == "admin").first()
+    if not admin_role:
+        return {"created": False, "attached": False, "note": "admin role missing"}
+
+    perm = session.query(Permission).filter(Permission.name == permission_name).first()
+    created = False
+    if perm is None:
+        perm = Permission(name=permission_name)
+        session.add(perm)
+        session.flush()
+        created = True
+
+    attached = False
+    if perm not in getattr(admin_role, "permissions", []):
+        admin_role.permissions.append(perm)
+        attached = True
+
+    session.commit()
+    return {"created": created, "attached": attached}
+
+
 def ensure_admin_role_assigned(session: Session, *, admin_username: str) -> dict:
     """Ensure the 'admin' role is assigned to the admin user."""
     admin_user = session.query(User).filter(User.username == admin_username).first()

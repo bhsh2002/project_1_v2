@@ -14,6 +14,7 @@ import { AuthProvider } from './context/AuthContext';
 
 // Page Components
 import HomePage from './pages/website/HomePage';
+import DownloadApp from './pages/website/DownloadApp';
 import LoginPage from './pages/auth/LoginPage';
 import MarketOwnerLoginPage from './pages/auth/MarketOwnerLoginPage';
 
@@ -26,6 +27,7 @@ import MarketDetails from './pages/admin/MarketDetails';
 import UsersList from './pages/admin/UsersList';
 import UserCreate from './pages/admin/UserCreate';
 import UserEdit from './pages/admin/UserEdit';
+import AppUpload from './pages/admin/AppUpload';
 
 // Market Owner Components
 import MarketOwnerLayout from './layouts/market-owner/MarketOwnerLayout';
@@ -52,6 +54,7 @@ function App() {
                 <Routes>
                   {/* Public Routes */}
                   <Route path="/" element={<HomePage />} />
+                  <Route path="/download" element={<DownloadApp />} />
                   <Route path="/:marketUuid" element={<ScannerPage />} />
 
                   {/* Auth Routes */}
@@ -67,6 +70,7 @@ function App() {
                     <Route path="users" element={<UsersList />} />
                     <Route path="users/new" element={<UserCreate />} />
                     <Route path="users/:userId/edit" element={<UserEdit />} />
+                    <Route path="app-upload" element={<AppUpload />} />
                   </Route>
 
                   {/* Market Owner Routes */}
