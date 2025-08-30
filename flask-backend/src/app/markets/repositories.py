@@ -19,8 +19,14 @@ class MarketRepository(BaseRepository[Market]):
         if not market:
             return {"total_products": 0, "total_shelves": 0}
 
-        total_products = self._db_session.query(Product).filter(Product.market_id == market.id).count()
-        total_shelves = self._db_session.query(Shelf).filter(Shelf.market_id == market.id).count()
+        total_products = (
+            self._db_session.query(Product)
+            .filter(Product.market_id == market.id)
+            .count()
+        )
+        total_shelves = (
+            self._db_session.query(Shelf).filter(Shelf.market_id == market.id).count()
+        )
 
         return {
             "total_products": total_products,

@@ -33,11 +33,11 @@ export function AuthProvider({ children }) {
     }, []);
 
     const login = async (username, password) => {
-        const res = await axiosInstance.post("/users/login", { username, password });
+        const res = await axiosInstance.post("/auth/login", { username, password });
         localStorage.setItem("access_token", res.data.access_token);
         setUser(res.data.user);
         // Admin login does not return a market_uuid
-        setMarketUuid(null); 
+        setMarketUuid(null);
         localStorage.removeItem("market_uuid");
     };
 

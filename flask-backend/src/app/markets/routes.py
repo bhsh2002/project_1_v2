@@ -17,13 +17,15 @@ from .services import MarketService
 markets_bp = APIBlueprint("market", __name__, url_prefix="/markets")
 market_service = MarketService()
 
-@markets_bp.get('/<uuid:market_uuid>/dashboard')
-@markets_bp.output({}, status_code=200) # Define a schema later
+
+@markets_bp.get("/<uuid:market_uuid>/dashboard")
+@markets_bp.output({}, status_code=200)  # Define a schema later
 @markets_bp.doc(summary="Get dashboard stats for a market")
 @permission_required("read:market")
 def get_dashboard_stats(market_uuid):
     stats = market_service.get_dashboard_stats(str(market_uuid))
     return stats, 200
+
 
 register_crud_routes(
     bp=markets_bp,

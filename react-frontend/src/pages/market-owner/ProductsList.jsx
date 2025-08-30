@@ -17,7 +17,7 @@ export default function ProductsList() {
 
     useEffect(() => {
         if (marketUuid) {
-            axiosInstance.get(`/products?market_uuid=${marketUuid}`)
+            axiosInstance.get(`/products/?market_uuid=${marketUuid}`)
                 .then(res => {
                     setProducts(res.data.items || []);
                 })

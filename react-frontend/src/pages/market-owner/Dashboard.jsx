@@ -23,6 +23,7 @@ export default function Dashboard() {
             axiosInstance.get(`/markets/${marketUuid}/dashboard`)
                 .then((res) => {
                     setStats(res.data);
+                    console.log("Dashboard stats:", res);
                 })
                 .catch((err) => {
                     console.error("Error fetching dashboard stats:", err);

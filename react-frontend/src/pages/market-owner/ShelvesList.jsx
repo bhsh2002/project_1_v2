@@ -56,11 +56,11 @@ export default function ShelvesList() {
         <Box>
             <Typography variant="h5" gutterBottom>Shelves</Typography>
             <Box component="form" onSubmit={handleAddShelf} sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                <TextField 
-                    label="New Shelf Code" 
-                    value={newShelfCode} 
-                    onChange={e => setNewShelfCode(e.target.value)} 
-                    variant="outlined" 
+                <TextField
+                    label="New Shelf Code"
+                    value={newShelfCode}
+                    onChange={e => setNewShelfCode(e.target.value)}
+                    variant="outlined"
                     size="small"
                 />
                 <Button type="submit" variant="contained">Add Shelf</Button>
