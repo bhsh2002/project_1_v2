@@ -4,12 +4,28 @@ from dev_kit.database.repository import (
     handle_db_errors,
 )
 from .models import Market, MarketUsers
+from ..products.models import Product
+from ..shelves.models import Shelf
 from dev_kit.modules.users.models import User
 
 
 class MarketRepository(BaseRepository[Market]):
     def __init__(self, model: type[Market], db_session):
         super().__init__(model=model, db_session=db_session)
+
+    @handle_db_errors
+    def get_dashboard_stats(self, market_uuid: str) -> dict:
+        market = self._query().filter(self.model.uuid == market_uuid).first()
+        if not market:
+            return {"total_products": 0, "total_shelves": 0}
+
+        total_products = self._db_session.query(Product).filter(Product.market_id == market.id).count()
+        total_shelves = self._db_session.query(Shelf).filter(Shelf.market_id == market.id).count()
+
+        return {
+            "total_products": total_products,
+            "total_shelves": total_shelves,
+        }
 
     @handle_db_errors
     def list_market_users(

@@ -17,6 +17,9 @@ class MarketService(BaseService[Market]):
             model=Market, db_session=db.session, repository_class=MarketRepository
         )
 
+    def get_dashboard_stats(self, market_uuid: str) -> Dict[str, Any]:
+        return self.repo.get_dashboard_stats(market_uuid)
+
     def list_market_users(self, market_uuid: str, query_args: Dict[str, Any]):
         page = query_args.get("page", 1)
         per_page = query_args.get("per_page", 10)

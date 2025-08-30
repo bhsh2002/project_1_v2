@@ -67,8 +67,12 @@ class ProductService(BaseService[Product]):
         )
 
     def process_bulk_file(
-        self, market_id, file_storage, batch_size: int = 1000
+        self, market_uuid, file_storage, batch_size: int = 1000
     ) -> Dict[str, Any]:
+        market = market_service.get_by_uuid(market_uuid)
+        if not market:
+            raise ValueError("Market not found.")
+        market_id = market.id
         try:
             filename = file_storage.filename
             if filename.endswith(".csv"):

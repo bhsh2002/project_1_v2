@@ -16,6 +16,9 @@ class ShelfService(BaseService[Shelf]):
             model=Shelf, db_session=db.session, repository_class=ShelfRepository
         )
 
+    def list_by_market_uuid(self, market_uuid: str, page: int, per_page: int):
+        return self.repo.list_by_market_uuid(market_uuid, page, per_page)
+
     def get_by_code(
         self, code_: Any, include_soft_deleted: bool = False
     ) -> Shelf | None:
