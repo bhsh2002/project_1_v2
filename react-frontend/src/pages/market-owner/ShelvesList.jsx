@@ -51,11 +51,21 @@ export default function ShelvesList() {
     };
 
     const handleChangePage = (event, newPage) => {
-        setData(prev => ({ ...prev, page: newPage + 1 }));
+        setData((prev) => ({
+            ...prev,
+            pagination: { ...prev.pagination, page: newPage + 1 },
+        }));
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setData(prev => ({ ...prev, per_page: parseInt(event.target.value, 10), page: 1 }));
+        setData((prev) => ({
+            ...prev,
+            pagination: {
+                ...prev.pagination,
+                per_page: parseInt(event.target.value, 10),
+                page: 1,
+            },
+        }));
     };
 
     if (loading && !data.items.length) return <CircularProgress />;
