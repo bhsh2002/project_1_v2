@@ -17,6 +17,7 @@ const drawerWidth = 240;
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
+    overflowX: 'auto',
     transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -28,21 +29,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
             duration: theme.transitions.duration.enteringScreen,
         }),
         marginLeft: 0,
-    }),
-}));
-
-const StyledAppBar = styled(AppBar, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
-    transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: `${drawerWidth}px`,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
     }),
 }));
 
@@ -77,7 +63,7 @@ export default function MarketOwnerLayout() {
 
     return (
         <Box sx={{ display: 'flex' }}>
-            <StyledAppBar position="fixed" open={open}>
+            <AppBar position="fixed" open={open}>
                 <Toolbar>
                     <IconButton color="inherit" edge="start" onClick={handleDrawerOpen} sx={{ mr: 2, ...(open && { display: 'none' }) }}>
                         <MenuIcon />
@@ -87,7 +73,7 @@ export default function MarketOwnerLayout() {
                     </Typography>
                     <Typography>Welcome, {user?.username}</Typography>
                 </Toolbar>
-            </StyledAppBar>
+            </AppBar>
             <Drawer
                 variant="persistent"
                 anchor="left"
@@ -120,7 +106,7 @@ export default function MarketOwnerLayout() {
                     </ListItem>
                 </List>
             </Drawer>
-            <Main open={open}>
+            <Main>
                 <DrawerHeader />
                 <Outlet />
             </Main>
