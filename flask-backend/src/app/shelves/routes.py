@@ -35,7 +35,7 @@ def list_market_shelves(query_args):
     verify_jwt_in_request()
     claims = get_jwt()
     market_uuid = claims.get("markets", [])[0]  # Get the first market of the user
-    return shelf_service.list_by_market_uuid(market_uuid, query_args)
+    return shelf_service.list_by_market_uuid(market_uuid, query_args), 200
 
 
 @shelves_bp.get("/download/csv/market/<int:market_id>")
