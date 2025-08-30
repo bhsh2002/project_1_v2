@@ -9,6 +9,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import QrCodeIcon from '@mui/icons-material/QrCode';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 240;
@@ -71,6 +72,7 @@ export default function MarketOwnerLayout() {
         { text: 'Products', icon: <InventoryIcon />, link: '/market-owner/products' },
         { text: 'Shelves', icon: <ViewQuiltIcon />, link: '/market-owner/shelves' },
         { text: 'Bulk Upload', icon: <UploadFileIcon />, link: '/market-owner/bulk-upload' },
+        { text: 'QR Generator', icon: <QrCodeIcon />, link: '/market-owner/qr-generator' },
     ];
 
     return (

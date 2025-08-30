@@ -37,7 +37,7 @@ export default function Dashboard() {
     }, [marketUuid]);
 
     const handlePrintQR = () => {
-        const url = `https://price.savana.ly/api/v1/markets/generate_qr_pdf?url=https://price.savana.ly/${marketUuid}`;
+        const url = `https://price.savana.ly/back/api/v1/markets/generate_qr_pdf?url=https://price.savana.ly/${marketUuid}`;
         window.open(url, '_blank');
     };
 

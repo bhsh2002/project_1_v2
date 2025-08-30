@@ -35,6 +35,7 @@ import MarketOwnerProductCreate from './pages/market-owner/ProductCreate';
 import MarketOwnerProductEdit from './pages/market-owner/ProductEdit';
 import MarketOwnerShelvesList from './pages/market-owner/ShelvesList';
 import MarketOwnerBulkUpload from './pages/market-owner/BulkUpload';
+import QrCodeGenerator from './pages/market-owner/QrCodeGenerator';
 
 // Common Components
 import ProtectedRoute from './components/ProtectedRoute';
@@ -76,6 +77,7 @@ function App() {
                     <Route path="products/:productId/edit" element={<MarketOwnerProductEdit />} />
                     <Route path="shelves" element={<MarketOwnerShelvesList />} />
                     <Route path="bulk-upload" element={<MarketOwnerBulkUpload />} />
+                    <Route path="qr-generator" element={<QrCodeGenerator />} />
                   </Route>
 
                 </Routes>

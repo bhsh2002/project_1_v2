@@ -166,7 +166,7 @@ def generate_qr_pdf():
 
         return send_file(
             buffer,
-            as_attachment=True,
+            as_attachment=False, # Changed to False to display inline
             download_name="qr_codes.pdf",
             mimetype="application/pdf",
         )
