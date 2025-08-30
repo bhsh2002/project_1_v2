@@ -50,18 +50,18 @@ export default function QrCodeGenerator() {
         <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 4 }}>
                 <Paper sx={{ p: 2 }}>
-                    <Typography variant="h6" gutterBottom>Print Settings</Typography>
+                    <Typography variant="h6" gutterBottom>إعدادات الطباعة</Typography>
                     <Grid container spacing={2}>
-                        <Grid item size={{ xs: 12 }}><TextField fullWidth label="URL" name="url" value={settings.url} onChange={handleChange} /></Grid>
-                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Columns" name="cols" type="number" value={settings.cols} onChange={handleChange} /></Grid>
-                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Rows" name="rows" type="number" value={settings.rows} onChange={handleChange} /></Grid>
-                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Horizontal Margin" name="margin_x" type="number" value={settings.margin_x} onChange={handleChange} /></Grid>
-                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Vertical Margin" name="margin_y" type="number" value={settings.margin_y} onChange={handleChange} /></Grid>
-                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Horizontal Spacing" name="spacing_x" type="number" value={settings.spacing_x} onChange={handleChange} /></Grid>
-                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="Vertical Spacing" name="spacing_y" type="number" value={settings.spacing_y} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 12 }}><TextField fullWidth label="الرابط" name="url" value={settings.url} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="أعمدة" name="cols" type="number" value={settings.cols} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="صفوف" name="rows" type="number" value={settings.rows} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="هامش أفقي" name="margin_x" type="number" value={settings.margin_x} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="هامش عمودي" name="margin_y" type="number" value={settings.margin_y} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="تباعد أفقي" name="spacing_x" type="number" value={settings.spacing_x} onChange={handleChange} /></Grid>
+                        <Grid item size={{ xs: 6 }}><TextField fullWidth label="تباعد عمودي" name="spacing_y" type="number" value={settings.spacing_y} onChange={handleChange} /></Grid>
                         <Grid item size={{ xs: 12 }}>
-                            <Button variant="contained" onClick={handlePreview} sx={{ mr: 1 }}>Preview</Button>
-                            <Button variant="outlined" onClick={handlePrint} disabled={!pdfUrl}>Print</Button>
+                            <Button variant="contained" onClick={handlePreview} sx={{ mr: 1 }}>معاينة</Button>
+                            <Button variant="outlined" onClick={handlePrint} disabled={!pdfUrl}>طباعة</Button>
                         </Grid>
                     </Grid>
                 </Paper>
@@ -79,7 +79,7 @@ export default function QrCodeGenerator() {
                         />
                     ) : (
                         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                            <Typography>Click 'Preview' to generate the PDF.</Typography>
+                            <Typography>انقر على 'معاينة' لإنشاء ملف PDF.</Typography>
                         </Box>
                     )}
                 </Paper>

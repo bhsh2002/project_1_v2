@@ -67,7 +67,7 @@ const ScannerPage = () => {
             // Reset scanner after 3s
             timerRef.current = setTimeout(() => handleResetScanner(), 3000);
         } catch (err) {
-            setError(err.message || 'Failed to fetch product');
+            setError(err.message || 'فشل في جلب المنتج');
         } finally {
             setIsLoading(false);
         }

@@ -34,10 +34,10 @@ const BarcodeScanner = forwardRef(({ onScanSuccess, onScanFailure, onClose, onRe
             },
             (errorMessage) => { onScanFailure?.(errorMessage); scannerRef.current?.resume() }
         ).then(() => { onReady?.(); }
-        ).catch(err => { console.error("Scanner start failed:", err); scannerRef.current?.resume() });
+        ).catch(err => { console.error("فشل بدء تشغيل الماسح الضوئي:", err); scannerRef.current?.resume() });
 
         return () => {
-            if (scannerRef.current?.isScanning) scannerRef.current?.stop().catch(err => console.error("Scanner stop failed:", err));
+            if (scannerRef.current?.isScanning) scannerRef.current?.stop().catch(err => console.error("فشل إيقاف الماسح الضوئي:", err));
         };
     }, [onScanSuccess, onScanFailure]);
 
@@ -58,7 +58,7 @@ const BarcodeScanner = forwardRef(({ onScanSuccess, onScanFailure, onClose, onRe
                 }}
             />
             <IconButton
-                aria-label="close scanner"
+                aria-label="إغلاق الماسح الضوئي"
                 onClick={onClose}
                 sx={{
                     position: 'absolute',

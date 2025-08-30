@@ -19,7 +19,7 @@ export default function MarketsList() {
             setData(response.data || { items: [], pagination: { total: 0, page: 1, per_page: 10 } });
         } catch (error) {
             console.error(error);
-            setErrorMsg('Failed to fetch markets');
+            setErrorMsg('فشل في جلب المتاجر');
         } finally {
             setLoading(false);
         }
@@ -53,20 +53,20 @@ export default function MarketsList() {
 
     return (
         <Box>
-            <Typography variant="h5" gutterBottom>Markets</Typography>
+            <Typography variant="h5" gutterBottom>المتاجر</Typography>
             {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
             <Button component={Link} to="/admin/markets/new" variant="contained" sx={{ mb: 2 }}>
-                New Market
+                متجر جديد
             </Button>
             <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
                 <Table sx={{ minWidth: 650 }}>
                     <TableHead>
                         <TableRow>
                             <TableCell sx={headCellStyle}>#</TableCell>
-                            <TableCell sx={headCellStyle}>Name</TableCell>
-                            <TableCell sx={headCellStyle}>Owner</TableCell>
-                            <TableCell sx={headCellStyle}>Phone Number</TableCell>
-                            <TableCell sx={headCellStyle}>Actions</TableCell>
+                            <TableCell sx={headCellStyle}>الاسم</TableCell>
+                            <TableCell sx={headCellStyle}>المالك</TableCell>
+                            <TableCell sx={headCellStyle}>رقم الهاتف</TableCell>
+                            <TableCell sx={headCellStyle}>الإجراءات</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -81,14 +81,14 @@ export default function MarketsList() {
                                     <TableCell sx={headCellStyle}>{market.phone_number || '-'}</TableCell>
                                     <TableCell sx={{ ...headCellStyle, display: 'flex', gap: 1 }}>
                                         <Button component={Link} to={`/admin/markets/${market.uuid}`} size="small" variant="outlined">
-                                            View
+                                            عرض
                                         </Button>
                                     </TableCell>
                                 </TableRow>
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={5} align="center">No markets found.</TableCell>
+                                <TableCell colSpan={5} align="center">لم يتم العثور على متاجر.</TableCell>
                             </TableRow>
                         )}
                     </TableBody>

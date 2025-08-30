@@ -21,7 +21,7 @@ export default function UsersList() {
             const response = await axiosInstance.get(`/users/?page=${page}&per_page=${limit}`);
             setData(response.data || { items: [], pagination: { total: 0, page: 1, per_page: 10 } });
         } catch (error) {
-            setErrorMsg('Failed to fetch users');
+            setErrorMsg('فشل في جلب المستخدمين');
         } finally {
             setLoading(false);
         }
@@ -37,7 +37,7 @@ export default function UsersList() {
             setDeleteDialog({ open: false, userId: null });
             fetchUsers(data.pagination.page, data.pagination.per_page); // Refetch current page
         } catch (error) {
-            setErrorMsg('Failed to delete user');
+            setErrorMsg('فشل في حذف المستخدم');
         }
     };
 
@@ -65,20 +65,20 @@ export default function UsersList() {
 
     return (
         <Box>
-            <Typography variant="h5" gutterBottom>Users</Typography>
+            <Typography variant="h5" gutterBottom>المستخدمون</Typography>
             {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
             <Button component={Link} to="/admin/users/new" variant="contained" sx={{ mb: 2 }}>
-                New User
+                مستخدم جديد
             </Button>
             <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
                 <Table sx={{ minWidth: 650 }}>
                     <TableHead>
                         <TableRow>
                             <TableCell sx={headCellStyle}>#</TableCell>
-                            <TableCell sx={headCellStyle}>Username</TableCell>
-                            <TableCell sx={headCellStyle}>Roles</TableCell>
-                            <TableCell sx={headCellStyle}>Status</TableCell>
-                            <TableCell sx={headCellStyle}>Actions</TableCell>
+                            <TableCell sx={headCellStyle}>اسم المستخدم</TableCell>
+                            <TableCell sx={headCellStyle}>الأدوار</TableCell>
+                            <TableCell sx={headCellStyle}>الحالة</TableCell>
+                            <TableCell sx={headCellStyle}>الإجراءات</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -92,7 +92,7 @@ export default function UsersList() {
                                     <TableCell sx={headCellStyle}>{user.roles?.join(', ')}</TableCell>
                                     <TableCell sx={headCellStyle}>
                                         <Box sx={{ backgroundColor: user.is_active ? 'success.light' : 'error.light', color: 'white', padding: '4px 8px', borderRadius: '12px', textAlign: 'center', display: 'inline-block', fontSize: '0.8rem' }}>
-                                            {user.is_active ? 'Active' : 'Inactive'}
+                                            {user.is_active ? 'نشط' : 'غير نشط'}
                                         </Box>
                                     </TableCell>
                                     <TableCell sx={{ ...headCellStyle, display: 'flex', gap: 1 }}>
@@ -102,7 +102,7 @@ export default function UsersList() {
                                 </TableRow>
                             ))
                         ) : (
-                            <TableRow><TableCell colSpan={5} align="center">No users found.</TableCell></TableRow>
+                            <TableRow><TableCell colSpan={5} align="center">لم يتم العثور على مستخدمين.</TableCell></TableRow>
                         )}
                     </TableBody>
                 </Table>
@@ -118,11 +118,11 @@ export default function UsersList() {
             </TableContainer>
 
             <Dialog open={deleteDialog.open} onClose={() => setDeleteDialog({ open: false, userId: null })}>
-                <DialogTitle>Confirm Delete</DialogTitle>
-                <DialogContent>Are you sure you want to delete this user?</DialogContent>
+                <DialogTitle>تأكيد الحذف</DialogTitle>
+                <DialogContent><Typography>هل أنت متأكد أنك تريد حذف هذا المستخدم؟</Typography></DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setDeleteDialog({ open: false, userId: null })}>Cancel</Button>
-                    <Button onClick={handleDeleteUser} color="error" variant="contained">Delete</Button>
+                    <Button onClick={() => setDeleteDialog({ open: false, userId: null })}>إلغاء</Button>
+                    <Button onClick={handleDeleteUser} color="error" variant="contained">حذف</Button>
                 </DialogActions>
             </Dialog>
         </Box>

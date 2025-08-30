@@ -54,11 +54,11 @@ export default function MarketOwnerLayout() {
     };
 
     const menuItems = [
-        { text: 'Dashboard', icon: <DashboardIcon />, link: '/market-owner/dashboard' },
-        { text: 'Products', icon: <InventoryIcon />, link: '/market-owner/products' },
-        { text: 'Shelves', icon: <ViewQuiltIcon />, link: '/market-owner/shelves' },
-        { text: 'Bulk Upload', icon: <UploadFileIcon />, link: '/market-owner/bulk-upload' },
-        { text: 'QR Generator', icon: <QrCodeIcon />, link: '/market-owner/qr-generator' },
+        { text: 'لوحة التحكم', icon: <DashboardIcon />, link: '/market-owner/dashboard' },
+        { text: 'المنتجات', icon: <InventoryIcon />, link: '/market-owner/products' },
+        { text: 'الرفوف', icon: <ViewQuiltIcon />, link: '/market-owner/shelves' },
+        { text: 'رفع جماعي', icon: <UploadFileIcon />, link: '/market-owner/bulk-upload' },
+        { text: 'مولد رمز QR', icon: <QrCodeIcon />, link: '/market-owner/qr-generator' },
     ];
 
     return (
@@ -69,9 +69,9 @@ export default function MarketOwnerLayout() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-                        Market Dashboard
+                        لوحة تحكم المتجر
                     </Typography>
-                    <Typography>Welcome, {user?.username}</Typography>
+                    <Typography>مرحباً، {user?.username}</Typography>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -101,7 +101,7 @@ export default function MarketOwnerLayout() {
                     <ListItem disablePadding>
                         <ListItemButton onClick={handleLogout}>
                             <ListItemIcon><LogoutIcon /></ListItemIcon>
-                            <ListItemText primary="Logout" />
+                            <ListItemText primary="تسجيل الخروج" />
                         </ListItemButton>
                     </ListItem>
                 </List>

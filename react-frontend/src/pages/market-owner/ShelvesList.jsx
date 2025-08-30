@@ -23,7 +23,7 @@ export default function ShelvesList() {
                 })
                 .catch(err => {
                     console.error("Failed to fetch shelves:", err);
-                    setError('Could not load shelves.');
+                    setError('تعذر تحميل الرفوف.');
                 })
                 .finally(() => setLoading(false));
         }
@@ -40,14 +40,14 @@ export default function ShelvesList() {
             setNewShelfCode('');
             fetchShelves(1, data.pagination.per_page); // Refetch from page 1
         } catch (err) {
-            setError('Failed to add shelf.');
+            setError('فشل إضافة الرف.');
         }
     };
 
     const handleDelete = (shelfId) => {
         axiosInstance.delete(`/shelves/${shelfId}`)
             .then(() => fetchShelves(data.pagination.page, data.pagination.per_page))
-            .catch(err => setError('Failed to delete shelf.'));
+            .catch(err => setError('فشل حذف الرف.'));
     };
 
     const handleChangePage = (event, newPage) => {
@@ -75,18 +75,18 @@ export default function ShelvesList() {
 
     return (
         <Box>
-            <Typography variant="h5" gutterBottom>Shelves</Typography>
+            <Typography variant="h5" gutterBottom>الرفوف</Typography>
             <Box component="form" onSubmit={handleAddShelf} sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                <TextField label="New Shelf Code" value={newShelfCode} onChange={e => setNewShelfCode(e.target.value)} variant="outlined" size="small" />
-                <Button type="submit" variant="contained">Add Shelf</Button>
+                <TextField label="رمز رف جديد" value={newShelfCode} onChange={e => setNewShelfCode(e.target.value)} variant="outlined" size="small" />
+                <Button type="submit" variant="contained">إضافة رف</Button>
             </Box>
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
                         <TableRow>
                             <TableCell sx={headCellStyle}>#</TableCell>
-                            <TableCell sx={headCellStyle}>Code</TableCell>
-                            <TableCell sx={headCellStyle} align="right">Actions</TableCell>
+                            <TableCell sx={headCellStyle}>الرمز</TableCell>
+                            <TableCell sx={headCellStyle} align="right">الإجراءات</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

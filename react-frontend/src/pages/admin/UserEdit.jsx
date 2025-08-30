@@ -27,7 +27,7 @@ export default function UserEdit() {
             const response = await axiosInstance.get(`/users/${userId}`);
             setUserData(response.data);
         } catch (error) {
-            setErrorMsg('Failed to load user');
+            setErrorMsg('فشل تحميل المستخدم');
         } finally {
             setLoading(false);
         }
@@ -59,7 +59,7 @@ export default function UserEdit() {
             await axiosInstance.put(`/admin/users/${userId}`, userData);
             navigate('/admin/users');
         } catch (error) {
-            setErrorMsg('Failed to update user');
+            setErrorMsg('فشل تحديث المستخدم');
         } finally {
             setSaving(false);
         }
@@ -69,13 +69,13 @@ export default function UserEdit() {
 
     return (
         <Paper sx={{ p: 4 }}>
-            <Typography variant="h5" gutterBottom>Edit User</Typography>
+            <Typography variant="h5" gutterBottom>تعديل المستخدم</Typography>
             {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
-                            label="Name"
+                            label="الاسم"
                             name="name"
                             value={userData.name}
                             onChange={handleChange}
@@ -85,7 +85,7 @@ export default function UserEdit() {
                     </Grid>
                     <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
-                            label="Email"
+                            label="البريد الإلكتروني"
                             name="email"
                             value={userData.email}
                             onChange={handleChange}
@@ -97,7 +97,7 @@ export default function UserEdit() {
                     <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
                             select
-                            label="Roles"
+                            label="الأدوار"
                             name="roles"
                             SelectProps={{ multiple: true }}
                             value={userData.roles}
@@ -112,19 +112,19 @@ export default function UserEdit() {
                     <Grid item size={{ xs: 12 }}>
                         <TextField
                             select
-                            label="Status"
+                            label="الحالة"
                             name="is_active"
                             value={userData.is_active ? 'true' : 'false'}
                             onChange={(e) => setUserData((prev) => ({ ...prev, is_active: e.target.value === 'true' }))}
                             fullWidth
                         >
-                            <MenuItem value="true">Active</MenuItem>
-                            <MenuItem value="false">Inactive</MenuItem>
+                            <MenuItem value="true">نشط</MenuItem>
+                            <MenuItem value="false">غير نشط</MenuItem>
                         </TextField>
                     </Grid>
                     <Grid item size={{ xs: 12 }}>
                         <Button type="submit" variant="contained" disabled={saving}>
-                            {saving ? <CircularProgress size={24} /> : 'Update User'}
+                            {saving ? <CircularProgress size={24} /> : 'تحديث المستخدم'}
                         </Button>
                     </Grid>
                 </Grid>

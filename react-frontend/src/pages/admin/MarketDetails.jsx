@@ -11,6 +11,7 @@ import {
     ListItem,
     ListItemText,
     Divider,
+    Alert,
 } from '@mui/material';
 import axiosInstance from '../../api/axios';
 
@@ -31,7 +32,7 @@ export default function MarketDetails() {
             })
             .catch((err) => {
                 console.error(err);
-                setErrorMsg("Failed to load market details.");
+                setErrorMsg("فشل تحميل تفاصيل المتجر.");
                 setLoading(false);
             });
     }, [marketUuid]);
@@ -43,7 +44,7 @@ export default function MarketDetails() {
                 .then(res => {
                     setUsers(res.data.items || []);
                 })
-                .catch(err => console.error("Failed to fetch users", err))
+                .catch(err => console.error("فشل جلب المستخدمين", err))
                 .finally(() => setUsersLoading(false));
         }
     }, [tab, marketUuid]);

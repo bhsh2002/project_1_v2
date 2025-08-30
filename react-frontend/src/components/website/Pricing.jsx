@@ -3,9 +3,9 @@ import { Box, Container, Typography, Grid, Paper, Button, List, ListItem, ListIt
 import CheckIcon from '@mui/icons-material/Check';
 
 const plans = [
-    { name: 'Basic', sub: 'للمتاجر الصغيرة', features: ['5,000 منتج', 'فرع واحد', 'دعم فني عبر البريد الإلكتروني'], popular: false },
-    { name: 'Pro', sub: 'للمتاجر المتوسطة', features: ['20,000 منتج', 'حتى 5 فروع', 'دعم فني عبر الدردشة', 'تكامل أساسي مع POS'], popular: true },
-    { name: 'Enterprise', sub: 'للمتاجر الكبيرة والمولات', features: ['منتجات وفروع غير محدودة', 'تكامل مباشر مع POS', 'تقارير متقدمة', 'مدير حساب مخصص'], popular: false }
+    { name: 'الأساسية', sub: 'للمتاجر الصغيرة', features: ['5,000 منتج', 'فرع واحد', 'دعم فني عبر البريد الإلكتروني'], popular: false },
+    { name: 'المحترفة', sub: 'للمتاجر المتوسطة', features: ['20,000 منتج', 'حتى 5 فروع', 'دعم فني عبر الدردشة', 'تكامل أساسي مع POS'], popular: true },
+    { name: 'الشركات', sub: 'للمتاجر الكبيرة والمولات', features: ['منتجات وفروع غير محدودة', 'تكامل مباشر مع POS', 'تقارير متقدمة', 'مدير حساب مخصص'], popular: false }
 ];
 
 function PricingCard({ plan }) {

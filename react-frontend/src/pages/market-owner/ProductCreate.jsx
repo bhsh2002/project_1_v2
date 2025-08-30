@@ -53,7 +53,7 @@ export default function ProductCreate() {
             navigate('/market-owner/products');
         } catch (err) {
             console.error("Failed to create product:", err);
-            setError(err.response?.data?.message || 'Could not create product.');
+            setError(err.response?.data?.message || 'تعذر إنشاء المنتج.');
         } finally {
             setLoading(false);
         }
@@ -61,20 +61,20 @@ export default function ProductCreate() {
 
     return (
         <Paper sx={{ p: 3 }}>
-            <Typography variant="h5" gutterBottom>Create New Product</Typography>
+            <Typography variant="h5" gutterBottom>إنشاء منتج جديد</Typography>
             {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
-                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="Product Name" name="name" value={productData.name} onChange={handleChange} /></Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="Barcode" name="barcode" value={productData.barcode} onChange={handleChange} /></Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="Price" name="price" type="number" value={productData.price} onChange={handleChange} /></Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="Stock Quantity" name="stock_quantity" type="number" value={productData.stock_quantity} onChange={handleChange} /></Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="Shelf Code" name="shelf_code" value={productData.shelf_code} onChange={handleChange} /></Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}><Button variant="contained" component="label">Upload Image<input type="file" hidden name="image" onChange={handleFileChange} /></Button></Grid>
-                    {productData.image && <Grid size={{ xs: 12 }}><Typography>Selected: {productData.image.name}</Typography></Grid>}
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="اسم المنتج" name="name" value={productData.name} onChange={handleChange} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="الباركود" name="barcode" value={productData.barcode} onChange={handleChange} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="السعر" name="price" type="number" value={productData.price} onChange={handleChange} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="الكمية في المخزون" name="stock_quantity" type="number" value={productData.stock_quantity} onChange={handleChange} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><TextField fullWidth required label="رمز الرف" name="shelf_code" value={productData.shelf_code} onChange={handleChange} /></Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}><Button variant="contained" component="label">رفع صورة<input type="file" hidden name="image" onChange={handleFileChange} /></Button></Grid>
+                    {productData.image && <Grid size={{ xs: 12 }}><Typography>تم اختيار: {productData.image.name}</Typography></Grid>}
                     <Grid size={{ xs: 12 }}>
                         <Button type="submit" variant="contained" disabled={loading}>
-                            {loading ? <CircularProgress size={24} /> : 'Create'}
+                            {loading ? <CircularProgress size={24} /> : 'إنشاء'}
                         </Button>
                     </Grid>
                 </Grid>

@@ -30,14 +30,14 @@ export default function Dashboard() {
             })
             .catch((err) => {
                 console.error("Error fetching dashboard stats:", err);
-                setError('Failed to load dashboard data.');
+                setError('فشل تحميل بيانات لوحة التحكم.');
             })
             .finally(() => setLoading(false));
     }, []);
 
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">{error}</Alert>;
-    if (!data) return <Typography>No data available.</Typography>;
+    if (!data) return <Typography>لا توجد بيانات متاحة.</Typography>;
 
     const { stats, recent_markets } = data;
 
@@ -48,10 +48,10 @@ export default function Dashboard() {
             </Typography>
 
             <Grid container spacing={3} sx={{ mb: 3 }}>
-                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<StorefrontIcon fontSize="large" color="primary" />} title="Total Markets" value={stats.total_markets} /></Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<PeopleIcon fontSize="large" color="secondary" />} title="Total Users" value={stats.total_users} /></Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<InventoryIcon fontSize="large" color="success" />} title="Total Products" value={stats.total_products} /></Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<ViewQuiltIcon fontSize="large" color="warning" />} title="Total Shelves" value={stats.total_shelves} /></Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<StorefrontIcon fontSize="large" color="primary" />} title="إجمالي المتاجر" value={stats.total_markets} /></Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<PeopleIcon fontSize="large" color="secondary" />} title="إجمالي المستخدمين" value={stats.total_users} /></Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<InventoryIcon fontSize="large" color="success" />} title="إجمالي المنتجات" value={stats.total_products} /></Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}><StatCard icon={<ViewQuiltIcon fontSize="large" color="warning" />} title="إجمالي الرفوف" value={stats.total_shelves} /></Grid>
             </Grid>
 
             <Paper sx={{ p: 2 }}>
@@ -65,7 +65,7 @@ export default function Dashboard() {
                                 <ListItem>
                                     <ListItemText
                                         primary={market.name}
-                                        secondary={`Created on: ${new Date(market.created_at).toLocaleDateString()}`}
+                                        secondary={`تاريخ الإنشاء: ${new Date(market.created_at).toLocaleDateString()}`}
                                     />
                                 </ListItem>
                                 {i < recent_markets.length - 1 && <Divider />}

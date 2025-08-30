@@ -28,7 +28,7 @@ export default function Dashboard() {
                 })
                 .catch((err) => {
                     console.error("Error fetching dashboard stats:", err);
-                    setError('Failed to load dashboard statistics.');
+                    setError('فشل تحميل إحصائيات لوحة التحكم.');
                 })
                 .finally(() => {
                     setLoading(false);
@@ -43,7 +43,7 @@ export default function Dashboard() {
 
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">{error}</Alert>;
-    if (!stats) return <Typography>No statistics available.</Typography>;
+    if (!stats) return <Typography>لا توجد إحصائيات متاحة.</Typography>;
 
     return (
         <Box>

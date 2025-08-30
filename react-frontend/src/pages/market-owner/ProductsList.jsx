@@ -24,7 +24,7 @@ export default function ProductsList() {
                 })
                 .catch(err => {
                     console.error("Failed to fetch products:", err);
-                    setError('Could not load products.');
+                    setError('تعذر تحميل المنتجات.');
                 })
                 .finally(() => setLoading(false));
         }
@@ -37,7 +37,7 @@ export default function ProductsList() {
     const handleDelete = (productId) => {
         axiosInstance.delete(`/products/${productId}`)
             .then(() => fetchProducts(data.pagination.page, data.pagination.per_page))
-            .catch(err => setError('Failed to delete product.'));
+            .catch(err => setError('فشل حذف المنتج.'));
     };
 
     const handleChangePage = (event, newPage) => {
@@ -66,9 +66,9 @@ export default function ProductsList() {
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="h5">Products</Typography>
+                <Typography variant="h5">المنتجات</Typography>
                 <Button component={Link} to="/market-owner/products/new" variant="contained">
-                    New Product
+                    منتج جديد
                 </Button>
             </Box>
             <TableContainer component={Paper}>
@@ -76,11 +76,11 @@ export default function ProductsList() {
                     <TableHead>
                         <TableRow>
                             <TableCell sx={headCellStyle}>#</TableCell>
-                            <TableCell sx={headCellStyle}>Name</TableCell>
-                            <TableCell sx={headCellStyle}>Barcode</TableCell>
-                            <TableCell sx={headCellStyle}>Price</TableCell>
-                            <TableCell sx={headCellStyle}>Stock</TableCell>
-                            <TableCell sx={headCellStyle}>Actions</TableCell>
+                            <TableCell sx={headCellStyle}>الاسم</TableCell>
+                            <TableCell sx={headCellStyle}>الباركود</TableCell>
+                            <TableCell sx={headCellStyle}>السعر</TableCell>
+                            <TableCell sx={headCellStyle}>المخزون</TableCell>
+                            <TableCell sx={headCellStyle}>الإجراءات</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -104,7 +104,7 @@ export default function ProductsList() {
                             </TableRow>
                         )) : (
                             <TableRow>
-                                <TableCell colSpan={6} align="center">No products found.</TableCell>
+                                <TableCell colSpan={6} align="center">لم يتم العثور على منتجات.</TableCell>
                             </TableRow>
                         )}
                     </TableBody>

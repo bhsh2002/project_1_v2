@@ -42,7 +42,7 @@ export default function UserCreate() {
             await axiosInstance.post('/users/', userData);
             navigate('/admin/users');
         } catch (error) {
-            setErrorMsg(error.response?.data?.message || 'Error creating user');
+            setErrorMsg(error.response?.data?.message || 'خطأ في إنشاء المستخدم');
         } finally {
             setLoading(false);
         }
@@ -50,13 +50,13 @@ export default function UserCreate() {
 
     return (
         <Paper sx={{ p: 4 }}>
-            <Typography variant="h5" gutterBottom>Create New User</Typography>
+            <Typography variant="h5" gutterBottom>إنشاء مستخدم جديد</Typography>
             {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
-                            label="Name"
+                            label="الاسم"
                             name="name"
                             value={userData.name}
                             onChange={handleChange}
@@ -66,7 +66,7 @@ export default function UserCreate() {
                     </Grid>
                     <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
-                            label="Email"
+                            label="البريد الإلكتروني"
                             name="email"
                             value={userData.email}
                             onChange={handleChange}
@@ -77,7 +77,7 @@ export default function UserCreate() {
                     </Grid>
                     <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
-                            label="Password"
+                            label="كلمة المرور"
                             name="password"
                             value={userData.password}
                             onChange={handleChange}
@@ -89,7 +89,7 @@ export default function UserCreate() {
                     <Grid size={{ xs: 12 }}>
                         <TextField
                             select
-                            label="Roles"
+                            label="الأدوار"
                             name="roles"
                             SelectProps={{ multiple: true }}
                             value={userData.roles}
@@ -103,7 +103,7 @@ export default function UserCreate() {
                     </Grid>
                     <Grid size={{ xs: 12 }}>
                         <Button type="submit" variant="contained" disabled={loading}>
-                            {loading ? <CircularProgress size={24} /> : 'Create User'}
+                            {loading ? <CircularProgress size={24} /> : 'إنشاء مستخدم'}
                         </Button>
                     </Grid>
                 </Grid>

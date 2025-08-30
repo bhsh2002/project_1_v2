@@ -50,7 +50,7 @@ export default function AdminLayout() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Admin Dashboard
+                        لوحة تحكم المسؤول
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -75,12 +75,12 @@ export default function AdminLayout() {
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton component={Link} to="/admin/markets">
-                            <ListItemText primary="Markets" />
+                            <ListItemText primary="المتاجر" />
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
                         <ListItemButton component={Link} to="/admin/users">
-                            <ListItemText primary="Users" />
+                            <ListItemText primary="المستخدمون" />
                         </ListItemButton>
                     </ListItem>
                 </List>

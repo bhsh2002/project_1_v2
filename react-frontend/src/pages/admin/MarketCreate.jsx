@@ -42,7 +42,7 @@ export default function MarketCreate() {
             await axiosInstance.post('/markets/', payload);
             navigate('/admin/markets');
         } catch (error) {
-            setErrorMsg(error.response?.data?.message || 'Error creating market');
+            setErrorMsg(error.response?.data?.message || 'خطأ في إنشاء المتجر');
         } finally {
             setLoading(false);
         }
@@ -50,13 +50,13 @@ export default function MarketCreate() {
 
     return (
         <Paper sx={{ p: 4 }}>
-            <Typography variant="h5" gutterBottom>Create New Market</Typography>
+            <Typography variant="h5" gutterBottom>إنشاء متجر جديد</Typography>
             {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
-                            label="Market Name"
+                            label="اسم المتجر"
                             name="name"
                             value={marketData.name}
                             onChange={handleChange}
@@ -66,7 +66,7 @@ export default function MarketCreate() {
                     </Grid>
                     <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
-                            label="Phone Number"
+                            label="رقم الهاتف"
                             name="phoneNumber"
                             value={marketData.phoneNumber}
                             onChange={handleChange}
@@ -77,14 +77,14 @@ export default function MarketCreate() {
                     <Grid size={{ xs: 12 }}>
                         <TextField
                             select
-                            label="Create Owner?"
+                            label="إنشاء مالك؟"
                             name="createOwner"
                             value={marketData.createOwner}
                             onChange={handleChange}
                             fullWidth
                         >
-                            <MenuItem value={true}>Yes</MenuItem>
-                            <MenuItem value={false}>No</MenuItem>
+                            <MenuItem value={true}>نعم</MenuItem>
+                            <MenuItem value={false}>لا</MenuItem>
                         </TextField>
                     </Grid>
 
@@ -92,7 +92,7 @@ export default function MarketCreate() {
                         <>
                             <Grid size={{ xs: 12, sm: 6 }}>
                                 <TextField
-                                    label="Owner Username"
+                                    label="اسم مستخدم المالك"
                                     name="ownerUsername"
                                     value={marketData.ownerUsername}
                                     onChange={handleChange}
@@ -102,7 +102,7 @@ export default function MarketCreate() {
                             </Grid>
                             <Grid size={{ xs: 12, sm: 6 }}>
                                 <TextField
-                                    label="Owner Password"
+                                    label="كلمة مرور المالك"
                                     name="ownerPassword"
                                     value={marketData.ownerPassword}
                                     onChange={handleChange}
@@ -120,7 +120,7 @@ export default function MarketCreate() {
                             variant="contained"
                             disabled={loading}
                         >
-                            {loading ? <CircularProgress size={24} /> : 'Create Market'}
+                            {loading ? <CircularProgress size={24} /> : 'إنشاء المتجر'}
                         </Button>
                     </Grid>
                 </Grid>
