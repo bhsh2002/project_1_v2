@@ -21,6 +21,7 @@ const BarcodeScanner = forwardRef(({ onScanSuccess, onScanFailure, onClose, onRe
     const [cameras, setCameras] = useState([]);
     const [selectedCamera, setSelectedCamera] = useState(null);
     const resumeTimeoutRef = useRef(null);
+    const isTransitioningRef = useRef(false);
 
     useImperativeHandle(ref, () => ({
         resume: () => scannerRef.current?.resume(),
@@ -72,9 +73,22 @@ const BarcodeScanner = forwardRef(({ onScanSuccess, onScanFailure, onClose, onRe
                 },
                 (errorMessage) => {
                     onScanFailure?.(errorMessage);
+
                     if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
-                    resumeTimeoutRef.current = setTimeout(() => {
-                        scannerRef.current?.resume();
+
+                    resumeTimeoutRef.current = setTimeout(async () => {
+                        if (scannerRef.current && !isTransitioningRef.current) {
+                            try {
+                                isTransitioningRef.current = true;
+                                if (!scannerRef.current.isScanning) {
+                                    await scannerRef.current.resume();
+                                }
+                            } catch (err) {
+                                console.warn("Resume فشل:", err);
+                            } finally {
+                                isTransitioningRef.current = false;
+                            }
+                        }
                     }, 800);
                 }
             )
