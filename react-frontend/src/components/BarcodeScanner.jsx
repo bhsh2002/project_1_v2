@@ -36,7 +36,7 @@ const BarcodeScanner = forwardRef(({ onScanSuccess, onScanFailure, onClose, onRe
             .then(devices => {
                 if (devices && devices.length) {
                     setCameras(devices);
-                    setSelectedCamera(devices[1].id);
+                    setSelectedCamera(devices[2].id);
                 }
             })
             .catch(err => console.error("فشل في جلب الكاميرات:", err));
